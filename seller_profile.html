@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seller Profile – EcoSphere</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+
+  *{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+  }
+
+  body{
+    font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
+    background:#f0f2f0;
+    color:#1e293b;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+  }
+
+  /* HEADER */
+  .header{
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    height:60px;
+    background:#18a118;
+    z-index:1000;
+    display:flex;
+    align-items:center;
+    padding:0 20px;
+    gap:14px;
+  }
+
+  /* HAMBURGER */
+  .hamburger{
+    background:none;
+    border:none;
+    color:#fff;
+    font-size:20px;
+    cursor:pointer;
+    padding:6px;
+    border-radius:6px;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    flex-shrink:0;
+    transition:background 0.2s;
+  }
+
+  .hamburger:hover{
+    background:rgba(255,255,255,0.15);
+  }
+
+  .logo{
+    flex:1;
+    font-size:1.25rem;
+    font-weight:700;
+    color:#fff;
+    text-decoration:none;
+    letter-spacing:-0.3px;
+  }
+
+  .logo i{
+    color:#ffd700;
+    margin-right:6px;
+  }
+
+  .profile-link{
+    color:#fff;
+    font-size:22px;
+    opacity:0.9;
+    transition:opacity 0.2s;
+    text-decoration:none;
+  }
+
+  .profile-link:hover{
+    opacity:1;
+  }
+
+  /* OVERLAY */
+  .overlay{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.4);
+    z-index:998;
+  }
+
+  .overlay.show{
+    display:block;
+  }
+
+  /* SIDEBAR */
+  .sidebar{
+    position:fixed;
+    top:0;
+    left:0;
+    width:210px;
+    height:100vh;
+    background:#1b2636;
+    z-index:999;
+    transition:transform 0.28s ease;
+    display:flex;
+    flex-direction:column;
+    padding-top:60px;
+  }
+
+  .sidebar-close{
+    position:absolute;
+    top:14px;
+    right:14px;
+    background:none;
+    border:none;
+    color:rgba(255,255,255,0.5);
+    font-size:18px;
+    cursor:pointer;
+    display:none;
+  }
+
+  .sidebar-brand{
+    padding:18px 20px 16px;
+    font-size:0.78rem;
+    font-weight:700;
+    color:rgba(255,255,255,0.35);
+    text-transform:uppercase;
+    letter-spacing:1px;
+    border-bottom:1px solid rgba(255,255,255,0.06);
+    margin-bottom:8px;
+  }
+
+  .sidebar a{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:11px 20px;
+    color:rgba(255,255,255,0.65);
+    text-decoration:none;
+    font-size:0.88rem;
+    font-weight:500;
+    transition:color 0.2s, background 0.2s, padding-left 0.2s;
+  }
+
+  .sidebar a i{
+    width:16px;
+    text-align:center;
+    font-size:0.85rem;
+  }
+
+  .sidebar a:hover{
+    color:#fff;
+    background:rgba(255,255,255,0.07);
+    padding-left:26px;
+  }
+
+  .sidebar a.active{
+    color:#4ade80;
+    background:rgba(74,222,128,0.1);
+  }
+
+  .sidebar a.active i{
+    color:#4ade80;
+  }
+
+  .sidebar a.logout{
+    color:rgba(248,113,113,0.8);
+    margin-bottom:12px;
+  }
+
+  .sidebar a.logout:hover{
+    color:#f87171;
+    background:rgba(248,113,113,0.08);
+    padding-left:26px;
+  }
+
+  /* LAYOUT */
+  .layout{
+    margin-top:60px;
+    margin-left:210px;
+    min-height:calc(100vh - 60px);
+    display:flex;
+    flex-direction:column;
+  }
+
+  .content{
+    flex:1;
+    padding:28px 24px;
+  }
+
+  /* PAGE TITLE */
+  .page-title{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:24px;
+  }
+
+  .page-title-icon{
+    width:46px;
+    height:46px;
+    background:#dcfce7;
+    color:#16a34a;
+    border-radius:10px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:1.2rem;
+    flex-shrink:0;
+  }
+
+  .page-title h2{
+    font-size:1.35rem;
+    font-weight:700;
+    color:#1e293b;
+  }
+
+  /* PROFILE CARD */
+  .profile-card{
+    background:#fff;
+    border-radius:10px;
+    padding:28px;
+    box-shadow:0 1px 4px rgba(0,0,0,0.06);
+    max-width:780px;
+  }
+
+  /* SECTION TITLE */
+  .section-title{
+    font-size:0.82rem;
+    font-weight:700;
+    color:#94a3b8;
+    text-transform:uppercase;
+    letter-spacing:0.8px;
+    margin-bottom:18px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+
+  .section-title i{
+    color:#18a118;
+    font-size:0.8rem;
+  }
+
+  /* PROFILE ROW */
+  .profile-row{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    margin-bottom:14px;
+  }
+
+  .profile-row label{
+    flex:0 0 170px;
+    font-size:0.82rem;
+    font-weight:600;
+    color:#64748b;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+
+  .profile-row label i{
+    color:#18a118;
+    width:14px;
+    text-align:center;
+    font-size:0.78rem;
+  }
+
+  .profile-row input{
+    flex:1;
+    padding:9px 12px;
+    border:1.5px solid #e2e8f0;
+    border-radius:8px;
+    font-size:0.875rem;
+    color:#1e293b;
+    background:#f8fafc;
+    outline:none;
+    transition:0.2s;
+  }
+
+  .profile-row input:disabled{
+    background:#f8fafc;
+    color:#64748b;
+    cursor:default;
+  }
+
+  .profile-row input:not(:disabled){
+    background:#fff;
+    border-color:#18a118;
+    box-shadow:0 0 0 3px rgba(24,161,24,0.1);
+  }
+
+  /* BANK SECTION */
+  .bank-section{
+    margin-top:24px;
+    padding-top:20px;
+    border-top:1px solid #f1f5f9;
+  }
+
+  /* BUTTONS */
+  .button-group{
+    display:flex;
+    gap:10px;
+    margin-top:24px;
+    flex-wrap:wrap;
+  }
+
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap:7px;
+    padding:9px 20px;
+    border:none;
+    border-radius:8px;
+    font-size:0.855rem;
+    font-weight:600;
+    cursor:pointer;
+    transition:0.18s;
+  }
+
+  .btn-primary{
+    background:#18a118;
+    color:#fff;
+  }
+
+  .btn-primary:hover{
+    background:#16a34a;
+  }
+
+  .btn-dark{
+    background:#1e293b;
+    color:#fff;
+  }
+
+  .btn-dark:hover{
+    background:#0f172a;
+  }
+
+  .btn-outline{
+    background:#fff;
+    color:#64748b;
+    border:1.5px solid #e2e8f0;
+  }
+
+  .btn-outline:hover{
+    background:#f8fafc;
+  }
+
+  /* FOOTER */
+  footer{
+    text-align:center;
+    padding:14px;
+    background:#161c22;
+    color:rgba(255,255,255,0.4);
+    font-size:0.78rem;
+    margin-top:auto;
+  }
+
+  /* MOBILE */
+  @media (max-width:768px){
+
+    .hamburger{
+      display:flex;
+    }
+
+    .sidebar{
+      transform:translateX(-100%);
+      padding-top:0;
+    }
+
+    .sidebar.open{
+      transform:translateX(0);
+      box-shadow:8px 0 30px rgba(0,0,0,0.2);
+    }
+
+    .sidebar-close{
+      display:block;
+    }
+
+    .layout{
+      margin-left:0;
+    }
+
+    .content{
+      padding:18px 14px;
+    }
+
+    .profile-row{
+      flex-direction:column;
+      align-items:flex-start;
+    }
+
+    .profile-row label{
+      flex:none;
+    }
+
+    .profile-row input{
+      width:100%;
+    }
+
+    .profile-card{
+      padding:18px;
+    }
+  }
+
+  @media (max-width:480px){
+
+    .page-title h2{
+      font-size:1.1rem;
+    }
+
+    .button-group{
+      flex-direction:column;
+    }
+
+    .btn{
+      justify-content:center;
+    }
+  }
+
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header class="header">
+
+  <button class="hamburger" onclick="toggleSidebar()" aria-label="Open menu">
+    <i class="fas fa-bars"></i>
+  </button>
+
+  <a href="seller.html" class="logo">
+    <i class="fas fa-leaf"></i> EcoSphere
+  </a>
+
+  <a href="seller_profile.html" class="profile-link">
+    <i class="fas fa-user-circle"></i>
+  </a>
+
+</header>
+
+<!-- OVERLAY -->
+<div class="overlay" id="overlay" onclick="closeSidebar()"></div>
+
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+
+  <button class="sidebar-close" onclick="closeSidebar()">
+    <i class="fas fa-times"></i>
+  </button>
+
+  <div class="sidebar-brand">
+    Seller Panel
+  </div>
+
+  <a href="./seller.html">
+    <i class="fas fa-home"></i>
+    Dashboard
+  </a>
+
+  <a href="./selle_orders.html">
+    <i class="fas fa-shopping-bag"></i>
+    Orders
+  </a>
+
+  <a href="./selle_items.html">
+    <i class="fas fa-box"></i>
+    List Items
+  </a>
+
+  <a href="./seller_profile.html" class="logout">
+    <i class="fas fa-sign-out-alt"></i>
+    Logout
+  </a>
+
+</aside>
+
+<!-- LAYOUT -->
+<div class="layout">
+
+  <div class="content">
+
+    <div class="page-title">
+      <div class="page-title-icon">
+        <i class="fas fa-id-card"></i>
+      </div>
+      <h2>Seller Profile</h2>
+    </div>
+
+    <div class="profile-card">
+
+      <!-- PERSONAL INFO -->
+      <div class="section-title">
+        <i class="fas fa-user"></i> Personal Information
+      </div>
+
+      <div class="profile-row">
+        <label><i class="fas fa-user"></i> Full Name</label>
+        <input type="text" id="name" value="Shiva Kumar" disabled>
+      </div>
+
+      <div class="profile-row">
+        <label><i class="fas fa-envelope"></i> Email</label>
+        <input type="email" id="email" value="shivakumar@ecosphere.com" disabled>
+      </div>
+
+      <div class="profile-row">
+        <label><i class="fas fa-phone"></i> Phone</label>
+        <input type="text" id="phone" value="98765 43210" disabled>
+      </div>
+
+      <div class="profile-row">
+        <label><i class="fas fa-map-marker-alt"></i> Address</label>
+        <input type="text" id="address" value="Hyderabad, Telangana" disabled>
+      </div>
+
+      <div class="profile-row">
+        <label><i class="fas fa-building"></i> Company</label>
+        <input type="text" id="company" value="Ecosphere Pvt Ltd" disabled>
+      </div>
+
+      <div class="profile-row">
+        <label><i class="fas fa-briefcase"></i> Experience</label>
+        <input type="text" id="experience" value="5 years" disabled>
+      </div>
+
+      <!-- BANK -->
+      <div class="bank-section">
+
+        <div class="section-title">
+          <i class="fas fa-university"></i> Bank Details
+        </div>
+
+        <div class="profile-row">
+          <label><i class="fas fa-user-circle"></i> Account Holder</label>
+          <input type="text" id="accName" value="Shiva Kumar" disabled>
+        </div>
+
+        <div class="profile-row">
+          <label><i class="fas fa-credit-card"></i> Account Number</label>
+          <input type="text" id="accNumber" value="1234567890123" disabled>
+        </div>
+
+        <div class="profile-row">
+          <label><i class="fas fa-code"></i> IFSC Code</label>
+          <input type="text" id="ifsc" value="SBIN0001234" disabled>
+        </div>
+
+        <div class="profile-row">
+          <label><i class="fas fa-university"></i> Bank Name</label>
+          <input type="text" id="bank" value="State Bank of India (SBI)" disabled>
+        </div>
+
+      </div>
+
+      <!-- BUTTONS -->
+      <div class="button-group">
+
+        <button class="btn btn-primary" id="editBtn" onclick="toggleEditMode()">
+          <i class="fas fa-edit"></i> Edit Profile
+        </button>
+
+        <button class="btn btn-dark" id="saveBtn" onclick="saveData()" style="display:none;">
+          <i class="fas fa-save"></i> Save Changes
+        </button>
+
+        <button class="btn btn-outline" id="cancelBtn" onclick="cancelEdit()" style="display:none;">
+          <i class="fas fa-times"></i> Cancel
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <footer>© 2026 EcoSphere. All rights reserved.</footer>
+
+</div>
+
+<script>
+
+  const fields = [
+    "name",
+    "email",
+    "phone",
+    "address",
+    "company",
+    "experience",
+    "accName",
+    "accNumber",
+    "ifsc",
+    "bank"
+  ];
+
+  function toggleEditMode(){
+
+    fields.forEach(id=>{
+      document.getElementById(id).disabled=false;
+    });
+
+    document.getElementById("editBtn").style.display="none";
+    document.getElementById("saveBtn").style.display="inline-flex";
+    document.getElementById("cancelBtn").style.display="inline-flex";
+  }
+
+  function cancelEdit(){
+
+    fields.forEach(id=>{
+      document.getElementById(id).disabled=true;
+    });
+
+    loadData();
+
+    document.getElementById("editBtn").style.display="inline-flex";
+    document.getElementById("saveBtn").style.display="none";
+    document.getElementById("cancelBtn").style.display="none";
+  }
+
+  function saveData(){
+
+    const data={};
+
+    fields.forEach(id=>{
+      data[id]=document.getElementById(id).value;
+    });
+
+    localStorage.setItem("userProfile",JSON.stringify(data));
+
+    alert("Profile Updated Successfully!");
+
+    fields.forEach(id=>{
+      document.getElementById(id).disabled=true;
+    });
+
+    document.getElementById("editBtn").style.display="inline-flex";
+    document.getElementById("saveBtn").style.display="none";
+    document.getElementById("cancelBtn").style.display="none";
+  }
+
+  function loadData(){
+
+    const saved=localStorage.getItem("userProfile");
+
+    if(!saved) return;
+
+    const data=JSON.parse(saved);
+
+    const defaults={
+      name:"Shiva Kumar",
+      email:"shivakumar@ecosphere.com",
+      phone:"98765 43210",
+      address:"Hyderabad, Telangana",
+      company:"Ecosphere Pvt Ltd",
+      experience:"5 years",
+      accName:"Shiva Kumar",
+      accNumber:"1234567890123",
+      ifsc:"SBIN0001234",
+      bank:"State Bank of India (SBI)"
+    };
+
+    fields.forEach(id=>{
+      document.getElementById(id).value=data[id] || defaults[id] || "";
+    });
+  }
+
+  window.onload=loadData;
+
+  function toggleSidebar(){
+    document.getElementById("sidebar").classList.toggle("open");
+    document.getElementById("overlay").classList.toggle("show");
+  }
+
+  function closeSidebar(){
+    document.getElementById("sidebar").classList.remove("open");
+    document.getElementById("overlay").classList.remove("show");
+  }
+
+  document.querySelectorAll(".sidebar a").forEach(function(link){
+    link.addEventListener("click",closeSidebar);
+  });
+
+</script>
+
+</body>
+</html>

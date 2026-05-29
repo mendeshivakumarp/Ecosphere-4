@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>♻️ E-Waste Marketplace</title>
+    <style>
+        * { box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, sans-serif; 
+            margin: 0; 
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); 
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .header { 
+            background: linear-gradient(135deg, #2c3e50, #34495e); 
+            color: white; 
+            padding: 40px; 
+            text-align: center; 
+            border-radius: 20px; 
+            margin-bottom: 40px; 
+            box-shadow: 0 15px 50px rgba(0,0,0,0.3);
+        }
+        .cart-header { 
+            position: fixed; top: 30px; right: 30px; 
+            background: linear-gradient(135deg, #27ae60, #2ecc71); 
+            color: white; 
+            padding: 20px 25px; 
+            border-radius: 50px; 
+            font-weight: bold; 
+            font-size: 18px;
+            cursor: pointer; 
+            z-index: 1000; 
+            box-shadow: 0 10px 40px rgba(39,174,96,0.4);
+            transition: all 0.3s;
+        }
+        .cart-header:hover { transform: scale(1.1); box-shadow: 0 15px 50px rgba(39,174,96,0.6); }
+        .cart-count { 
+            background: #e74c3c; 
+            border-radius: 50%; 
+            padding: 8px 12px; 
+            margin-left: 15px; 
+            font-size: 16px; 
+            min-width: 30px; 
+            text-align: center;
+        }
+        .items-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .item-card {
+            background: rgba(255,255,255,0.95);
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+            transition: all 0.4s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .item-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 30px 80px rgba(0,0,0,0.3);
+        }
+        .item-image {
+            height: 250px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .item-image::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(45deg, rgba(52,152,219,0.3), rgba(231,76,60,0.3));
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .item-card:hover .item-image::after { opacity: 1; }
+        .item-content {
+            padding: 30px;
+            position: relative;
+        }
+        .item-title {
+            font-size: 1.6em;
+            font-weight: 700;
+            color: #2c3e50;
+            margin: 0 0 15px;
+            line-height: 1.3;
+        }
+        .seller-info {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            padding: 18px;
+            border-radius: 15px;
+            margin: 20px 0;
+            font-size: 15px;
+            color: #495057;
+            border-left: 4px solid #3498db;
+        }
+        .price-tag {
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 50px;
+            font-size: 24px;
+            font-weight: 800;
+            display: inline-block;
+            box-shadow: 0 8px 25px rgba(39,174,96,0.4);
+        }
+        .quantity-tag {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 600;
+            margin-left: 20px;
+        }
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+        .add-cart {
+            flex: 1;
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            color: white;
+            border: none;
+            padding: 18px 30px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 16px;
+            transition: all 0.3s;
+            box-shadow: 0 8px 25px rgba(39,174,96,0.4);
+        }
+        .add-cart:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(39,174,96,0.6);
+        }
+        .add-cart.in-cart {
+            background: linear-gradient(135deg, #95a5a6, #bdc3c7);
+            cursor: not-allowed;
+        }
+        .cart-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 2000;
+            backdrop-filter: blur(5px);
+        }
+        .cart-content {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(135deg, #ffffff, #f8f9fa);
+            padding: 40px;
+            border-radius: 25px;
+            max-width: 700px;
+            max-height: 85vh;
+            overflow-y: auto;
+            width: 90%;
+            box-shadow: 0 30px 100px rgba(0,0,0,0.5);
+        }
+        @media (max-width: 768px) {
+            .items-grid { grid-template-columns: 1fr; }
+            .btn-group { flex-direction: column; }
+            .cart-header { top: 20px; right: 20px; padding: 15px 20px; font-size: 16px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="cart-header" onclick="toggleCart()">
+        🛒 Cart <span class="cart-count" id="cartCount">0</span>
+    </div>
+
+    <div class="header">
+        <h1>♻️ E-Waste Marketplace</h1>
+        <p>Premium Electronic Waste Items | Hyderabad Market | Live Prices</p>
+    </div>
+
+    <div class="items-grid" id="itemsGrid">
+        <!-- Items populated by JavaScript -->
+    </div>
+
+    <!-- Cart Modal -->
+    <div class="cart-modal" id="cartModal">
+        <div class="cart-content">
+            <h2 style="margin: 0 0 30px; text-align: center; color: #2c3e50;">🛒 Shopping Cart</h2>
+            <div id="cartItems"></div>
+            <div style="font-size: 28px; font-weight: 700; color: #27ae60; margin: 30px 0; text-align: center;" id="cartTotal">Total: ₹0</div>
+            <button class="add-cart" onclick="checkout()" style="width: 100%; padding: 20px; font-size: 18px;">💳 Proceed to Checkout</button>
+        </div>
+    </div>
+
+    <script>
+        let cart = JSON.parse(localStorage.getItem('eWasteCart') || '[]');
+        let eWasteItems = [];
+
+        // E-waste themed images from Unsplash
+        const eWasteImages = [
+            'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&h=250&fit=crop',
+            'https://images.unsplash.com/photo-1588205282196-9f74750b52e2?w=400&h=250&fit=crop',
+            'https://images.unsplash.com/photo-1610945262588-8c949ec60938?w=400&h=250&fit=crop',
+            'https://images.unsplash.com/photo-1570549717069-33bed1eb1528?w=400&h=250&fit=crop',
+            'https://images.unsplash.com/photo-1603796846092-b9344f8b877c?w=400&h=250&fit=crop',
+            'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=400&h=250&fit=crop',
+            'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&h=250&fit=crop',
+            'https://images.unsplash.com/photo-1586953208442-7d2267bb7d16?w=400&h=250&fit=crop'
+        ];
+
+        function generateItems() {
+            const types = ['Laptop', 'Desktop PC', 'Mobile Phone', 'Tablet', 'Monitor', 'Server Rack', 'UPS Battery', 'Printer', 'Networking Gear', 'Hard Drives'];
+            const sellers = ['Rajesh E-Waste', 'Sharma Recycling', 'Gupta Electronics', 'Verma Tech Scrap', 'Patel E-Cycle', 'Kumar Digital', 'Singh Recyclers', 'Agarwal E-Waste'];
+            const cities = ['Delhi', 'Mumbai', 'Hyderabad', 'Pune', 'Bangalore', 'Chennai', 'Kolkata'];
+
+            // 24 premium featured items
+            eWasteItems = [
+                {id:1, name:"Grade A Laptop Scrap", type:"laptop", price:45, qty:120, seller:"Rajesh E-Waste", addr:"Delhi", imageIndex:0},
+                {id:2, name:"Desktop PC Tower Scrap", type:"desktop", price:38, qty:80, seller:"Sharma Recycling", addr:"Mumbai", imageIndex:1},
+                {id:3, name:"Smartphone Mixed Scrap", type:"mobile", price:52, qty:200, seller:"Gupta Electronics", addr:"Hyderabad", imageIndex:2},
+                {id:4, name:"LCD Monitor Scrap", type:"monitor", price:28, qty:150, seller:"Verma Tech Scrap", addr:"Pune", imageIndex:3},
+                {id:5, name:"Server Rack Components", type:"server", price:65, qty:40, seller:"Patel E-Cycle", addr:"Bangalore", imageIndex:4}
+            ];
+
+            // Generate 95 more realistic items
+            for(let i = 6; i <= 100; i++) {
+                eWasteItems.push({
+                    id: i,
+                    name: `${types[Math.floor(Math.random()*types.length)]} Scrap #${i}`,
+                    type: ['laptop','desktop','mobile','monitor','server','tablet','printer','battery','networking','harddrive'][Math.floor(Math.random()*10)],
+                    price: 22 + Math.floor(Math.random()*45),
+                    qty: 25 + Math.floor(Math.random()*250),
+                    seller: sellers[Math.floor(Math.random()*sellers.length)],
+                    addr: cities[Math.floor(Math.random()*cities.length)],
+                    imageIndex: Math.floor(Math.random()*eWasteImages.length)
+                });
+            }
+        }
+
+        function displayItems() {
+            const grid = document.getElementById('itemsGrid');
+            grid.innerHTML = eWasteItems.slice(0, 24).map(item => {
+                const inCart = cart.some(c => c.id === item.id);
+                const imgUrl = eWasteImages[item.imageIndex % eWasteImages.length];
+                return `
+                    <div class="item-card">
+                        <div class="item-image" style="background-image: url('${imgUrl}')"></div>
+                        <div class="item-content">
+                            <h3 class="item-title">${item.name}</h3>
+                            <div class="seller-info">
+                                👤 <strong>${item.seller}</strong><br>
+                                📍 ${item.addr}<br>
+                                📦 <strong>${item.qty}kg</strong> available
+                            </div>
+                            <div style="margin: 25px 0;">
+                                <span class="price-tag">₹${item.price}/kg</span>
+                            </div>
+                            <div class="btn-group">
+                                <button class="add-cart ${inCart ? 'in-cart' : ''}" onclick="addToCart(${item.id})" ${inCart ? 'disabled' : ''} style="width: 100%;">
+                                    ${inCart ? '✅ Added' : '🛒 Add to Cart'}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function addToCart(id) {
+            const item = eWasteItems.find(i => i.id === id);
+            cart.push({...item, qtyOrdered: 25, addedDate: new Date().toLocaleString()});
+            localStorage.setItem('eWasteCart', JSON.stringify(cart));
+            updateCartCount();
+            displayItems();
+        }
+
+        function toggleCart() {
+            document.getElementById('cartModal').style.display = 
+                document.getElementById('cartModal').style.display === 'block' ? 'none' : 'block';
+            if(document.getElementById('cartModal').style.display === 'block') displayCart();
+        }
+
+        function updateCartCount() {
+            document.getElementById('cartCount').textContent = cart.length;
+        }
+
+        function displayCart() {
+            const cartItems = document.getElementById('cartItems');
+            const cartTotal = document.getElementById('cartTotal');
+            
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<p style="text-align: center; color: #7f8c8d; font-size: 18px;">Your cart is empty</p>';
+                cartTotal.textContent = 'Total: ₹0';
+                return;
+            }
+
+            cartItems.innerHTML = cart.map(item => `
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px; border-bottom: 1px solid #eee; margin-bottom: 10px;">
+                    <div>
+                        <strong>${item.name}</strong><br>
+                        <small>${item.seller} - ${item.addr}</small>
+                    </div>
+                    <div style="text-align: right;">
+                        <div>₹${item.price}/kg</div>
+                        <div><strong>${item.qtyOrdered}kg</strong></div>
+                        <div>₹${(item.price * item.qtyOrdered).toLocaleString()}</div>
+                    </div>
+                </div>
+            `).join('');
+
+            const total = cart.reduce((sum, item) => sum + (item.price * item.qtyOrdered), 0);
+            cartTotal.textContent = `Total: ₹${total.toLocaleString()}`;
+        }
+
+        function checkout() {
+            if (cart.length === 0) {
+                alert('Your cart is empty!');
+                return;
+            }
+            alert('✅ Checkout successful! Thank you for your purchase.');
+            cart = [];
+            localStorage.setItem('eWasteCart', JSON.stringify(cart));
+            toggleCart();
+            updateCartCount();
+            displayItems();
+        }
+
+        // Initialize
+        generateItems();
+        updateCartCount();
+        displayItems();
+    </script>
+</body>
+</html>

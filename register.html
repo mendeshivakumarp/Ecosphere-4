@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>EcoSphere - Register</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<link rel="stylesheet" href="./css/register.css">
+<link rel="stylesheet" href="./css/responsive.css">
+
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+<header class="header">
+        <nav class="nav">
+            <div class="logo">
+                <h1><i class="fas fa-leaf"></i> EcoSphere</h1>
+            </div>
+                        <!-- Hamburger button (visible on mobile/tablet) -->
+            <button class="hamburger" id="hamburger" aria-label="Toggle navigation" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="./index.html">Home</a></li>
+                <!-- <li><a href="./abc.html"> buy materials</a></li> -->
+                <li><a href="./about.html">About</a></li>
+                <li><a href="./contact.html">Contact</a></li>
+                <li><a href="./login.html" >login</a></li>
+            </ul>
+        </nav>
+        <!-- Overlay backdrop for mobile menu -->
+        <div class="nav-overlay" id="navOverlay"></div>
+    </header>
+
+<!-- ================= REGISTER ================= -->
+
+<div class="register-container">
+
+<div class="register-card">
+
+<h1>Join EcoSphere 🌱</h1>
+<!-- <h1>Join EcoSphere <i class="fa-notdog fa-solid fa-tree"></i></h1> -->
+
+<p class="subtitle">
+Turn waste into opportunity. Register to buy, sell, and recycle scrap.
+</p>
+
+<form id="registerForm">
+
+<div class="form-group">
+<label>Full Name</label>
+<i class="fa-solid fa-user"></i>
+<input type="text" placeholder="Enter your name" required>
+</div>
+
+<div class="form-group">
+<label>Email</label>
+<i class="fa-solid fa-envelope"></i>
+<input type="email" placeholder="Enter your email" required>
+</div>
+
+<div class="form-group">
+<label>Phone Number</label>
+<i class="fa-solid fa-phone"></i>
+<input type="tel" placeholder="Enter phone number" required>
+</div>
+
+<div class="form-group">
+<label>Password</label>
+<i class="fa-solid fa-lock"></i>
+<input type="password" placeholder="Create password" required 
+pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}"
+title="Must contain at least 8 characters, including uppercase, lowercase, number and special character">
+</div>
+
+<div class="form-group">
+<label>Address</label>
+<i class="fa-solid fa-address-card"></i>
+<input type="text" placeholder="Add Address" required>
+</div>
+
+<div class="form-group">
+<label>Gender</label>
+<i class="fa-solid fa-user"></i>
+<select required>
+<option value="">Select Gender</option>
+<option>Male</option>
+<option>Female</option>
+<option>Others</option>
+</select>
+</div>
+
+<!-- BANK DETAILS -->
+<div class="bank-section">
+
+<!-- <h3><i class="fa-solid fa-building-columns"></i> Bank Details</h3> -->
+
+<div class="form-group">
+<label>Account Holder</label>
+<i class="fas fa-user-circle"></i>
+<!-- <input type="text" id="accName"> -->
+ <input type="text" placeholder="Enter the Account Holder" required 
+pattern="[A-Za-z ]{3,}">
+</div>
+
+<div class="form-group">
+<label>Account Number</label>
+<i class="fas fa-credit-card"></i>
+<input type="text" placeholder="Enter the Account Number" required 
+pattern="[0-9]{9,18}"
+title="Enter a valid account number (9–18 digits)">
+</div>
+
+<div class="form-group">
+<label>IFSC Code</label>
+<i class="fas fa-code"></i>
+<input type="text" placeholder="Enter the IFSC Code" required 
+pattern="^[A-Z]{4}0[A-Z0-9]{6}$"
+title="Enter valid IFSC (e.g., SBIN0001234)"
+oninput="this.value = this.value.toUpperCase()">
+</div>
+
+<div class="form-group">
+<label>Select Bank:</label>
+<i class="fas fa-university"></i>
+<select required>
+    <option value="" disabled selected>Select Bank</option>
+    <option value="SBI">State Bank of India (SBI)</option>
+    <option value="HDFC">HDFC Bank</option>
+    <option value="ICICI">ICICI Bank</option>
+    <option value="AXIS">Axis Bank</option>
+    <option value="PNB">Punjab National Bank (PNB)</option>
+    <option value="BOB">Bank of Baroda (BOB)</option>
+    <option value="CANARA">Canara Bank</option>
+    <option value="UNION">Union Bank of India</option>
+    <option value="IDBI">IDBI Bank</option>
+    <option value="INDIAN">Indian Bank</option>
+    <option value="KOTAK">Kotak Mahindra Bank</option>
+    <option value="YES">Yes Bank</option>
+    <option value="FEDERAL">Federal Bank</option>
+    <option value="SOUTH">South Indian Bank</option>
+    <option value="KARUR">Karur Vysya Bank</option>
+    <option value="OTHER">Other</option>
+</select>
+
+<input type="text" id="otherBank" placeholder="Enter Bank Name" style="display:none;">
+
+</div>
+
+</div>
+
+<button type="submit" class="btn-register">Create Account</button>
+
+<!-- <p class="back-arrow">
+<a href="index.html">⬅</a>
+</p> -->
+
+<p class="login-text">
+Already have an account? 
+<a href="./login.html">Login</a> 
+</p>
+
+</form>
+
+
+
+</div>
+
+</div>
+
+<!-- ================= FOOTER ================= -->
+
+<footer class="footer">
+
+<div class="footer-bottom">
+<p>© 2026 EcoSphere. All rights reserved. | Making sustainability profitable.</p>
+</div>
+
+</footer>
+
+
+<!-- ================= SCRIPT ================= -->
+
+<script>
+
+document.getElementById("registerForm").addEventListener("submit", function(e){
+
+e.preventDefault();
+
+// alert("Registration Successful 🌱 Welcome to EcoSphere!");
+ alert("Registration Successful 🌱 Welcome to EcoSphere! A World where Nature, Environment and Life Exist together");
+
+window.location.href = "admin.html";
+// window.location.href = "seller.html";
+// window.location.href = "recycler.html";
+
+});
+
+</script>
+<script>
+function showOtherBank(value){
+    document.getElementById("otherBank").style.display = (value === "OTHER") ? "block" : "none";
+}
+</script>
+
+    <!-- Hamburger menu toggle script -->
+    <script>
+    (function () {
+        var hamburger = document.getElementById('hamburger');
+        var navLinks  = document.getElementById('navLinks');
+        var overlay   = document.getElementById('navOverlay');
+        if (!hamburger) return;
+        function openMenu() {
+            hamburger.classList.add('active');
+            hamburger.setAttribute('aria-expanded', 'true');
+            navLinks.classList.add('open');
+            overlay.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeMenu() {
+            hamburger.classList.remove('active');
+            hamburger.setAttribute('aria-expanded', 'false');
+            navLinks.classList.remove('open');
+            overlay.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+        hamburger.addEventListener('click', function () {
+            hamburger.classList.contains('active') ? closeMenu() : openMenu();
+        });
+        overlay.addEventListener('click', closeMenu);
+        navLinks.querySelectorAll('a').forEach(function (a) {
+            a.addEventListener('click', closeMenu);
+        });
+    })();
+    </script>
+</body>
+</html>

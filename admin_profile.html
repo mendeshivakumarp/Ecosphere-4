@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Recycler Profile</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Segoe UI, sans-serif;
+    background:#f4f7fa;
+}
+
+/* HEADER */
+.header{
+position:fixed;
+top:0;
+width:100%;
+height:80px;
+background:#12ba11;
+z-index:1000;
+}
+
+.nav{
+display:flex;
+justify-content:space-between;
+align-items:center;
+max-width:1200px;
+margin:auto;
+padding:1rem 2rem;
+}
+
+.logo h1{
+color:white;
+}
+
+.logo i{
+color:#ffd700;
+}
+
+.profile-mini{
+font-size:25px;
+}
+
+.profile-mini i{
+color:#fff;
+}
+
+/* DASHBOARD */
+.dashboard{
+margin-top:80px;
+display:flex;
+}
+
+/* SIDEBAR */
+.sidebar{
+width:220px;
+background:#1e293b;
+color:white;
+padding-top:20px;
+min-height:calc(100vh - 80px);
+}
+
+.admin-logo{
+display:flex;
+align-items:center;
+gap:10px;
+padding:20px;
+font-size:20px;
+font-weight:bold;
+color:#ffd700;
+border-bottom:1px solid #334155;
+}
+
+.sidebar a{
+display:block;
+padding:12px 20px;
+color:white;
+text-decoration:none;
+transition:0.3s;
+}
+
+.sidebar a i{margin-right:10px;}
+
+.sidebar a:hover,
+.sidebar a.active{
+background:#334155;
+padding-left:25px;
+}
+
+/* MAIN */
+.main{
+flex:1;
+padding:20px;
+/* margin-left: -190px; */
+}
+
+/* PROFILE HEADER */
+.profile-header{
+display:flex;
+align-items:center;
+gap:12px;
+/* background:white; */
+padding:15px;
+border-radius:8px;
+margin-bottom:20px;
+/* margin-left: 190px; */
+/* box-shadow:0 2px 8px rgba(0,0,0,0.1); */
+}
+
+.profile-icon{
+color:#12ba11;
+background:#e8f5ec;
+padding:10px;
+border-radius:10px;
+font-size:26px;
+}
+
+/* PROFILE CARD */
+.profile-card{
+background:white;
+padding:30px;
+border-radius:10px;
+box-shadow:0 2px 8px rgba(0,0,0,0.1);
+max-width:800px;
+margin:auto;
+}
+
+.profile-card h3{
+margin-bottom:15px;
+}
+
+.profile-row{
+display:flex;
+margin-bottom:15px;
+align-items:center;
+}
+
+.profile-row label{
+flex:1;
+font-weight:600;
+}
+
+.profile-row input{
+flex:2;
+padding:8px;
+border:1px solid #ccc;
+border-radius:5px;
+}
+
+.profile-row label i{
+margin-right:8px;
+color:#12ba11;
+}
+
+/* BANK SECTION */
+.bank-section{
+margin-top:30px;
+padding-top:20px;
+border-top:2px solid #eee;
+}
+
+/* BUTTONS */
+.button-group{
+display:flex;
+justify-content:center;
+gap:15px;
+margin-top:20px;
+}
+
+button{
+padding:10px 20px;
+background:#12ba11;
+border:none;
+color:white;
+cursor:pointer;
+border-radius:5px;
+}
+
+button:hover{
+background:#0e8b0e;
+}
+
+/* FOOTER */
+.footer-bottom{
+text-align:center;
+padding:15px;
+background:#1a1a1a;
+color:#aaa;
+/* margin-top:20px; */
+}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+.sidebar{width:180px;}
+}
+
+@media(max-width:600px){
+.sidebar{display:none;}
+}
+
+</style>
+</head>
+
+<body>
+
+
+<!-- HEADER -->
+<header class="header">
+<nav class="nav">
+<div class="logo">
+<h1><i class="fas fa-leaf"></i> EcoSphere</h1>
+</div>
+
+<div class="profile-mini">
+<a href="./admin_profile.html"><i class="fas fa-user-circle"></i></a>
+</div>
+</nav>
+</header>
+
+<!-- DASHBOARD -->
+<div class="dashboard">
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+
+<div class="admin-logo">
+<i class="fas fa-user-shield"></i>
+<span>Admin Panel</span>
+</div>
+<a href="./admin.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+<a href="./a_users.html"><i class="fas fa-users"></i> Users</a>
+<a href="./a_recyciier.html" ><i class="fas fa-recycle"></i> Recycler</a>
+<a href="./a_products.html"><i class="fas fa-box"></i> Products</a>
+<a href="./a_order.html"><i class="fas fa-shopping-cart"></i> Orders</a>
+<a href="./index.html"><i class="fas fa-sign-out-alt"></i> Logout</a>
+<!-- <a href="#"><i class="fas fa-cog"></i> Settings</a> -->
+
+</aside>
+<!-- MAIN -->
+<div class="main">
+
+<!--  PROFILE HEADER WITH LOGO -->
+<div class="profile-header">
+<i class="fas fa-id-card profile-icon"></i>
+<h2>Admin Profile</h2>
+</div>
+
+<!-- PROFILE CARD -->
+<div class="profile-card">
+
+<h3><i class="fas fa-user"></i> Personal Information</h3>
+
+<div class="profile-row">
+<label><i class="fas fa-user"></i> Full Name:</label>
+<input type="text" id="name" value="shiva Kumar" disabled>
+</div>
+
+<div class="profile-row">
+<label><i class="fas fa-envelope"></i> Email:</label>
+<input type="email" id="email" value="shivakumar@ecosphere.com" disabled>
+</div>
+
+<div class="profile-row">
+<label><i class="fas fa-phone"></i> Phone:</label>
+<input type="text" id="phone" value="98765 43210" disabled>
+</div>
+
+<div class="profile-row">
+<label><i class="fas fa-map-marker-alt"></i> Address:</label>
+<input type="text" id="address" value="Hyderabad, Telangana" disabled>
+</div>
+
+<div class="profile-row">
+<label><i class="fas fa-building"></i> Company:</label>
+<input type="text" id="company" value="Ecosphere Pvt Ltd" disabled>
+</div>
+
+<div class="profile-row">
+<label><i class="fas fa-briefcase"></i> Experience:</label>
+<!-- <input type="text" id="experience" value="5 years" disabled> -->
+</div>
+
+<!-- BANK -->
+<div class="bank-section">
+<h3><i class="fas fa-university"></i> Bank Details</h3>
+
+<div class="profile-row">
+<label><i class="fas fa-user-circle"></i> Account Holder:</label>
+<input type="text" id="accName" value="Shiva Kumar" disabled>
+</div>
+
+<div class="profile-row">
+<label><i class="fas fa-credit-card"></i> Account Number:</label>
+<input type="text" id="accNumber" value="1234567890123" disabled>
+</div>
+
+<div class="profile-row">
+<label><i class="fas fa-code"></i> IFSC:</label>
+<input type="text" id="ifsc" value="SBIN0001234" disabled>
+</div>
+
+<div class="profile-row">
+<label><i class="fas fa-university"></i> Bank Name:</label>
+<input type="text" id="bank" value="State Bank of India (SBI)" disabled>
+</div>
+</div>
+
+<div class="button-group">
+<button id="editBtn" onclick="toggleEditMode()"><i class="fas fa-edit"></i> Edit Profile</button>
+<button id="saveBtn" onclick="saveData()" style="display:none;"><i class="fas fa-save"></i> Save Changes</button>
+<button id="cancelBtn" onclick="cancelEdit()" style="display:none;"><i class="fas fa-times"></i> Cancel</button>
+</div>
+
+</div>
+</div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer-bottom">
+<p>© 2026 EcoSphere. All rights reserved.</p>
+</footer>
+
+<script>
+
+let isEditMode = false;
+const fields = ["name", "email", "phone", "address", "company", "experience", "accName", "accNumber", "ifsc", "bank"];
+
+function toggleEditMode(){
+isEditMode = true;
+fields.forEach(fieldId => {
+document.getElementById(fieldId).disabled = false;
+});
+
+document.getElementById("editBtn").style.display = "none";
+document.getElementById("saveBtn").style.display = "inline-block";
+document.getElementById("cancelBtn").style.display = "inline-block";
+}
+
+function cancelEdit(){
+isEditMode = false;
+fields.forEach(fieldId => {
+document.getElementById(fieldId).disabled = true;
+});
+
+loadData();
+
+document.getElementById("editBtn").style.display = "inline-block";
+document.getElementById("saveBtn").style.display = "none";
+document.getElementById("cancelBtn").style.display = "none";
+}
+
+function saveData(){
+const data={
+name:document.getElementById("name").value,
+email:document.getElementById("email").value,
+phone:document.getElementById("phone").value,
+address:document.getElementById("address").value,
+company:document.getElementById("company").value,
+experience:document.getElementById("experience").value,
+accName:document.getElementById("accName").value,
+accNumber:document.getElementById("accNumber").value,
+ifsc:document.getElementById("ifsc").value,
+bank:document.getElementById("bank").value
+};
+
+localStorage.setItem("userProfile",JSON.stringify(data));
+alert("Profile Updated Successfully!");
+
+isEditMode = false;
+fields.forEach(fieldId => {
+document.getElementById(fieldId).disabled = true;
+});
+
+document.getElementById("editBtn").style.display = "inline-block";
+document.getElementById("saveBtn").style.display = "none";
+document.getElementById("cancelBtn").style.display = "none";
+}
+
+function loadData(){
+const savedData = localStorage.getItem("userProfile");
+if(savedData){
+const data = JSON.parse(savedData);
+document.getElementById("name").value = data.name || "Shiva kumar";
+document.getElementById("email").value = data.email || "Shivakumar@ecosphere.com";
+document.getElementById("phone").value = data.phone || "98765 43210";
+document.getElementById("address").value = data.address || "Hyderabad, Telangana";
+document.getElementById("company").value = data.company || "Ecosphere pvt lmt";
+// document.getElementById("experience").value = data.experience || "5 years";
+document.getElementById("accName").value = data.accName || "Shiva Kumar";
+document.getElementById("accNumber").value = data.accNumber || "1234567890123";
+document.getElementById("ifsc").value = data.ifsc || "SBIN0001234";
+document.getElementById("bank").value = data.bank || "State Bank of India (SBI)";
+}
+}
+
+window.onload=function(){
+loadData();
+}
+
+</script>
+
+</body>
+</html>

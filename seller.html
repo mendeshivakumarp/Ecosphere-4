@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EcoSphere – Seller Dashboard</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<!-- CHART JS -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
+
+<!-- DATA LABELS -->
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
+
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  font-family:'Segoe UI',sans-serif;
+  background:#f0f2f0;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+}
+
+/* HEADER */
+
+.header{
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  height:60px;
+  background:#18a118;
+  z-index:1000;
+  display:flex;
+  align-items:center;
+  padding:0 20px;
+  gap:14px;
+}
+
+.hamburger{
+  background:none;
+  border:none;
+  color:#fff;
+  font-size:20px;
+  cursor:pointer;
+  padding:6px;
+  border-radius:6px;
+  display:none;
+  align-items:center;
+  justify-content:center;
+}
+
+.logo{
+  flex:1;
+  font-size:1.25rem;
+  font-weight:700;
+  color:#fff;
+}
+
+.logo i{
+  color:#ffd700;
+  margin-right:6px;
+}
+
+.profile-link{
+  color:#fff;
+  font-size:22px;
+}
+
+/* OVERLAY */
+
+.overlay{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.4);
+  z-index:998;
+}
+
+.overlay.show{
+  display:block;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+  position:fixed;
+  top:0;
+  left:0;
+  width:210px;
+  height:100vh;
+  background:#1b2636;
+  z-index:999;
+  display:flex;
+  flex-direction:column;
+  padding-top:60px;
+  transition:0.3s;
+}
+
+.sidebar-close{
+  display:none;
+}
+
+.sidebar-brand{
+  padding:18px 20px 16px;
+  font-size:0.8rem;
+  font-weight:700;
+  color:rgba(255,255,255,0.35);
+  text-transform:uppercase;
+  letter-spacing:1px;
+  border-bottom:1px solid rgba(255,255,255,0.06);
+  margin-bottom:8px;
+}
+
+.sidebar a{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:11px 20px;
+  color:rgba(255,255,255,0.65);
+  text-decoration:none;
+  font-size:0.88rem;
+  font-weight:500;
+  transition:0.2s;
+}
+
+.sidebar a:hover{
+  color:#fff;
+  background:rgba(255,255,255,0.07);
+  padding-left:26px;
+}
+
+.sidebar a.active{
+  color:#4ade80;
+  background:rgba(74,222,128,0.1);
+}
+
+.sidebar a.logout{
+  color:rgba(248,113,113,0.8);
+  margin-bottom:12px;
+}
+
+.sidebar a.logout:hover{
+  color:#f87171;
+  background:rgba(248,113,113,0.08);
+  padding-left:26px;
+}
+
+/* MAIN */
+
+.dashboard{
+  margin-top:60px;
+  display:flex;
+  flex:1;
+}
+
+.main{
+  margin-left:210px;
+  width:100%;
+  padding:28px 24px;
+}
+
+.page-title{
+  font-size:1.35rem;
+  font-weight:700;
+  color:#1e293b;
+  margin-bottom:24px;
+}
+
+.page-title span{
+  color:#18a118;
+}
+
+/* CARDS */
+
+.cards{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:16px;
+  margin-bottom:24px;
+}
+
+.card{
+  background:#fff;
+  border-radius:10px;
+  padding:20px;
+  display:flex;
+  align-items:center;
+  gap:16px;
+  box-shadow:0 1px 4px rgba(0,0,0,0.06);
+  transition:0.3s;
+}
+
+.card:hover{
+  transform:translateY(-3px);
+}
+
+.card-icon{
+  width:48px;
+  height:48px;
+  border-radius:10px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:1.15rem;
+}
+
+.icon-green{
+  background:#dcfce7;
+  color:#16a34a;
+}
+
+.icon-yellow{
+  background:#fef9c3;
+  color:#ca8a04;
+}
+
+.icon-blue{
+  background:#dbeafe;
+  color:#2563eb;
+}
+
+.card-label{
+  font-size:0.72rem;
+  font-weight:600;
+  color:#94a3b8;
+  text-transform:uppercase;
+  margin-bottom:4px;
+}
+
+.card-value{
+  font-size:1.8rem;
+  font-weight:700;
+  color:#1e293b;
+}
+
+/* BOTTOM GRID */
+
+.bottom-grid{
+  display:grid;
+  grid-template-columns:280px 1fr;
+  gap:20px;
+}
+
+/* PANEL */
+
+.panel{
+  background:#fff;
+  border-radius:10px;
+  padding:20px;
+  box-shadow:0 1px 4px rgba(0,0,0,0.06);
+}
+
+.panel-title{
+  font-size:0.9rem;
+  font-weight:700;
+  color:#1e293b;
+  margin-bottom:18px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.panel-title i{
+  color:#18a118;
+}
+
+/* CHART */
+
+.chart-box{
+  position:relative;
+  width:100%;
+  max-width:260px;
+  margin:auto;
+}
+
+.chart-center{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  text-align:center;
+}
+
+.chart-center h2{
+  font-size:2rem;
+  font-weight:700;
+  color:#1e293b;
+}
+
+.chart-center p{
+  font-size:0.8rem;
+  color:#64748b;
+  margin-top:3px;
+}
+
+/* TABLE */
+
+.table-wrap{
+  overflow-x:auto;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:380px;
+}
+
+thead th{
+  padding:10px 12px;
+  text-align:center;
+  font-size:0.72rem;
+  font-weight:700;
+  color:#94a3b8;
+  text-transform:uppercase;
+  background:#f8fafc;
+}
+
+tbody td{
+  padding:12px;
+  text-align:center;
+  font-size:0.86rem;
+  color:#334155;
+  border-bottom:1px solid #f1f5f9;
+}
+
+tbody tr:hover td{
+  background:#f8fafc;
+}
+
+.badge{
+  display:inline-block;
+  padding:4px 10px;
+  border-radius:20px;
+  font-size:0.72rem;
+  font-weight:600;
+}
+
+.badge-active{
+  background:#dcfce7;
+  color:#15803d;
+}
+
+.badge-inactive{
+  background:#fee2e2;
+  color:#b91c1c;
+}
+
+/* FOOTER */
+
+footer{
+  text-align:center;
+  padding:14px;
+  background:#161c22;
+  color:rgba(255,255,255,0.4);
+  font-size:0.78rem;
+  margin-top:auto;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:1024px){
+
+  .bottom-grid{
+    grid-template-columns:1fr;
+  }
+
+}
+
+@media(max-width:768px){
+
+  .hamburger{
+    display:flex;
+  }
+
+  .sidebar{
+    transform:translateX(-100%);
+    padding-top:0;
+  }
+
+  .sidebar.open{
+    transform:translateX(0);
+  }
+
+  .sidebar-close{
+    display:block;
+    position:absolute;
+    top:14px;
+    right:14px;
+    background:none;
+    border:none;
+    color:#fff;
+    font-size:20px;
+    cursor:pointer;
+  }
+
+  .main{
+    margin-left:0;
+    padding:18px 14px;
+  }
+
+  .cards{
+    grid-template-columns:1fr;
+  }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+
+<header class="header">
+
+  <button class="hamburger" onclick="toggleSidebar()">
+    <i class="fas fa-bars"></i>
+  </button>
+
+  <div class="logo">
+    <i class="fas fa-leaf"></i> EcoSphere
+  </div>
+
+  <a href="#" class="profile-link">
+    <i class="fas fa-user-circle"></i>
+  </a>
+
+</header>
+
+<!-- OVERLAY -->
+
+<div class="overlay" id="overlay" onclick="closeSidebar()"></div>
+
+<!-- SIDEBAR -->
+
+<aside class="sidebar" id="sidebar">
+
+  <button class="sidebar-close" onclick="closeSidebar()">
+    <i class="fas fa-times"></i>
+  </button>
+
+  <div class="sidebar-brand">
+    Seller Panel
+  </div>
+
+  <a href="seller.html" class="active">
+    <i class="fas fa-home"></i>
+    Dashboard
+  </a>
+
+  <a href="selle_orders.html">
+    <i class="fas fa-shopping-bag"></i>
+    Orders
+  </a>
+
+  <a href="selle_items.html">
+    <i class="fas fa-box"></i>
+    List Items
+  </a>
+
+  <a href="index.html" class="logout">
+    <i class="fas fa-sign-out-alt"></i>
+    Logout
+  </a>
+
+</aside>
+
+<!-- MAIN -->
+
+<div class="dashboard">
+
+  <div class="main">
+
+    <h2 class="page-title">
+      Good morning,
+      <span>Shiva 👋</span>
+    </h2>
+
+    <!-- CARDS -->
+
+    <div class="cards">
+
+      <div class="card">
+
+        <div class="card-icon icon-green">
+          <i class="fas fa-shopping-bag"></i>
+        </div>
+
+        <div>
+          <div class="card-label">Total Orders</div>
+          <div class="card-value" id="total">0</div>
+        </div>
+
+      </div>
+
+      <div class="card">
+
+        <div class="card-icon icon-yellow">
+          <i class="fas fa-clock"></i>
+        </div>
+
+        <div>
+          <div class="card-label">Pending</div>
+          <div class="card-value" id="pending">0</div>
+        </div>
+
+      </div>
+
+      <div class="card">
+
+        <div class="card-icon icon-blue">
+          <i class="fas fa-check-circle"></i>
+        </div>
+
+        <div>
+          <div class="card-label">Completed</div>
+          <div class="card-value" id="completed">0</div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- BOTTOM GRID -->
+
+    <div class="bottom-grid">
+
+      <!-- CHART -->
+
+      <div class="panel">
+
+        <div class="panel-title">
+          <i class="fas fa-chart-pie"></i>
+          Order Status
+        </div>
+
+        <div class="chart-box">
+
+          <canvas id="chart" height="260"></canvas>
+
+          <div class="chart-center">
+            <h2 id="chartNumber"></h2>
+            <!-- <h2 id="chartNumber">0</h2> -->
+            <!-- <p>Total Orders</p> -->
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- TABLE -->
+
+      <div class="panel">
+
+        <div class="panel-title">
+          <i class="fas fa-users"></i>
+          Recent Recycler
+        </div>
+
+        <div class="table-wrap">
+
+          <table>
+
+            <thead>
+              <tr>
+                <th>Company</th>
+                <th>Email</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+
+            <tbody>
+
+              <tr>
+                <td>EcoSphere Recyclers</td>
+                <td>ecosphere@email.com</td>
+                <td><span class="badge badge-active">Active</span></td>
+              </tr>
+
+              <tr>
+                <td>GreenCycle Recyclers</td>
+                <td>greenCycle@email.com</td>
+                <td><span class="badge badge-active">Active</span></td>
+              </tr>
+
+              <tr>
+                <td>EcoBin Recycling</td>
+                <td>ecobin@email.com</td>
+                <td><span class="badge badge-inactive">Inactive</span></td>
+              </tr>
+
+              <tr>
+                <td>RecycleHub India</td>
+                <td>recyclehub@email.com</td>
+                <td><span class="badge badge-active">Active</span></td>
+              </tr>
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<footer>
+  © 2026 EcoSphere. All rights reserved.
+</footer>
+
+<script>
+
+/* ORDERS */
+
+const orders = [
+
+  { status:"Pending" },
+  { status:"Completed" },
+  { status:"Completed" },
+  { status:"Pending" },
+  { status:"Completed" }
+
+];
+
+/* COUNTS */
+
+const pending =
+orders.filter(o => o.status === "Pending").length;
+
+const completed =
+orders.filter(o => o.status === "Completed").length;
+
+/* CARD VALUES */
+
+document.getElementById("total").innerText =
+orders.length;
+
+document.getElementById("pending").innerText =
+pending;
+
+document.getElementById("completed").innerText =
+completed;
+
+/* CENTER TEXT */
+
+const centerText = {
+
+  id: 'centerText',
+
+  afterDraw(chart) {
+
+    const { ctx } = chart;
+
+    const centerX =
+    chart.getDatasetMeta(0).data[0].x;
+
+    const centerY =
+    chart.getDatasetMeta(0).data[0].y;
+
+    ctx.save();
+
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+
+    /* LABEL */
+
+    ctx.font = "600 14px Segoe UI";
+    ctx.fillStyle = "#64748b";
+
+    ctx.fillText(
+      "Total Orders",
+      centerX,
+      centerY - 12
+    );
+
+    /* VALUE */
+
+    ctx.font = "700 28px Segoe UI";
+    ctx.fillStyle = "#1e293b";
+
+    ctx.fillText(
+      orders.length,
+      centerX,
+      centerY + 16
+    );
+
+    ctx.restore();
+  }
+};
+
+/* CHART */
+
+new Chart(document.getElementById("chart"), {
+
+  type: "doughnut",
+
+  data: {
+
+    labels: ["Pending", "Completed"],
+
+    datasets: [{
+
+      data: [pending, completed],
+
+      backgroundColor: [
+        "#fbbf24",
+        "#22c55e"
+      ],
+
+      borderWidth: 0,
+
+      hoverOffset: 5
+    }]
+  },
+
+  options: {
+
+    plugins: {
+
+      legend: {
+        position: "bottom"
+      },
+
+      datalabels: {
+
+        color: "#fff",
+
+        font: {
+          weight: "bold",
+          size: 18
+        },
+
+        formatter: (value) => value
+      }
+
+    },
+
+    cutout: "68%"
+  },
+
+  plugins: [
+    ChartDataLabels,
+    centerText
+  ]
+
+});
+
+/* SIDEBAR */
+
+function toggleSidebar(){
+
+  document
+  .getElementById("sidebar")
+  .classList
+  .toggle("open");
+
+  document
+  .getElementById("overlay")
+  .classList
+  .toggle("show");
+
+}
+
+function closeSidebar(){
+
+  document
+  .getElementById("sidebar")
+  .classList
+  .remove("open");
+
+  document
+  .getElementById("overlay")
+  .classList
+  .remove("show");
+
+}
+
+document
+.querySelectorAll(".sidebar a")
+.forEach(function(link){
+
+  link.addEventListener(
+    "click",
+    closeSidebar
+  );
+
+});
+
+</script>
+
+</body>
+</html>

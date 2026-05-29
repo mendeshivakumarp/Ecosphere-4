@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>EcoSphere Scrap Buy Page</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#edf7ee;
+}
+
+/* HEADER */
+.header{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:80px;
+    background:#12ba11;
+    z-index:1000;
+    box-shadow:0 2px 10px rgba(0,0,0,0.1);
+}
+
+.nav{
+    height:100%;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 25px;
+}
+
+.logo h1{
+    color:#fff;
+    font-size:26px;
+}
+
+.logo i{
+    color:gold;
+}
+
+.profile-mini i{
+    color:#fff;
+    font-size:28px;
+}
+
+/* MAIN LAYOUT */
+.main-layout{
+    display:flex;
+    margin-top:80px;
+    min-height:calc(100vh - 80px);
+}
+
+/* SIDEBAR */
+.sidebar{
+    width:240px;
+    background:#1e293b;
+    color:#fff;
+    position:fixed;
+    top:80px;
+    left:0;
+    height:calc(100vh - 80px);
+    overflow-y:auto;
+    padding-top:20px;
+}
+
+.admin-logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:20px;
+    font-size:20px;
+    font-weight:bold;
+    color:gold;
+    border-bottom:1px solid #334155;
+}
+
+.sidebar a{
+    display:block;
+    color:#cbd5e1;
+    text-decoration:none;
+    padding:15px 20px;
+    transition:0.3s;
+    font-size:15px;
+}
+
+.sidebar a i{
+    margin-right:10px;
+}
+
+.sidebar a:hover,
+.sidebar a.active{
+    background:#334155;
+    color:#fff;
+    padding-left:28px;
+}
+
+/* CONTENT */
+.content{
+    margin-left:240px;
+    width:100%;
+    padding:35px;
+}
+
+.page-title{
+    text-align:center;
+    color:#1b5e20;
+    margin-bottom:35px;
+    font-size:35px;
+}
+
+/* CARDS */
+.container{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    gap:25px;
+}
+
+.card{
+    background:#fff;
+    border-radius:18px;
+    overflow:hidden;
+    box-shadow:0 4px 12px rgba(0,0,0,0.15);
+    transition:0.3s;
+}
+
+.card:hover{
+    transform:translateY(-8px);
+}
+
+.card img{
+    width:100%;
+    height:220px;
+    object-fit:cover;
+}
+
+.card-content{
+    padding:18px;
+}
+
+.card-content h2{
+    color:#1b5e20;
+    margin-bottom:10px;
+}
+
+.card-content p{
+    margin-bottom:8px;
+    color:#555;
+}
+
+.price{
+    font-size:22px;
+    color:#0d8b3e;
+    font-weight:bold;
+    margin-top:10px;
+}
+
+.btn{
+    margin-top:15px;
+    padding:10px 18px;
+    border:none;
+    background:#1b5e20;
+    color:#fff;
+    border-radius:8px;
+    cursor:pointer;
+    transition:0.3s;
+    width:100%;
+    font-size:16px;
+}
+
+.btn:hover{
+    background:#0d8b3e;
+}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+
+    .sidebar{
+        width:200px;
+    }
+
+    .content{
+        margin-left:200px;
+        padding:20px;
+    }
+
+    .page-title{
+        font-size:28px;
+    }
+}
+
+@media(max-width:600px){
+
+    .main-layout{
+        flex-direction:column;
+    }
+
+    .sidebar{
+        position:relative;
+        width:100%;
+        height:auto;
+        top:0;
+    }
+
+    .content{
+        margin-left:0;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header class="header">
+    <nav class="nav">
+
+        <div class="logo">
+            <h1><i class="fas fa-leaf"></i> EcoSphere</h1>
+        </div>
+
+        <div class="profile-mini">
+            <a href="./recycler_profile.html">
+                <i class="fas fa-user-circle"></i>
+            </a>
+        </div>
+
+    </nav>
+</header>
+
+<!-- MAIN -->
+<div class="main-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="admin-logo">
+            <i class="fas fa-recycle"></i>
+            <span>Recycler Panel</span>
+        </div>
+
+        <a href="./recycler.html" class="active">
+            <i class="fas fa-tachometer-alt"></i> Dashboard
+        </a>
+
+        <a href="./recycler_orders.html">
+            <i class="fas fa-shopping-cart"></i> Orders
+        </a>
+
+        <a href="./recycler_payments.html">
+            <i class="fas fa-wallet"></i> Payments
+        </a>
+
+        <a href="./abc.html">
+            <i class="fas fa-shopping-bag"></i> Buy Materials
+        </a>
+
+        <a href="./card.html">
+            <i class="fas fa-cart-plus"></i> Cart
+        </a>
+
+        <a href="./index.html">
+            <i class="fas fa-sign-out-alt"></i> Logout
+        </a>
+
+    </aside>
+
+    <!-- CONTENT -->
+    <div class="content">
+
+        <h1 class="page-title">Add To Cart Products</h1>
+
+        <div class="container" id="cardContainer"></div>
+
+    </div>
+
+</div>
+
+<script>
+
+const scraps = [
+
+{
+    name:"Iron Scrap",
+    category:"Metal Scrap",
+    quantity:"120 Kg",
+    price:"₹45 / Kg",
+    image:"https://2.wlimg.com/product_images/bc-full/2025/4/14567673/copper-wire-scrap-1744783904-7993888.jpg"
+},
+
+{
+    name:"Plastic Scrap",
+    category:"Recyclable Waste",
+    quantity:"80 Kg",
+    price:"₹25 / Kg",
+    image:"https://img.freepik.com/free-photo/dirty-dumped-objects-arrangement_23-2148996943.jpg"
+},
+
+{
+    name:"Aluminium Scrap",
+    category:"Metal Waste",
+    quantity:"150 Kg",
+    price:"₹18 / Kg",
+    image:"https://cpimg.tistatic.com/04426614/b/5/Aluminium-Scrap.jpg"
+},
+
+{
+    name:"Paper Scrap",
+    category:"Paper Waste",
+    quantity:"60 Kg",
+    price:"₹95 / Kg",
+    image:"https://images.jdmagicbox.com/quickquotes/images_main/waste-paper-scrap-2217511939-9cyeqq8q.jpg"
+}
+
+];
+
+const container = document.getElementById("cardContainer");
+
+scraps.forEach(scrap => {
+
+container.innerHTML += `
+
+<div class="card">
+
+    <img src="${scrap.image}" alt="${scrap.name}">
+
+    <div class="card-content">
+
+        <h2>${scrap.name}</h2>
+
+        <p><b>Category:</b> ${scrap.category}</p>
+
+        <p><b>Quantity:</b> ${scrap.quantity}</p>
+
+        <div class="price">${scrap.price}</div>
+
+        <button class="btn" onclick="showMessage('${scrap.name}')">
+            Buy Now
+        </button>
+
+    </div>
+
+</div>
+
+`;
+
+});
+
+function showMessage(product){
+    alert(product + " added successfully!");
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Iron Scrap Cards</title>
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:Arial, sans-serif;
+    }
+
+    body{
+      background:linear-gradient(135deg,#0f172a,#334155,#1e293b);
+      min-height:100vh;
+      padding:40px;
+    }
+
+    h1{
+      text-align:center;
+      color:white;
+      margin-bottom:40px;
+      font-size:40px;
+    }
+
+    .container{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+      gap:25px;
+    }
+
+    .card{
+      background:white;
+      border-radius:18px;
+      overflow:hidden;
+      box-shadow:0 8px 20px rgba(0,0,0,0.3);
+      transition:0.3s;
+    }
+
+    .card:hover{
+      transform:translateY(-8px);
+    }
+
+    .card img{
+      width:100%;
+      height:200px;
+      object-fit:cover;
+    }
+
+    .card-content{
+      padding:18px;
+      background:#f8fafc;
+    }
+
+    .card-content h2{
+      color:#111827;
+      margin-bottom:10px;
+      font-size:22px;
+    }
+
+    .price{
+      color:#16a34a;
+      font-size:22px;
+      font-weight:bold;
+      margin-bottom:8px;
+    }
+
+    .quantity{
+      color:#475569;
+      margin-bottom:15px;
+      font-size:16px;
+    }
+
+    button{
+      width:100%;
+      padding:12px;
+      border:none;
+      border-radius:10px;
+      background:linear-gradient(to right,#0f172a,#334155);
+      color:white;
+      font-size:16px;
+      cursor:pointer;
+      transition:0.3s;
+    }
+
+    button:hover{
+      background:linear-gradient(to right,#1e293b,#475569);
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>Iron Scrap Collection</h1>
+
+  <div class="container">
+
+    <div class="card">
+      <img src="https://tiimg.tistatic.com/fp/1/006/615/a-grade-iron-scrap-696.jpg" alt="">
+      <div class="card-content">
+        <h2>Heavy Iron Scrap</h2>
+        <div class="price">₹45 / Kg</div>
+        <div class="quantity">Quantity: 120 Kg</div>
+        <button>View Details</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="https://img.magnific.com/free-photo/dirty-dumped-objects-arrangement_23-2148996943.jpg?semt=ais_hybrid&w=740&q=80" alt="">
+      <div class="card-content">
+        <h2>Steel Iron Scrap</h2>
+        <div class="price">₹52 / Kg</div>
+        <div class="quantity">Quantity: 80 Kg</div>
+        <button>View Details</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=600" alt="">
+      <div class="card-content">
+        <h2>Machine Iron Parts</h2>
+        <div class="price">₹60 / Kg</div>
+        <div class="quantity">Quantity: 150 Kg</div>
+        <button>View Details</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEpwHgq6FQbP9yl2hS7FOuI8ACWfrDu2LIVQ&s" alt="">
+      <div class="card-content">
+        <h2>Mixed Iron Scrap</h2>
+        <div class="price">₹40 / Kg</div>
+        <div class="quantity">Quantity: 95 Kg</div>
+        <button>View Details</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="https://media.istockphoto.com/id/613101492/photo/iron-pipe.jpg?s=612x612&w=0&k=20&c=VFflUZjGTVRIienq4WBdIlZqyeBx_Gv3Y4o91DOUzhU=" alt="">
+      <div class="card-content">
+        <h2>Industrial Iron Scrap</h2>
+        <div class="price">₹58 / Kg</div>
+        <div class="quantity">Quantity: 140 Kg</div>
+        <button>View Details</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="https://static.vecteezy.com/system/resources/thumbnails/055/801/124/small/recycle-metal-recovery-concept-metal-scraps-being-lifted-by-machinery-in-an-industrial-setting-photo.jpeg" alt="">
+      <div class="card-content">
+        <h2>Construction Iron Scrap</h2>
+        <div class="price">₹50 / Kg</div>
+        <div class="quantity">Quantity: 110 Kg</div>
+        <button>View Details</button>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>

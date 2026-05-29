@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Admin Dashboard - EcoSphere</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+
+/* ================= GLOBAL ================= */
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
+}
+
+body{
+background:#f9fafb;
+display:flex;
+flex-direction:column;
+min-height:100vh;
+overflow-x:hidden;
+}
+
+/* ================= HEADER ================= */
+
+.header{
+position:fixed;
+top:0;
+left:0;
+right:0;
+height:60px;
+background:#18a118;
+z-index:1000;
+display:flex;
+align-items:center;
+padding:0 20px;
+}
+
+.nav{
+width:100%;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.nav-left{
+display:flex;
+align-items:center;
+gap:14px;
+}
+
+.logo{
+text-decoration:none;
+font-size:1.25rem;
+font-weight:700;
+color:#fff;
+}
+
+.logo i{
+color:#ffd700;
+margin-right:6px;
+}
+
+.profile-mini a{
+font-size:24px;
+color:#fff;
+text-decoration:none;
+}
+
+/* HAMBURGER */
+
+.hamburger{
+display:none;
+background:none;
+border:none;
+color:#fff;
+font-size:22px;
+cursor:pointer;
+}
+
+/* OVERLAY */
+
+.overlay{
+display:none;
+position:fixed;
+inset:0;
+background:rgba(0,0,0,0.4);
+z-index:998;
+}
+
+.overlay.show{
+display:block;
+}
+
+/* ================= DASHBOARD ================= */
+
+.dashboard{
+display:flex;
+margin-top:60px;
+flex:1;
+}
+
+/* ================= SIDEBAR ================= */
+
+.sidebar{
+position:fixed;
+top:0;
+left:0;
+width:210px;
+height:100vh;
+background:#1b2636;
+z-index:999;
+display:flex;
+flex-direction:column;
+padding-top:60px;
+transition:0.3s;
+}
+
+.sidebar-close{
+display:none;
+position:absolute;
+top:14px;
+right:14px;
+background:none;
+border:none;
+color:#fff;
+font-size:20px;
+cursor:pointer;
+}
+
+.sidebar-brand{
+padding:18px 20px 16px;
+font-size:0.8rem;
+font-weight:700;
+color:rgba(255,255,255,0.35);
+text-transform:uppercase;
+letter-spacing:1px;
+border-bottom:1px solid rgba(255,255,255,0.06);
+margin-bottom:8px;
+}
+
+.sidebar a{
+display:flex;
+align-items:center;
+gap:10px;
+padding:11px 20px;
+color:rgba(255,255,255,0.65);
+text-decoration:none;
+font-size:0.88rem;
+font-weight:500;
+transition:0.2s;
+}
+
+.sidebar a i{
+width:16px;
+text-align:center;
+}
+
+.sidebar a:hover{
+color:#fff;
+background:rgba(255,255,255,0.07);
+padding-left:26px;
+}
+
+.sidebar a.active{
+color:#4ade80;
+background:rgba(74,222,128,0.1);
+}
+
+.sidebar a.logout{
+color:rgba(248,113,113,0.8);
+margin-bottom:12px;
+}
+
+.sidebar a.logout:hover{
+color:#f87171;
+background:rgba(248,113,113,0.08);
+}
+
+/* ================= MAIN ================= */
+
+.main{
+margin-left:210px;
+width:100%;
+padding:30px;
+background:#f9fafb;
+min-height:calc(100vh - 60px);
+}
+
+.header-box{
+display:flex;
+align-items:center;
+gap:12px;
+margin-bottom:24px;
+}
+
+.header-box h2{
+font-size:1.6rem;
+color:#1a1a1a;
+}
+
+.header-box i{
+color:#12ba11;
+background:#e8f5ec;
+padding:10px;
+border-radius:10px;
+font-size:24px;
+}
+
+/* ================= CARDS ================= */
+
+.cards{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+gap:20px;
+}
+
+.card{
+background:#fff;
+padding:25px;
+border-radius:15px;
+box-shadow:0 5px 15px rgba(0,0,0,0.08);
+transition:0.3s;
+cursor:pointer;
+}
+
+.card:hover{
+transform:translateY(-5px);
+}
+
+.card h3{
+font-size:15px;
+margin-bottom:10px;
+color:#64748b;
+}
+
+.card p{
+font-size:30px;
+font-weight:700;
+color:#18a118;
+}
+
+/* ================= TABLE ================= */
+
+.table-container{
+margin-top:30px;
+background:#fff;
+border-radius:15px;
+overflow-x:auto;
+box-shadow:0 5px 15px rgba(0,0,0,0.08);
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+min-width:600px;
+}
+
+th{
+background:#f8fafc;
+color:#64748b;
+font-size:13px;
+padding:15px;
+text-align:center;
+}
+
+td{
+padding:15px;
+text-align:center;
+border-bottom:1px solid #f1f5f9;
+}
+
+tbody tr:hover{
+background:#f8fafc;
+}
+
+/* ================= FOOTER ================= */
+
+.footer{
+background:#1e293b;
+color:#aaa;
+padding:16px;
+text-align:center;
+font-size:14px;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:768px){
+
+.hamburger{
+display:block;
+}
+
+.sidebar{
+transform:translateX(-100%);
+padding-top:0;
+}
+
+.sidebar.active{
+transform:translateX(0);
+box-shadow:8px 0 30px rgba(0,0,0,0.2);
+}
+
+.sidebar-close{
+display:block;
+}
+
+.main{
+margin-left:0;
+padding:18px;
+}
+
+.cards{
+grid-template-columns:1fr;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- HEADER -->
+
+<header class="header">
+
+<nav class="nav">
+
+<div class="nav-left">
+
+<button class="hamburger" onclick="toggleSidebar()">
+<i class="fas fa-bars"></i>
+</button>
+
+<a href="./admin.html" class="logo">
+<i class="fas fa-leaf"></i> EcoSphere
+</a>
+
+</div>
+
+<div class="profile-mini">
+
+<a href="./admin_profile.html">
+<i class="fas fa-user-circle"></i>
+</a>
+
+</div>
+
+</nav>
+
+</header>
+
+<!-- OVERLAY -->
+
+<div class="overlay"
+id="overlay"
+onclick="closeSidebar()">
+</div>
+
+<!-- DASHBOARD -->
+
+<div class="dashboard">
+
+<!-- SIDEBAR -->
+
+<aside class="sidebar"
+id="sidebar">
+
+<button class="sidebar-close"
+onclick="closeSidebar()">
+
+<i class="fas fa-times"></i>
+
+</button>
+
+<div class="sidebar-brand">
+Admin Panel
+</div>
+
+<a href="./admin.html"
+class="active">
+
+<i class="fas fa-tachometer-alt"></i>
+Dashboard
+
+</a>
+
+<a href="./a_users.html">
+
+<i class="fas fa-users"></i>
+Sellers
+
+</a>
+
+<a href="./a_recyciier.html">
+
+<i class="fas fa-recycle"></i>
+Recycler
+
+</a>
+
+<a href="./a_products.html">
+
+<i class="fas fa-box"></i>
+Products
+
+</a>
+
+<a href="./a_order.html">
+
+<i class="fas fa-shopping-cart"></i>
+Orders
+
+</a>
+
+<a href="./index.html"
+class="logout">
+
+<i class="fas fa-sign-out-alt"></i>
+Logout
+
+</a>
+
+</aside>
+
+<!-- MAIN -->
+
+<main class="main">
+
+<div class="header-box">
+
+<i class="fas fa-chart-line"></i>
+
+<h2>Dashboard Overview</h2>
+
+</div>
+
+<!-- CARDS -->
+
+<div class="cards">
+
+<div class="card">
+<h3>Total Sellers</h3>
+<p>1,247</p>
+</div>
+
+<div class="card">
+<h3>Total Products</h3>
+<p>892</p>
+</div>
+
+<div class="card">
+<h3>Total Orders</h3>
+<p>3,456</p>
+</div>
+
+<div class="card">
+<h3>Revenue</h3>
+<p>₹4,52,780</p>
+</div>
+
+</div>
+
+<!-- TABLE -->
+
+<div class="table-container">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>SELLER</th>
+<th>EMAIL</th>
+<th>STATUS</th>
+
+</tr>
+
+</thead>
+
+<tbody id="adminTable"></tbody>
+
+</table>
+
+</div>
+
+</main>
+
+</div>
+
+<!-- FOOTER -->
+
+<footer class="footer">
+<p>© 2026 EcoSphere | Admin Dashboard</p>
+</footer>
+
+<!-- SCRIPT -->
+
+<script>
+
+/* SAMPLE DATA */
+
+const orders = [
+
+{
+SELLER:"Ravi Sharma",
+EMAIL:"ravi@email.com",
+STATUS:"Active"
+},
+
+{
+SELLER:"Priya Singh",
+EMAIL:"priya@email.com",
+STATUS:"Active"
+},
+
+{
+SELLER:"Anil Kumar",
+EMAIL:"anil@email.com",
+STATUS:"Inactive"
+},
+
+{
+SELLER:"Sunita Patel",
+EMAIL:"sunita@email.com",
+STATUS:"Active"
+},
+
+{
+SELLER:"Rajesh Gupta",
+EMAIL:"rajesh@email.com",
+STATUS:"Active"
+},
+
+{
+SELLER:"Meera Joshi",
+EMAIL:"meera@email.com",
+STATUS:"Inactive"
+},
+
+{
+SELLER:"Vikram Rao",
+EMAIL:"vikram@email.com",
+STATUS:"Active"
+}
+
+];
+
+/* LOAD TABLE */
+
+function loadOrders(){
+
+let html = "";
+
+orders.forEach(o=>{
+
+html += `
+
+<tr>
+
+<td>${o.SELLER}</td>
+
+<td>${o.EMAIL}</td>
+
+<td style="
+color:${o.STATUS==='Active' ? 'green' : 'red'};
+font-weight:bold;
+">
+
+${o.STATUS}
+
+</td>
+
+</tr>
+
+`;
+
+});
+
+document
+.getElementById("adminTable")
+.innerHTML = html;
+
+}
+
+loadOrders();
+
+/* SIDEBAR */
+
+function toggleSidebar(){
+
+document
+.getElementById("sidebar")
+.classList
+.toggle("active");
+
+document
+.getElementById("overlay")
+.classList
+.toggle("show");
+
+}
+
+function closeSidebar(){
+
+document
+.getElementById("sidebar")
+.classList
+.remove("active");
+
+document
+.getElementById("overlay")
+.classList
+.remove("show");
+
+}
+
+</script>
+
+</body>
+</html>

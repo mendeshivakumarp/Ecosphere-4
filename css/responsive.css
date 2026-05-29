@@ -1,0 +1,401 @@
+/* ============================================================
+   EcoSphere - Shared Responsive & Hamburger Menu Styles
+   Added: Hamburger menu, mobile/tablet layout fixes
+   All existing styles are preserved in their original CSS files.
+   ============================================================ */
+
+/* ===== HAMBURGER BUTTON (hidden on desktop) ===== */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 28px;
+    height: 20px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0;
+    z-index: 1100;
+}
+
+.hamburger span {
+    display: block;
+    height: 3px;
+    width: 100%;
+    background-color: #fff;
+    border-radius: 3px;
+    transition: all 0.35s ease;
+    transform-origin: center;
+}
+
+/* Animate hamburger → X when active */
+.hamburger.active span:nth-child(1) {
+    transform: translateY(8.5px) rotate(45deg);
+}
+.hamburger.active span:nth-child(2) {
+    opacity: 0;
+    transform: scaleX(0);
+}
+.hamburger.active span:nth-child(3) {
+    transform: translateY(-8.5px) rotate(-45deg);
+}
+
+/* ===== MOBILE NAV MENU ===== */
+@media (max-width: 768px) {
+
+    /* Show hamburger button */
+    .hamburger {
+        display: flex;
+    }
+
+    /* Keep nav row layout on mobile */
+    .nav {
+        flex-direction: row !important;
+        flex-wrap: nowrap;
+        align-items: center;
+        padding: 0.85rem 1.2rem !important;
+        gap: 0 !important;
+        position: relative;
+    }
+
+    /* Slide-down mobile nav menu */
+    .nav-links {
+        display: flex !important;
+        flex-direction: column;
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 75%;
+        max-width: 280px;
+        height: 100vh;
+        background: rgba(18, 135, 17, 0.98);
+        backdrop-filter: blur(12px);
+        padding: 80px 0 30px;
+        gap: 0 !important;
+        list-style: none;
+        z-index: 1050;
+        transition: left 0.35s ease;
+        box-shadow: 4px 0 20px rgba(0,0,0,0.3);
+    }
+
+    /* Slide in when open */
+    .nav-links.open {
+        left: 0;
+    }
+
+    .nav-links li {
+        width: 100%;
+    }
+
+    .nav-links a {
+        display: block;
+        padding: 14px 24px;
+        font-size: 1.05rem;
+        border-bottom: 1px solid rgba(255,255,255,0.12);
+    }
+
+    .nav-links a::after {
+        display: none;
+    }
+
+    /* Overlay behind open menu */
+    .nav-overlay {
+        display: none;
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: rgba(0,0,0,0.4);
+        z-index: 1040;
+    }
+    .nav-overlay.open {
+        display: block;
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+        height: auto !important;
+        min-height: 100vh;
+        padding: 90px 16px 40px !important;
+    }
+
+    .hero-title {
+        font-size: clamp(1.8rem, 7vw, 2.6rem) !important;
+    }
+
+    .hero-subtitle {
+        font-size: 1rem !important;
+    }
+
+    .hero-buttons {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 14px;
+    }
+
+    .cta-btn {
+        width: 100%;
+        max-width: 260px;
+        text-align: center;
+        margin: 0 !important;
+    }
+
+    .hero-stats {
+        flex-direction: column;
+        gap: 1rem;
+        margin-top: 2rem;
+    }
+
+    /* ===== FEATURES GRID ===== */
+    .features-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+
+    /* ===== SERVICES GRID ===== */
+    .services-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    /* Service card image */
+    .service-card img {
+        height: 180px !important;
+    }
+
+    /* ===== SCRAP GRID ===== */
+    .scrap-grid {
+        grid-template-columns: repeat(3, 1fr) !important;
+    }
+
+    /* ===== TESTIMONIALS ===== */
+    .testimonials-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    /* ===== STEPS GRID (How it works) ===== */
+    .steps-grid {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .step-arrow {
+        transform: rotate(90deg);
+    }
+
+    /* ===== ABOUT - TEAM GRID ===== */
+    .team-grid {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        grid-template-columns: 1fr !important;
+        padding: 0 16px !important;
+    }
+
+    .team-avatar img {
+        width: 100% !important;
+        height: auto !important;
+        max-height: 240px;
+        object-fit: cover;
+    }
+
+    /* ===== STATS ===== */
+    .stats {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 1rem !important;
+        padding: 0 16px !important;
+        margin: 2rem auto !important;
+    }
+
+    /* ===== FOOTER ===== */
+    .footer-content {
+        grid-template-columns: 1fr !important;
+    }
+
+    /* ===== MAIN CONTENT GRID ===== */
+    .main-content-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    /* ===== CONTAINER PADDING ===== */
+    .container {
+        padding: 40px 16px !important;
+    }
+
+    /* ===== SECTION TITLE ===== */
+    .section-title {
+        font-size: clamp(1.5rem, 5vw, 2rem) !important;
+    }
+
+    /* ===== CTA SECTION ===== */
+    .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .btn-large {
+        width: 100%;
+        max-width: 280px;
+    }
+
+    /* ===== ABOUT HERO ===== */
+    .hero h1 {
+        font-size: clamp(1.8rem, 6vw, 2.5rem) !important;
+    }
+    .hero p {
+        font-size: 1rem !important;
+    }
+
+    /* ===== ABOUT TEXT SECTION ===== */
+    #about-us {
+        padding: 24px 16px !important;
+    }
+    #about-us p {
+        font-size: 15px !important;
+    }
+
+    /* ===== REGISTER CARD ===== */
+    .register-container,
+    .register-card {
+        padding: 16px !important;
+    }
+
+    /* ===== CONTACT FORM ===== */
+    .contact {
+        padding: 90px 16px 40px !important;
+    }
+}
+
+/* ===== TABLET (769px – 1024px) ===== */
+@media (min-width: 769px) and (max-width: 1024px) {
+
+    .hamburger {
+        display: flex;
+    }
+
+    .nav {
+        padding: 0.9rem 1.5rem !important;
+        flex-direction: row !important;
+        align-items: center;
+        gap: 0 !important;
+    }
+
+    .nav-links {
+        display: flex !important;
+        flex-direction: column;
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 60%;
+        max-width: 300px;
+        height: 100vh;
+        background: rgba(18, 135, 17, 0.98);
+        backdrop-filter: blur(12px);
+        padding: 80px 0 30px;
+        gap: 0 !important;
+        list-style: none;
+        z-index: 1050;
+        transition: left 0.35s ease;
+        box-shadow: 4px 0 20px rgba(0,0,0,0.3);
+    }
+
+    .nav-links.open {
+        left: 0;
+    }
+
+    .nav-links li {
+        width: 100%;
+    }
+
+    .nav-links a {
+        display: block;
+        padding: 14px 24px;
+        font-size: 1rem;
+        border-bottom: 1px solid rgba(255,255,255,0.12);
+    }
+
+    .nav-links a::after {
+        display: none;
+    }
+
+    .nav-overlay {
+        display: none;
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: rgba(0,0,0,0.4);
+        z-index: 1040;
+    }
+    .nav-overlay.open {
+        display: block;
+    }
+
+    .features-grid {
+        grid-template-columns: repeat(3, 1fr) !important;
+    }
+
+    .scrap-grid {
+        grid-template-columns: repeat(4, 1fr) !important;
+    }
+
+    .services-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+
+    .team-grid {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        padding: 0 20px !important;
+    }
+
+    .stats {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+}
+
+/* ===== SMALL MOBILE (≤ 480px) ===== */
+@media (max-width: 480px) {
+
+    .features-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    .scrap-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+
+    .stats {
+        grid-template-columns: 1fr !important;
+    }
+
+    .hero-stats {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .stat h3 {
+        font-size: 1.8rem;
+    }
+
+    .step-card {
+        width: 100% !important;
+        max-width: 300px;
+    }
+}
+/* Fix nav order when hamburger is before logo */
+.nav {
+  display: flex;
+  align-items: center;
+  flex-direction: row; /* ensure row direction */
+}
+
+.hamburger {
+  order: 0;         /* stays first */
+  margin-right: 12px;
+}
+
+.logo {
+  order: 1;         /* logo second */
+  flex: 1;          /* takes remaining space, keeps logo left-ish */
+}
+
+.nav-links {
+  order: 2;         /* links last */
+}

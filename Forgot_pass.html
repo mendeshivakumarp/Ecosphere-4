@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EcoSphere Login</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="shortcut icon" href="./logoblk.jpg">
+<link rel="stylesheet" href="/css/login.css">
+
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header class="header">
+<nav class="nav">
+<div class="logo">
+<h1><i class="fas fa-leaf"></i> EcoSphere</h1>
+</div>
+
+<ul class="nav-links">
+<li><a href="./index.html">Home</a></li>
+<li><a href="./about.html">About</a></li>
+<li><a href="./contact.html">Contact</a></li>
+<li><a href="./login.html">Login</a></li>
+</ul>
+</nav>
+</header>
+
+<!-- LOGIN FORM -->
+<form class="form-box" onsubmit="return login(event)">
+<div class="login-box">
+
+<button type="button" class="close-btn">
+<a href="./login.html">✕</a>
+</button>
+
+<i class="fas fa-leaf" style="color:#ffd700;font-size:28px;"></i>
+<h2>EcoSphere Forgot Password</h2>
+
+<div class="input-box">
+<i class="fa-solid fa-user"></i>
+<input type="email" id="Email" placeholder="Email" required>
+</div>
+
+<div class="input-box">
+<i class="fa-solid fa-lock"></i>
+<input type="password" id="New password" placeholder="New Password" required>
+</div>
+
+<button type="submit" class="login-btn">Login</button>
+
+<div class="extra">
+<a href="./login.html"><i class="fa-solid fa-arrow-left"></i> <samp>Back?</samp></a>
+<!-- <a href="./register.html"><i class="fa-solid fa-user-plus"></i><samp>Create Account</samp></a> -->
+</div>
+
+</div>
+</form>
+
+<!-- FOOTER -->
+<footer class="footer">
+<div class="footer-bottom">
+<p>© 2026 EcoSphere. All rights reserved. | Making sustainability profitable.</p>
+</div>
+</footer>
+
+</body>
+<script>
+
+function login(){
+
+let user = document.getElementById("username").value;
+let pass = document.getElementById("password").value;
+
+if(user === "seller" && pass === "1234"){
+
+localStorage.setItem("login","true");
+
+// window.location.href = "EcoS_TESTING.html";
+window.location.href = "seller.html";
+}
+else if(user === "admin" && pass === "12345"){
+localStorage.setItem("login","true");
+window.location.href = "admin.html";
+}
+else if(user === "recycler" && pass === "123456"){
+localStorage.setItem("login","true");
+window.location.href = "recycler.html";
+}
+else{
+alert("Invalid Login Credentials\n\nDemo Login:\nUsername: seller\nPassword: 1234");
+}
+}
+function adminLogin(){
+alert("Invalid Login Credentials\n\nDemo Login:\nUsername: admin\nPassword: 12345");
+}
+
+function recyclerLogin(){
+alert("Invalid Login Credentials\n\nDemo Login:\nUsername: recycler\nPassword: 123456");
+
+}
+
+</script>
+</html>

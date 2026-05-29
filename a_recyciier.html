@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>EcoSphere Admin - Recycler</title>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body{
+background:#f4f6f8;
+overflow-x:hidden;
+}
+
+/* HEADER */
+
+.header{
+position:fixed;
+top:0;
+left:0;
+right:0;
+height:60px;
+background:#18a118;
+z-index:1000;
+display:flex;
+align-items:center;
+padding:0 20px;
+}
+
+.nav{
+width:100%;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.nav-left{
+display:flex;
+align-items:center;
+gap:14px;
+}
+
+.logo{
+text-decoration:none;
+font-size:1.25rem;
+font-weight:700;
+color:#fff;
+}
+
+.logo i{
+color:#ffd700;
+margin-right:6px;
+}
+
+.profile-mini a{
+font-size:24px;
+color:#fff;
+text-decoration:none;
+}
+
+/* HAMBURGER */
+
+.hamburger{
+display:none;
+background:none;
+border:none;
+color:#fff;
+font-size:22px;
+cursor:pointer;
+}
+
+/* OVERLAY */
+
+.overlay{
+display:none;
+position:fixed;
+inset:0;
+background:rgba(0,0,0,0.4);
+z-index:998;
+}
+
+.overlay.show{
+display:block;
+}
+
+/* DASHBOARD */
+
+.dashboard{
+display:flex;
+margin-top:60px;
+min-height:calc(100vh - 60px);
+}
+
+/* SIDEBAR */
+.sidebar{
+position:fixed;
+top:0;
+left:0;
+width:210px;
+height:100vh;
+background:#1b2636;
+z-index:999;
+display:flex;
+flex-direction:column;
+padding-top:60px;
+transition:0.3s;
+}
+
+.sidebar-close{
+display:none;
+position:absolute;
+top:14px;
+right:14px;
+background:none;
+border:none;
+color:#fff;
+font-size:20px;
+cursor:pointer;
+}
+
+.sidebar-brand{
+padding:18px 20px 16px;
+font-size:0.8rem;
+font-weight:700;
+color:rgba(255,255,255,0.35);
+text-transform:uppercase;
+letter-spacing:1px;
+border-bottom:1px solid rgba(255,255,255,0.06);
+margin-bottom:8px;
+}
+
+.sidebar a{
+display:flex;
+align-items:center;
+gap:10px;
+padding:11px 20px;
+color:rgba(255,255,255,0.65);
+text-decoration:none;
+font-size:0.88rem;
+font-weight:500;
+transition:0.2s;
+}
+
+.sidebar a i{
+width:16px;
+text-align:center;
+}
+
+.sidebar a:hover{
+color:#fff;
+background:rgba(255,255,255,0.07);
+padding-left:26px;
+}
+
+.sidebar a.active{
+color:#4ade80;
+background:rgba(74,222,128,0.1);
+}
+
+.sidebar a.logout{
+color:rgba(248,113,113,0.8);
+margin-bottom:12px;
+}
+
+.sidebar a.logout:hover{
+color:#f87171;
+background:rgba(248,113,113,0.08);
+}
+
+
+/* MAIN */
+
+.main-content{
+flex:1;
+margin-left:220px;
+padding:30px;
+}
+
+/* PAGE HEADER */
+
+.page-header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+flex-wrap:wrap;
+gap:15px;
+margin-bottom:25px;
+}
+
+.page-title{
+display:flex;
+align-items:center;
+gap:12px;
+font-size:28px;
+font-weight:bold;
+color:#1e293b;
+}
+
+.page-title i{
+background:#dcfce7;
+color:#16a34a;
+padding:12px;
+border-radius:12px;
+}
+
+/* SEARCH */
+
+.search-box{
+position:relative;
+}
+
+.search-box input{
+width:260px;
+padding:11px 15px 11px 40px;
+border:1px solid #ddd;
+border-radius:10px;
+outline:none;
+font-size:14px;
+}
+
+.search-box i{
+position:absolute;
+left:14px;
+top:50%;
+transform:translateY(-50%);
+color:#777;
+}
+
+/* CARD */
+
+.user-card{
+background:#fff;
+padding:24px;
+border-radius:14px;
+box-shadow:0 4px 14px rgba(0,0,0,0.05);
+overflow-x:auto;
+}
+
+/* BUTTON */
+
+.add-user{
+background:#16a34a;
+color:#fff;
+border:none;
+padding:11px 22px;
+border-radius:8px;
+cursor:pointer;
+font-weight:600;
+margin-bottom:20px;
+transition:0.3s;
+}
+
+.add-user:hover{
+background:#15803d;
+}
+
+/* TABLE */
+
+table{
+width:100%;
+border-collapse:collapse;
+min-width:750px;
+}
+
+th, td{
+padding:15px;
+border-bottom:1px solid #eee;
+text-align:center;
+}
+
+th{
+background:#f8fafc;
+color:#64748b;
+font-size:13px;
+text-transform:uppercase;
+}
+
+/* STATUS */
+
+.status{
+padding:5px 12px;
+border-radius:20px;
+font-size:12px;
+font-weight:bold;
+}
+
+.active{
+background:#dcfce7;
+color:#15803d;
+}
+
+.inactive{
+background:#fee2e2;
+color:#b91c1c;
+}
+
+/* ACTION BUTTONS */
+
+.action-btn{
+padding:7px 12px;
+border:none;
+border-radius:6px;
+cursor:pointer;
+font-size:13px;
+margin:2px;
+}
+
+.view-btn{
+background:#dbeafe;
+color:#1d4ed8;
+}
+
+.delete-btn{
+background:#fee2e2;
+color:#b91c1c;
+}
+
+/* FORM */
+
+.user-form{
+display:none;
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%, -50%);
+background:#fff;
+width:400px;
+padding:30px;
+border-radius:14px;
+z-index:2000;
+box-shadow:0 10px 30px rgba(0,0,0,0.2);
+}
+
+.user-form h3{
+margin-bottom:20px;
+color:#1e293b;
+}
+
+.user-form input{
+width:100%;
+padding:12px;
+border:1px solid #ddd;
+border-radius:8px;
+margin-bottom:15px;
+outline:none;
+}
+
+.form-btns{
+display:flex;
+gap:10px;
+}
+
+.form-btns button{
+flex:1;
+padding:12px;
+border:none;
+border-radius:8px;
+font-weight:600;
+cursor:pointer;
+}
+
+.save-btn{
+background:#16a34a;
+color:#fff;
+}
+
+.cancel-btn{
+background:#f70808;
+color: #fff;
+}
+
+/* FOOTER */
+
+.footer{
+background:#1e293b;
+color:#aaa;
+text-align:center;
+padding:16px;
+font-size:14px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:992px){
+
+.hamburger{
+display:block;
+}
+
+.sidebar{
+left:-230px;
+}
+
+.sidebar.show{
+left:0;
+}
+
+.sidebar-close{
+display:block;
+}
+
+.main-content{
+margin-left:0;
+}
+
+}
+
+@media(max-width:600px){
+
+.page-header{
+flex-direction:column;
+align-items:flex-start;
+}
+
+.search-box{
+width:100%;
+}
+
+.search-box input{
+width:100%;
+}
+
+.user-form{
+width:90%;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+
+<header class="header">
+
+<nav class="nav">
+
+<div class="nav-left">
+
+<button class="hamburger" onclick="toggleSidebar()">
+<i class="fas fa-bars"></i>
+</button>
+
+<a href="./admin.html" class="logo">
+<i class="fas fa-leaf"></i> EcoSphere
+</a>
+
+</div>
+
+<div class="profile-mini">
+
+<a href="./admin_profile.html">
+<i class="fas fa-user-circle"></i>
+</a>
+
+</div>
+
+</nav>
+
+</header>
+
+<!-- OVERLAY -->
+
+<div class="overlay" id="overlay" onclick="closeSidebar()"></div>
+
+<!-- DASHBOARD -->
+
+<div class="dashboard">
+
+<!-- SIDEBAR -->
+
+<aside class="sidebar" id="sidebar">
+
+<button class="sidebar-close" onclick="closeSidebar()">
+<i class="fas fa-times"></i>
+</button>
+
+<div class="sidebar-brand">
+Admin Panel
+</div>
+
+<a href="./admin.html">
+<i class="fas fa-tachometer-alt"></i>
+Dashboard
+</a>
+
+<a href="./a_users.html">
+<i class="fas fa-users"></i>
+Seller
+</a>
+
+<a href="./a_recycler.html" class="active">
+<i class="fas fa-recycle"></i>
+Recycler
+</a>
+
+<a href="./a_products.html">
+<i class="fas fa-box"></i>
+Products
+</a>
+
+<a href="./a_order.html">
+<i class="fas fa-shopping-cart"></i>
+Orders
+</a>
+
+<a href="./index.html" class="logout">
+<i class="fas fa-sign-out-alt"></i>
+Logout
+</a>
+
+</aside>
+
+<!-- MAIN -->
+
+<main class="main-content">
+
+<div class="page-header">
+
+<h1 class="page-title">
+<i class="fas fa-recycle"></i>
+Recycler Management
+</h1>
+
+<div class="search-box">
+
+<i class="fas fa-search"></i>
+
+<input type="text"
+id="searchInput"
+placeholder="Search Recycler..."
+onkeyup="searchTable()">
+
+</div>
+
+</div>
+
+<!-- CARD -->
+
+<div class="user-card">
+
+<button class="add-user" onclick="openForm()">
+<i class="fas fa-user-plus"></i>
+Add Recycler
+</button>
+
+<table>
+
+<thead>
+
+<tr>
+<th>Company</th>
+<th>Email</th>
+<th>Location</th>
+<th>GSTIN</th>
+<th>Status</th>
+<th>Date Joined</th>
+<th>Action</th>
+</tr>
+
+</thead>
+
+<tbody id="userTableBody">
+
+<tr>
+<td>EcoSphere Recyclers</td>
+<td>ecosphere@email.com</td>
+<td>Hyderabad</td>
+<td>28AAECE5566H1ZW</td>
+<td><span class="status active">Active</span></td>
+<td>05-04-2026</td>
+<td>
+<button class="action-btn view-btn" onclick="viewUser(this)">View</button>
+<button class="action-btn delete-btn" onclick="deleteUser(this)">Delete</button>
+</td>
+</tr>
+
+<tr>
+<td>GreenCycle Recyclers</td>
+<td>greencycle@email.com</td>
+<td>Mumbai</td>
+<td>36ABCPK2211M1Z6</td>
+<td><span class="status active">Active</span></td>
+<td>06-04-2026</td>
+<td>
+<button class="action-btn view-btn" onclick="viewUser(this)">View</button>
+<button class="action-btn delete-btn" onclick="deleteUser(this)">Delete</button>
+</td>
+</tr>
+
+<tr>
+<td>EcoBin Recycling</td>
+<td>ecobin@email.com</td>
+<td>Delhi</td>
+<td>33AALPS4455D1ZT</td>
+<td><span class="status inactive">Inactive</span></td>
+<td>07-04-2026</td>
+<td>
+<button class="action-btn view-btn" onclick="viewUser(this)">View</button>
+<button class="action-btn delete-btn" onclick="deleteUser(this)">Delete</button>
+</td>
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</main>
+
+</div>
+
+<!-- FORM -->
+
+<div class="user-form" id="userForm">
+
+<h3>Add Recycler</h3>
+
+<input type="text" id="name" placeholder="Company Name">
+
+<input type="email" id="email" placeholder="Email Address">
+
+<input type="text" id="location" placeholder="City / Location">
+
+<input type="text" id="gst" placeholder="GST Number">
+
+<input type="text" id="date" readonly>
+
+<div class="form-btns">
+
+<button class="save-btn" onclick="addUser()">
+Add Recycler
+</button>
+
+<button class="cancel-btn" onclick="closeForm()">
+Cancel
+</button>
+
+</div>
+
+</div>
+
+<!-- FOOTER -->
+
+<footer class="footer">
+© 2026 EcoSphere | Sustainable Admin Solutions
+</footer>
+
+<!-- SCRIPT -->
+
+<script>
+
+function toggleSidebar(){
+
+document.getElementById("sidebar").classList.toggle("show");
+
+document.getElementById("overlay").classList.toggle("show");
+
+}
+
+function closeSidebar(){
+
+document.getElementById("sidebar").classList.remove("show");
+
+document.getElementById("overlay").classList.remove("show");
+
+}
+
+function openForm(){
+
+document.getElementById("userForm").style.display = "block";
+
+document.getElementById("overlay").classList.add("show");
+
+let d = new Date();
+
+let dateStr =
+`${String(d.getDate()).padStart(2,'0')}-${String(d.getMonth()+1).padStart(2,'0')}-${d.getFullYear()}`;
+
+document.getElementById("date").value = dateStr;
+
+}
+
+function closeForm(){
+
+document.getElementById("userForm").style.display = "none";
+
+document.getElementById("overlay").classList.remove("show");
+
+}
+
+function addUser(){
+
+let name = document.getElementById("name").value;
+let email = document.getElementById("email").value;
+let location = document.getElementById("location").value;
+let gst = document.getElementById("gst").value;
+let date = document.getElementById("date").value;
+
+if(name === "" || email === "" || location === "" || gst === ""){
+
+alert("Please fill all fields");
+return;
+
+}
+
+let table = document.getElementById("userTableBody");
+
+let row = table.insertRow(0);
+
+row.innerHTML = `
+<td>${name}</td>
+<td>${email}</td>
+<td>${location}</td>
+<td>${gst}</td>
+<td><span class="status active">Active</span></td>
+<td>${date}</td>
+<td>
+<button class="action-btn view-btn" onclick="viewUser(this)">View</button>
+<button class="action-btn delete-btn" onclick="deleteUser(this)">Delete</button>
+</td>
+`;
+
+document.getElementById("name").value = "";
+document.getElementById("email").value = "";
+document.getElementById("location").value = "";
+document.getElementById("gst").value = "";
+
+closeForm();
+
+}
+
+function deleteUser(btn){
+
+if(confirm("Are you sure you want to delete this recycler?")){
+
+btn.closest("tr").remove();
+
+}
+
+}
+
+function viewUser(btn){
+
+let row = btn.closest("tr");
+
+let cells = row.cells;
+
+alert(
+`Recycler Details
+
+Company : ${cells[0].innerText}
+Email : ${cells[1].innerText}
+Location : ${cells[2].innerText}
+GSTIN : ${cells[3].innerText}
+Status : ${cells[4].innerText}
+Joined : ${cells[5].innerText}`
+);
+
+}
+
+function searchTable(){
+
+let input =
+document.getElementById("searchInput")
+.value.toUpperCase();
+
+let rows =
+document.getElementById("userTableBody")
+.getElementsByTagName("tr");
+
+for(let row of rows){
+
+let text = row.innerText.toUpperCase();
+
+row.style.display =
+text.includes(input)
+? ""
+: "none";
+
+}
+
+}
+
+</script>
+
+</body>
+</html>
