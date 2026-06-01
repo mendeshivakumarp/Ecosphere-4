@@ -660,7 +660,52 @@ View
 </main>
 
 </div>
-function viewOrder(btn){
+<!-- function viewOrder(btn){
+
+    let row = btn.closest("tr");
+    let data = row.children;
+
+    let status = data[6].querySelector("select").value;
+
+    alert(
+        "📦 ORDER DETAILS\n\n" +
+        "Order ID : " + data[0].innerText +
+        "\nRecycler : " + data[1].innerText +
+        "\nProduct : " + data[2].innerText +
+        "\nPrice : " + data[3].innerText +
+        "\nQuantity : " + data[4].innerText +
+        "\nTotal : " + data[5].innerText +
+        "\nStatus : " + status.toUpperCase() +
+        "\nDate : " + data[7].innerText
+    );
+} -->
+<!-- ================= FOOTER ================= -->
+
+<footer class="footer">
+
+<p>© 2026 EcoSphere | Admin Dashboard</p>
+
+</footer>
+
+<!-- ================= JAVASCRIPT ================= -->
+
+<script>
+
+/* ================= SIDEBAR ================= */
+
+function toggleSidebar() {
+    document.getElementById("sidebar").classList.toggle("active");
+    document.getElementById("overlay").classList.toggle("show");
+}
+
+function closeSidebar() {
+    document.getElementById("sidebar").classList.remove("active");
+    document.getElementById("overlay").classList.remove("show");
+}
+
+/* ================= VIEW ORDER ================= */
+
+function viewOrder(btn) {
 
     let row = btn.closest("tr");
     let data = row.children;
@@ -679,116 +724,47 @@ function viewOrder(btn){
         "\nDate : " + data[7].innerText
     );
 }
-<!-- ================= FOOTER ================= -->
-
-<footer class="footer">
-
-<p>© 2026 EcoSphere | Admin Dashboard</p>
-
-</footer>
-
-<!-- ================= JAVASCRIPT ================= -->
-
-<script>
-
-/* ================= SIDEBAR ================= */
-
-function toggleSidebar(){
-
-document.getElementById("sidebar")
-.classList.toggle("active");
-
-document.getElementById("overlay")
-.classList.toggle("show");
-
-}
-
-function closeSidebar(){
-
-document.getElementById("sidebar")
-.classList.remove("active");
-
-document.getElementById("overlay")
-.classList.remove("show");
-
-}
-
-/* ================= VIEW ORDER ================= */
-
-function viewOrder(btn){
-
-let row =
-btn.closest("tr");
-
-let data =
-row.children;
-
-let status =
-data[5].querySelector("select").value;
-
-alert(
-
-"--- ORDER DETAILS ---\n\n" +
-
-"Order ID: " + data[0].innerText +
-"\nBuyer: " + data[1].innerText +
-"\nProduct: " + data[2].innerText +
-"\nQuantity: " + data[3].innerText +
-"\nTotal: " + data[4].innerText +
-"\nStatus: " + status.toUpperCase() +
-"\nDate: " + data[6].innerText
-
-);
-
-}
 
 /* ================= SEARCH ================= */
 
-function searchOrders(){
+function searchOrders() {
 
-let input =
-document.getElementById("searchInput")
-.value.toLowerCase();
+    let input = document.getElementById("searchInput")
+        .value.toLowerCase();
 
-let rows =
-document.querySelectorAll("#ordersTable tbody tr");
+    let rows = document.querySelectorAll("#ordersTable tbody tr");
 
-rows.forEach(row => {
+    rows.forEach(row => {
 
-let text =
-row.innerText.toLowerCase();
+        let text = row.innerText.toLowerCase();
 
-row.style.display =
-text.includes(input) ? "" : "none";
+        row.style.display = text.includes(input)
+            ? ""
+            : "none";
 
-});
-
+    });
 }
 
 /* ================= STATUS COLOR ================= */
 
-function changeStatus(select){
+function changeStatus(select) {
 
-select.classList.remove(
-"pending",
-"delivered",
-"cancelled"
-);
+    select.classList.remove(
+        "pending",
+        "delivered",
+        "cancelled"
+    );
 
-select.classList.add(select.value);
-
+    select.classList.add(select.value);
 }
 
 /* ================= LOAD STATUS ================= */
 
 document.querySelectorAll(".status-select")
-.forEach(select => {
-
-changeStatus(select);
-
-});
+    .forEach(select => {
+        changeStatus(select);
+    });
 
 </script>
-
 </body>
 </html>
