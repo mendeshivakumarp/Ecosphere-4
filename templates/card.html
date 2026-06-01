@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>EcoSphere Scrap Buy Page</title>
+<title>EcoSphere Cart</title>
 
 <link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"/>
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 
 <style>
 
@@ -14,93 +14,51 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
     margin:0;
     padding:0;
     box-sizing:border-box;
-    font-family:'Segoe UI',sans-serif;
+    font-family:Arial,sans-serif;
 }
 
 body{
-    background:#f1f5f9;
+    background:#edf7ee;
 }
 
-/* ── HEADER ── */
-.header {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  height: 80px;
-  background: #12ba11;
-  z-index: 1000;
+/* HEADER */
+.header{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:80px;
+    background:#12ba11;
+    z-index:1000;
+    box-shadow:0 2px 10px rgba(0,0,0,0.1);
 }
 
-.nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: 100%;
-  max-width: 1200px;
-  margin: auto;
-  padding: 0 20px;
-}
-
-/* Updated logo container for alignment */
-.logo {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.logo h1 {
-  color: #fff;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-weight: 700;
-  font-size: 24px;
-}
-.logo i { color: #ffd700; }
-
-.nav-right {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-.profile-mini a { color: #fff; font-size: 26px; }
-
-/* HAMBURGER */
-.hamburger {
-  display: none;
-  flex-direction: column;
-  cursor: pointer; 
-  gap: 5px;
-  padding: 6px;
-  background: none;
-  border: none;
-}
-.hamburger span {
-  display: block;
-  width: 26px;
-  height: 3px;
-  background: #fff;
-  border-radius: 3px;
-  transition: all 0.35s ease;
-  transform-origin: center;
-}
-.hamburger.open span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
-.hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
-.hamburger.open span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
-
-/* OVERLAY */
-.overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.45);
-  z-index: 900;
-}
-.overlay.show { display: block; }
-
-/* MAIN LAYOUT */
-
-.main-container{
+.nav{
+    height:100%;
     display:flex;
-    min-height:100vh;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 25px;
+}
+
+.logo h1{
+    color:#fff;
+    font-size:26px;
+}
+
+.logo i{
+    color:gold;
+}
+
+.profile-mini i{
+    color:#fff;
+    font-size:28px;
+}
+
+/* MAIN */
+.main-layout{
+    display:flex;
+    margin-top:80px;
 }
 
 /* SIDEBAR */
@@ -114,15 +72,16 @@ body{
     color:white;
     padding-top:20px;
     height: calc(100vh - 80px);
-    overflow-y: auto;
-    flex-shrink:0;
+    /* overflow-y: auto; */
+    /* flex-shrink:0; */
+    z-index: 950;
 }
 
 .admin-logo{
     display:flex;
     align-items:center;
     gap:10px;
-    padding:10px;
+    padding:20px;
     font-size:20px;
     font-weight:bold;
     color:#facc15;
@@ -131,7 +90,7 @@ body{
 
 .sidebar a{
     display:block;
-    padding:15px 20px;
+    padding:12px 20px;
     color:#cbd5e1;
     text-decoration:none;
     transition:0.3s;
@@ -149,153 +108,139 @@ body{
     padding-left:25px;
 }
 
-/* RIGHT CONTENT */
-
-.content-area{
-    flex:1;
-    padding:100px;
-    margin-left:220px;
+/* CONTENT */
+.content{
+    margin-left:240px;
+    width:100%;
+    padding:30px;
 }
 
-/* PAGE HEADER */
-
-.header1{
-    background:linear-gradient(135deg,#ffffff,#f0f0f0);
-    color:#1e293b;
-    padding:35px;
-    border-radius:20px;
-    margin-bottom:30px;
+.page-title{
     text-align:center;
+    color:#1b5e20;
+    margin-bottom:30px;
 }
 
-.header1 h1{
-    font-size:36px;
-    margin-bottom:10px;
-}
-
-/* GRID */
-
-.items-grid{
+/* CARDS */
+.container{
     display:grid;
-    grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
     gap:25px;
 }
 
-/* CARD */
-
-.item-card{
-    background:white;
+.card{
+    background:#fff;
     border-radius:18px;
     overflow:hidden;
-    box-shadow:0 8px 20px rgba(0,0,0,0.1);
-    transition:0.3s;
+    box-shadow:0 4px 12px rgba(0,0,0,.15);
+    transition:.3s;
 }
 
-.item-card:hover{
+.card:hover{
     transform:translateY(-5px);
 }
 
-.item-image{
+.card img{
+    width:100%;
     height:220px;
-    background-size:cover;
-    background-position:center;
+    object-fit:cover;
 }
 
-.item-content{
-    padding:20px;
+.card-content{
+    padding:18px;
 }
 
-.item-title{
+.card-content h2{
+    color:#1b5e20;
+    margin-bottom:10px;
+}
+
+.card-content p{
+    color:#555;
+    margin-bottom:6px;
+}
+
+.price{
     font-size:22px;
-    margin-bottom:15px;
-    color:#1e293b;
-}
-
-.seller-info{
-    background:#f8fafc;
-    padding:12px;
-    border-radius:10px;
-    line-height:1.7;
-    color:#475569;
-    margin-bottom:18px;
+    color:#0d8b3e;
+    font-weight:bold;
+    margin-top:10px;
 }
 
 /* BUTTONS */
-
-.button-group{
-    display:flex;
-    gap:10px;
+.btn{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    color:#fff;
+    margin-top:12px;
+    font-size:16px;
+    background:#1b5e20;
 }
 
-.buy-btn,
-.cart-btn{
-    flex:1;
+.btn:hover{
+    background:#0d8b3e;
+}
+
+.cancel-btn{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    color:#fff;
+    margin-top:10px;
+    font-size:16px;
+    background:#dc2626;
+}
+
+.cancel-btn:hover{
+    background:#b91c1c;
+}
+
+/* EMPTY CART */
+.empty-cart{
+    grid-column:1/-1;
+    background:#fff;
+    padding:40px;
     text-align:center;
-    padding:13px;
-    border-radius:30px;
-    color:white;
-    text-decoration:none;
-    font-weight:bold;
-    transition:0.3s;
-    font-size:14px;
-}
-
-/* BUY BUTTON */
-
-.buy-btn{
-    background:#16a34a;
-}
-
-.buy-btn:hover{
-    background:#15803d;
-}
-
-/* ADD TO CART BUTTON */
-
-.cart-btn{
-    background:#0f172a;
-}
-
-.cart-btn:hover{
-    background:#1e293b;
+    border-radius:18px;
+    font-size:20px;
+    color:#475569;
+    box-shadow:0 4px 12px rgba(0,0,0,.1);
 }
 
 /* RESPONSIVE */
+@media(max-width:768px){
 
-@media(max-width:900px){
+.sidebar{
+    width:200px;
+}
 
-    .main-container{
-        flex-direction:column;
-    }
-
-    .sidebar{
-        position: relative;
-        width:100%;
-        display:flex;
-        overflow:auto;
-        top: 0;
-        height: auto;
-    }
-
-    .sidebar a{
-        white-space:nowrap;
-    }
-
-    .content-area{
-        margin-left:0;
-        padding:30px;
-    }
+.content{
+    margin-left:200px;
+}
 
 }
 
-/* FOOTER */
-.footer-bottom { 
-  text-align: center; 
-  padding: 20px; 
-  background: #1a1a1a; 
-  color: #94a3b8; 
-  font-size: 13px; 
-  margin-top: 1px;
+@media(max-width:600px){
+
+.sidebar{
+    position:relative;
+    width:100%;
+    height:auto;
+}
+
+.content{
+    margin-left:0;
+}
+
+.main-layout{
+    flex-direction:column;
+}
+
 }
 
 </style>
@@ -303,27 +248,24 @@ body{
 
 <body>
 
-!-- HEADER -->
+<!-- HEADER -->
 <header class="header">
-  <nav class="nav">
-    <div class="logo">
-      <!-- MOVED HAMBURGER HERE BEFORE LOGO TEXT -->
-      <button class="hamburger" id="hamburgerBtn" aria-label="Toggle menu">
-        <span></span><span></span><span></span>
-      </button>
-      <h1><i class="fas fa-leaf"></i> EcoSphere</h1>
-    </div>
-    <div class="nav-right">
-      <div class="profile-mini">
-        <a href="./recycler_profile.html"><i class="fas fa-user-circle"></i></a>
-      </div>
-    </div>
-  </nav>
+    <nav class="nav">
+
+        <div class="logo">
+            <h1><i class="fas fa-leaf"></i> EcoSphere</h1>
+        </div>
+
+        <div class="profile-mini">
+            <a href="recycler_profile.html">
+                <i class="fas fa-user-circle"></i>
+            </a>
+        </div>
+
+    </nav>
 </header>
 
-<!-- MAIN -->
-
-<div class="main-container">
+<div class="main-layout">
 
     <!-- SIDEBAR -->
 
@@ -365,273 +307,105 @@ body{
     </aside>
 
     <!-- CONTENT -->
+    <div class="content">
 
-    <div class="content-area">
+        <h1 class="page-title">Add To Cart Products</h1>
 
-        <div class="header1">
-            <h1>♻️ Buy Scrap Materials</h1>
-            <p>Complete Scrap Trading Platform</p>
-        </div>
-
-        <!-- CARDS -->
-
-        <div class="items-grid">
-
-            <!-- CARD 1 -->
-
-            <div class="item-card">
-
-                <div class="item-image"
-                style="background-image:url('https://img.freepik.com/free-photo/dirty-dumped-objects-arrangement_23-2148996943.jpg');">
-                </div>
-
-                <div class="item-content">
-
-                    <h3 class="item-title">Iron Scrap</h3>
-
-                    <div class="seller-info">
-                        👤 Verified Seller <br>
-                        📍 Mumbai <br>
-                        💰 ₹34/kg
-                    </div>
-
-                    <div class="button-group">
-                        <a href="./iron.html" class="buy-btn">
-                            🛒 Buy Now
-                        </a>
-
-                        <a href="#" class="cart-btn">
-                            ➕ Add Cart
-                        </a>
-                    </div>
-
-                </div>
-
-            </div>
-
-            <!-- CARD 2 -->
-
-            <div class="item-card">
-
-                <div class="item-image"
-                style="background-image:url('https://2.wlimg.com/product_images/bc-full/2025/4/14567673/copper-wire-scrap-1744783904-7993888.jpg');">
-                </div>
-
-                <div class="item-content">
-
-                    <h3 class="item-title">Copper Wire</h3>
-
-                    <div class="seller-info">
-                        👤 Quality Metals <br>
-                        📍 Delhi <br>
-                        💰 ₹720/kg
-                    </div>
-
-                    <div class="button-group">
-                        <a href="./copper.html" class="buy-btn">
-                            🛒 Buy Now
-                        </a>
-
-                        <a href="#" class="cart-btn">
-                            ➕ Add Cart
-                        </a>
-                    </div>
-
-                </div>
-
-            </div>
-
-            <!-- CARD 3 -->
-
-            <div class="item-card">
-
-                <div class="item-image"
-                style="background-image:url('https://cpimg.tistatic.com/04426614/b/5/Aluminium-Scrap.jpg');">
-                </div>
-
-                <div class="item-content">
-
-                    <h3 class="item-title">Aluminium Scrap</h3>
-
-                    <div class="seller-info">
-                        👤 Eco Recyclers <br>
-                        📍 Bangalore <br>
-                        💰 ₹145/kg
-                    </div>
-
-                    <div class="button-group">
-                        <a href="./alumininum.html" class="buy-btn">
-                            🛒 Buy Now
-                        </a>
-
-                        <a href="#" class="cart-btn">
-                            ➕ Add Cart
-                        </a>
-                    </div>
-
-                </div>
-
-            </div>
-
-            <!-- CARD 4 -->
-
-            <div class="item-card">
-
-                <div class="item-image"
-                style="background-image:url('https://images.jdmagicbox.com/quickquotes/images_main/waste-paper-scrap-2217511939-9cyeqq8q.jpg');">
-                </div>
-
-                <div class="item-content">
-
-                    <h3 class="item-title">Paper Scrap</h3>
-
-                    <div class="seller-info">
-                        👤 Paper Mills <br>
-                        📍 Chennai <br>
-                        💰 ₹7/kg
-                    </div>
-
-                    <div class="button-group">
-                        <a href="./paper.html" class="buy-btn">
-                            🛒 Buy Now
-                        </a>
-
-                        <a href="#" class="cart-btn">
-                            ➕ Add Cart
-                        </a>
-                    </div>
-
-                </div>
-
-            </div>
-
-            <!-- CARD 5 -->
-
-            <div class="item-card">
-
-                <div class="item-image"
-                style="background-image:url('https://5.imimg.com/data5/SELLER/Default/2025/4/500004349/OU/CO/HQ/191888915/cccc-500x500.jpg');">
-                </div>
-
-                <div class="item-content">
-
-                    <h3 class="item-title">Cardboard</h3>
-
-                    <div class="seller-info">
-                        👤 box Recycle <br>
-                        📍 Ahmedabad <br>
-                        💰 ₹10/kg
-                    </div>
-
-                    <div class="button-group">
-                        <a href="#" class="buy-btn">
-                            🛒 Buy Now
-                        </a>
-
-                        <a href="#" class="cart-btn">
-                            ➕ Add Cart
-                        </a>
-                    </div>
-
-                </div>
-
-            </div>
-
-            <!-- CARD 6 -->
-
-            <div class="item-card">
-
-                <div class="item-image"
-                style="background-image:url('https://www.dahldisposalservice.com/wp-content/uploads/2025/04/metal-picture-1.jpg');">
-                </div>
-
-                <div class="item-content">
-
-                    <h3 class="item-title">Metal Scrap</h3>
-
-                    <div class="seller-info">
-                        👤 Scrap Yard <br>
-                        📍 Nagpur <br>
-                        💰 ₹40/kg
-                    </div>
-
-                    <div class="button-group">
-                        <a href="#" class="buy-btn">
-                            🛒 Buy Now
-                        </a>
-
-                        <a href="#" class="cart-btn">
-                            ➕ Add Cart
-                        </a>
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
+        <div class="container" id="cardContainer"></div>
 
     </div>
 
 </div>
 
-<footer class="footer-bottom">
-  <p>© 2026 EcoSphere. All rights reserved.</p>
-</footer>
-
-<!-- ADD THIS SCRIPT BEFORE </body> -->
-
 <script>
-const cartKey = "ecoCartItems";
 
-function getCartItems() {
-    try {
+const cartKey = "ecoCartItems";
+const container = document.getElementById("cardContainer");
+
+function getCartItems(){
+    try{
         return JSON.parse(localStorage.getItem(cartKey)) || [];
-    } catch (err) {
+    }
+    catch(err){
         return [];
     }
 }
 
-function saveCartItems(items) {
-    localStorage.setItem(cartKey, JSON.stringify(items));
-}
+function loadCart(){
 
-function addToCart(item) {
-    const cart = getCartItems();
-    if (cart.some(cartItem => cartItem.name === item.name)) {
-        return false;
+    const cartItems = getCartItems();
+
+    if(cartItems.length === 0){
+
+        container.innerHTML = `
+            <div class="empty-cart">
+                Your cart is empty. Add items from Buy Materials page.
+            </div>
+        `;
+        return;
     }
-    cart.push(item);
-    saveCartItems(cart);
-    return true;
+
+    container.innerHTML = "";
+
+    cartItems.forEach((scrap,index)=>{
+
+        container.innerHTML += `
+        
+        <div class="card" id="card-${index}">
+        
+            <img src="${scrap.image}" alt="${scrap.name}">
+        
+            <div class="card-content">
+            
+                <h2>${scrap.name}</h2>
+            
+                <p><b>Seller:</b> ${scrap.seller}</p>
+            
+                <p><b>Location:</b> ${scrap.location}</p>
+            
+                <div class="price">${scrap.price}</div>
+
+                <button class="btn"
+                onclick="buyNow('${scrap.name}')">
+                    Buy Now
+                </button>
+
+                <button class="cancel-btn"
+                onclick="removeItem(${index})">
+                    Cancel
+                </button>
+
+            </div>
+        
+        </div>
+        
+        `;
+    });
+
 }
 
-const cartButtons = document.querySelectorAll(".cart-btn");
-cartButtons.forEach(button => {
-    button.addEventListener("click", function(e) {
-        e.preventDefault();
+function buyNow(product){
 
-        const itemCard = button.closest(".item-card");
-        const name = itemCard.querySelector(".item-title").textContent.trim();
-        const sellerInfo = itemCard.querySelector(".seller-info").textContent.trim().split("\n").map(line => line.trim()).filter(Boolean);
-        const seller = sellerInfo[0] || "";
-        const location = sellerInfo[1] || "";
-        const price = sellerInfo[2] || "";
-        const bg = itemCard.querySelector(".item-image").style.backgroundImage;
-        const image = bg.replace(/^url\(["']?/, "").replace(/["']?\)$/, "");
+    alert(product + " purchased successfully!");
 
-        const item = { name, seller, location, price, image };
+}
 
-        if (addToCart(item)) {
-            button.innerHTML = "✅ Added";
-            button.style.background = "#16a34a";
-            alert(`${name} added to cart!`);
-            window.location.href = "./card.html";
-        } else {
-            alert(`${name} is already in the cart.`);
-        }
-    });
-});
+function removeItem(index){
+
+    let cartItems = getCartItems();
+
+    cartItems.splice(index,1);
+
+    localStorage.setItem(
+        cartKey,
+        JSON.stringify(cartItems)
+    );
+
+    loadCart();
+}
+
+loadCart();
+
 </script>
 
 </body>
