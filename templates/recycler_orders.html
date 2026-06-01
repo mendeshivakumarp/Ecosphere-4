@@ -761,7 +761,7 @@ tbody tr:hover td{
 
 <input type="text"
 id="searchInput"
-placeholder="Search order ID or customer..."
+placeholder="Search order ID or Seller..."
 oninput="filterOrders()">
 
 </div>
@@ -790,7 +790,7 @@ oninput="filterOrders()">
 
 <tr>
   <th>Order ID</th>
-  <th>Customer</th>
+  <th>Seller</th>
   <th>Waste Type</th>
   <th>Qty</th>
   <th>Amount</th>
@@ -872,41 +872,41 @@ sidebar.querySelectorAll("a").forEach(link=>{
 
 const orders = [
 
-{ id:"#RC-1001", customer:"Ravi Sharma", type:"Paper", qty:12, amount:480, date:"01 May 2026", status:"Completed" },
+{ id:"#RC-1001", Seller:"Ravi Sharma", type:"Paper", qty:12, amount:480, date:"01 May 2026", status:"Completed" },
 
-{ id:"#RC-1002", customer:"Priya Singh", type:"Plastic", qty:8, amount:320, date:"02 May 2026", status:"Pending" },
+{ id:"#RC-1002", Seller:"Priya Singh", type:"Plastic", qty:8, amount:320, date:"02 May 2026", status:"Pending" },
 
-{ id:"#RC-1003", customer:"Anil Kumar", type:"Metal", qty:20, amount:900, date:"03 May 2026", status:"Processing" },
+{ id:"#RC-1003", Seller:"Anil Kumar", type:"Metal", qty:20, amount:900, date:"03 May 2026", status:"Processing" },
 
-{ id:"#RC-1004", customer:"Sunita Patel", type:"E-Waste", qty:5, amount:750, date:"03 May 2026", status:"Completed" },
+{ id:"#RC-1004", Seller:"Sunita Patel", type:"E-Waste", qty:5, amount:750, date:"03 May 2026", status:"Completed" },
 
-{ id:"#RC-1005", customer:"Vikram Rao", type:"Glass", qty:15, amount:300, date:"04 May 2026", status:"Pending" },
+{ id:"#RC-1005", Seller:"Vikram Rao", type:"Glass", qty:15, amount:300, date:"04 May 2026", status:"Pending" },
 
-{ id:"#RC-1006", customer:"Meera Joshi", type:"Paper", qty:10, amount:400, date:"04 May 2026", status:"Cancelled" },
+{ id:"#RC-1006", Seller:"Meera Joshi", type:"Paper", qty:10, amount:400, date:"04 May 2026", status:"Cancelled" },
 
-{ id:"#RC-1007", customer:"Rajesh Gupta", type:"Plastic", qty:6, amount:240, date:"05 May 2026", status:"Completed" },
+{ id:"#RC-1007", Seller:"Rajesh Gupta", type:"Plastic", qty:6, amount:240, date:"05 May 2026", status:"Completed" },
 
-{ id:"#RC-1008", customer:"Deepa Nair", type:"Metal", qty:18, amount:810, date:"05 May 2026", status:"Pending" },
+{ id:"#RC-1008", Seller:"Deepa Nair", type:"Metal", qty:18, amount:810, date:"05 May 2026", status:"Pending" },
 
-{ id:"#RC-1009", customer:"Suresh Menon", type:"E-Waste", qty:3, amount:450, date:"06 May 2026", status:"Processing" },
+{ id:"#RC-1009", Seller:"Suresh Menon", type:"E-Waste", qty:3, amount:450, date:"06 May 2026", status:"Processing" },
 
-{ id:"#RC-1010", customer:"Kavita Reddy", type:"Paper", qty:9, amount:360, date:"06 May 2026", status:"Completed" },
+{ id:"#RC-1010", Seller:"Kavita Reddy", type:"Paper", qty:9, amount:360, date:"06 May 2026", status:"Completed" },
 
-{ id:"#RC-1011", customer:"Arjun Das", type:"Glass", qty:11, amount:220, date:"07 May 2026", status:"Pending" },
+{ id:"#RC-1011", Seller:"Arjun Das", type:"Glass", qty:11, amount:220, date:"07 May 2026", status:"Pending" },
 
-{ id:"#RC-1012", customer:"Nisha Verma", type:"Plastic", qty:7, amount:280, date:"07 May 2026", status:"Processing" },
+{ id:"#RC-1012", Seller:"Nisha Verma", type:"Plastic", qty:7, amount:280, date:"07 May 2026", status:"Processing" },
 
-{ id:"#RC-1013", customer:"Mohan Lal", type:"Metal", qty:25, amount:1125, date:"08 May 2026", status:"Completed" },
+{ id:"#RC-1013", Seller:"Mohan Lal", type:"Metal", qty:25, amount:1125, date:"08 May 2026", status:"Completed" },
 
-{ id:"#RC-1014", customer:"Shalini Bose", type:"E-Waste", qty:4, amount:600, date:"08 May 2026", status:"Pending" },
+{ id:"#RC-1014", Seller:"Shalini Bose", type:"E-Waste", qty:4, amount:600, date:"08 May 2026", status:"Pending" },
 
-{ id:"#RC-1015", customer:"Prakash Rao", type:"Paper", qty:14, amount:560, date:"09 May 2026", status:"Cancelled" },
+{ id:"#RC-1015", Seller:"Prakash Rao", type:"Paper", qty:14, amount:560, date:"09 May 2026", status:"Cancelled" },
 
-{ id:"#RC-1016", customer:"Gita Kapoor", type:"Plastic", qty:9, amount:360, date:"09 May 2026", status:"Pending" },
+{ id:"#RC-1016", Seller:"Gita Kapoor", type:"Plastic", qty:9, amount:360, date:"09 May 2026", status:"Pending" },
 
-{ id:"#RC-1017", customer:"Harish Tiwari", type:"Glass", qty:20, amount:400, date:"09 May 2026", status:"Completed" },
+{ id:"#RC-1017", Seller:"Harish Tiwari", type:"Glass", qty:20, amount:400, date:"09 May 2026", status:"Completed" },
 
-{ id:"#RC-1018", customer:"Lalitha Iyer", type:"Metal", qty:16, amount:720, date:"09 May 2026", status:"Processing" }
+{ id:"#RC-1018", Seller:"Lalitha Iyer", type:"Metal", qty:16, amount:720, date:"09 May 2026", status:"Processing" }
 
 ];
 
@@ -945,7 +945,7 @@ function filterOrders(){
 
     const matchSearch =
       order.id.toLowerCase().includes(search) ||
-      order.customer.toLowerCase().includes(search);
+      order.Seller.toLowerCase().includes(search);
 
     return matchStatus && matchType && matchSearch;
 
@@ -988,7 +988,7 @@ function renderTable(){
 
         <td><strong>${order.id}</strong></td>
 
-        <td>${order.customer}</td>
+        <td>${order.Seller}</td>
 
         <td>${order.type}</td>
 
@@ -1138,7 +1138,7 @@ function viewOrder(id){
 
     alert(
       `Order ID: ${order.id}
-Customer: ${order.customer}
+Seller: ${order.Seller}
 Type: ${order.type}
 Quantity: ${order.qty} kg
 Amount: ₹${order.amount}
