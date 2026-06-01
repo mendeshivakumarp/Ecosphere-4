@@ -11,734 +11,1171 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
 <style>
 
 /* RESET */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
 }
 
-body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: #f4f7fa;
+body{
+  font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
+  background:#f4f7fa;
+  color:#334155;
 }
 
-/* ── HEADER ── */
-.header {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  height: 80px;
-  background: #12ba11;
-  z-index: 1000;
+/* HEADER */
+
+.header{
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  height:60px;
+  background:#18a118;
+  z-index:1000;
+  display:flex;
+  align-items:center;
+  padding:0 20px;
 }
 
-.nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: 100%;
-  max-width: 1200px;
-  margin: auto;
-  padding: 0 20px;
+.nav{
+  width:100%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
 }
 
-/* Updated logo container for alignment */
-.logo {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+.nav-left{
+  display:flex;
+  align-items:center;
+  gap:14px;
 }
 
-.logo h1 {
-  color: #fff;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-weight: 700;
-  font-size: 24px;
+.logo{
+  text-decoration:none;
+  font-size:1.25rem;
+  font-weight:700;
+  color:#fff;
 }
-.logo i { color: #ffd700; }
 
-.nav-right {
-  display: flex;
-  align-items: center;
-  gap: 16px;
+.logo i{
+  color:#ffd700;
+  margin-right:6px;
 }
-.profile-mini a { color: #fff; font-size: 26px; }
+
+.profile-mini a{
+  font-size:24px;
+  color:#fff;
+  text-decoration:none;
+}
 
 /* HAMBURGER */
-.hamburger {
-  display: none;
-  flex-direction: column;
-  cursor: pointer; 
-  gap: 5px;
-  padding: 6px;
-  background: none;
-  border: none;
+
+.hamburger{
+  display:none;
+  background:none;
+  border:none;
+  color:#fff;
+  font-size:22px;
+  cursor:pointer;
 }
-.hamburger span {
-  display: block;
-  width: 26px;
-  height: 3px;
-  background: #fff;
-  border-radius: 3px;
-  transition: all 0.35s ease;
-  transform-origin: center;
-}
-.hamburger.open span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
-.hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
-.hamburger.open span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
 
 /* OVERLAY */
-.overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.45);
-  z-index: 900;
-}
-.overlay.show { display: block; }
 
-/* ── LAYOUT ── */
-.dashboard {
-  margin-top: 80px;
-  display: flex;
+.overlay{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.4);
+  z-index:998;
 }
 
-/* ── SIDEBAR ── */
-.sidebar {
-  width: 220px;
-  background: #1e293b;
-  color: white;
-  padding-top: 20px;
-  min-height: calc(100vh - 80px);
-  transition: transform 0.35s ease;
-  z-index: 950;
+.overlay.show{
+  display:block;
 }
 
-.admin-logo {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 20px;
-  font-size: 20px;
-  font-weight: bold;
-  color: #ffd700;
-  border-bottom: 1px solid #334155;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+/* DASHBOARD */
+
+.dashboard{
+  display:flex;
+  margin-top:60px;
 }
 
-.sidebar a {
-  display: block;
-  padding: 12px 20px;
-  color: white;
-  text-decoration: none;
-  transition: 0.3s;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-size: 15px;
-}
-.sidebar a i { margin-right: 10px; }
-.sidebar a:hover,
-.sidebar a.active {
-  background: #334155;
-  padding-left: 25px;
+/* SIDEBAR */
+
+.sidebar{
+position:fixed;
+top:0;
+left:0;
+width:210px;
+height:100vh;
+background:#1b2636;
+z-index:999;
+display:flex;
+flex-direction:column;
+padding-top:60px;
+transition:0.3s;
 }
 
-/* ── MAIN ── */
-.main {
-  flex: 1;
-  padding: 20px;
+.sidebar-close{
+display:none;
+position:absolute;
+top:14px;
+right:14px;
+background:none;
+border:none;
+color:#fff;
+font-size:20px;
+cursor:pointer;
+}
+
+.sidebar-brand{
+padding:18px 20px 16px;
+font-size:0.8rem;
+font-weight:700;
+color:rgba(255,255,255,0.35);
+text-transform:uppercase;
+letter-spacing:1px;
+border-bottom:1px solid rgba(255,255,255,0.06);
+margin-bottom:8px;
+}
+
+.sidebar a{
+display:flex;
+align-items:center;
+gap:10px;
+padding:11px 20px;
+color:rgba(255,255,255,0.65);
+text-decoration:none;
+font-size:0.88rem;
+font-weight:500;
+transition:0.2s;
+}
+
+.sidebar a i{
+width:16px;
+text-align:center;
+}
+
+.sidebar a:hover{
+color:#fff;
+background:rgba(255,255,255,0.07);
+padding-left:26px;
+}
+
+.sidebar a.active{
+color:#4ade80;
+background:rgba(74,222,128,0.1);
+}
+
+.sidebar a.logout{
+color:rgba(248,113,113,0.8);
+margin-bottom:12px;
+}
+
+.sidebar a.logout:hover{
+color:#f87171;
+background:rgba(248,113,113,0.08);
+}
+
+/* MAIN */
+
+.main{
+  flex:1;
+  padding:20px;
+  margin-left:210px;
+  overflow-x:hidden;
 }
 
 /* PAGE HEADER */
-.page-header {
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  margin-bottom: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  flex-wrap: wrap;
-  gap: 12px;
+
+.page-header{
+  background:white;
+  padding:20px;
+  border-radius:10px;
+  margin-bottom:20px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  box-shadow:0 2px 8px rgba(0,0,0,0.1);
+  flex-wrap:wrap;
+  gap:12px;
 }
 
-.page-header-left {
-  display: flex;
-  align-items: center;
-  gap: 14px;
+.page-header-left{
+  display:flex;
+  align-items:center;
+  gap:14px;
 }
 
-.page-header-left i {
-  font-size: 36px;
-  color: #12ba11;
+.page-header-left i{
+  font-size:36px;
+  color:#12ba11;
 }
 
-.page-header-left h1 {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-size: 22px;
-  color: #1e293b;
-}
-.page-header-left p {
-  font-size: 13px;
-  color: #64748b;
-  margin-top: 2px;
+.page-header-left h1{
+  font-size:22px;
+  color:#1e293b;
 }
 
-/* ── STAT CARDS ── */
-.cards {
-  display: flex;
-  gap: 16px;
-  flex-wrap: wrap;
-  margin-bottom: 20px;
+.page-header-left p{
+  font-size:13px;
+  color:#64748b;
+  margin-top:2px;
 }
 
-.card {
-  flex: 1;
-  min-width: 180px;
-  background: white;
-  padding: 18px 20px;
-  border-radius: 8px;
-  text-align: center;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-  transition: 0.3s;
-}
-.card:hover { transform: translateY(-4px); }
-.card i {
-  font-size: 22px;
-  color: #12ba11;
-  margin-bottom: 8px;
-}
-.card h3 {
-  font-size: 12px;
-  color: #64748b;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  margin-bottom: 5px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-.card p {
-  font-size: 22px;
-  font-weight: 700;
-  color: #2e8b57;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+/* CARDS */
+
+.cards{
+  display:flex;
+  gap:16px;
+  flex-wrap:wrap;
+  margin-bottom:20px;
 }
 
-/* ── FILTER BAR ── */
-.filter-bar {
-  background: white;
-  padding: 14px 20px;
-  border-radius: 8px;
-  margin-bottom: 16px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
+.card{
+  flex:1;
+  min-width:180px;
+  background:white;
+  padding:18px 20px;
+  border-radius:8px;
+  text-align:center;
+  box-shadow:0 2px 8px rgba(0,0,0,0.08);
+  transition:0.3s;
 }
 
-.filter-bar label {
-  font-size: 13px;
-  font-weight: 600;
-  color: #475569;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+.card:hover{
+  transform:translateY(-4px);
+}
+
+.card i{
+  font-size:22px;
+  color:#12ba11;
+  margin-bottom:8px;
+}
+
+.card h3{
+  font-size:12px;
+  color:#64748b;
+  margin-bottom:5px;
+  text-transform:uppercase;
+  letter-spacing:0.5px;
+}
+
+.card p{
+  font-size:22px;
+  font-weight:700;
+  color:#2e8b57;
+}
+
+/* FILTER BAR */
+
+.filter-bar{
+  background:white;
+  padding:14px 20px;
+  border-radius:8px;
+  margin-bottom:16px;
+  box-shadow:0 2px 8px rgba(0,0,0,0.06);
+  display:flex;
+  align-items:center;
+  gap:12px;
+  flex-wrap:wrap;
+}
+
+.filter-bar label{
+  font-size:13px;
+  font-weight:600;
+  color:#475569;
 }
 
 .filter-bar select,
-.filter-bar input {
-  padding: 7px 12px;
-  border: 1px solid #e2e8f0;
-  border-radius: 6px;
-  font-size: 13px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  color: #334155;
-  background: #f8fafc;
-  outline: none;
-  cursor: pointer;
+.filter-bar input{
+  padding:7px 12px;
+  border:1px solid #e2e8f0;
+  border-radius:6px;
+  font-size:13px;
+  color:#334155;
+  background:#f8fafc;
+  outline:none;
 }
+
 .filter-bar select:focus,
-.filter-bar input:focus {
-  border-color: #12ba11;
+.filter-bar input:focus{
+  border-color:#12ba11;
 }
 
-.search-wrap {
-  margin-left: auto;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.search-wrap input {
-  width: 200px;
-  padding: 7px 12px 7px 34px;
-}
-.search-icon-wrap {
-  position: relative;
-}
-.search-icon-wrap i {
-  position: absolute;
-  left: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #94a3b8;
-  font-size: 13px;
+.search-wrap{
+  margin-left:auto;
+  display:flex;
+  align-items:center;
+  gap:8px;
 }
 
-/* ── TABLE BOX ── */
-.table-box {
-  background: white;
-  border-radius: 8px;
-  padding: 20px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-  overflow-x: auto;
+.search-wrap input{
+  width:220px;
+  padding:7px 12px 7px 34px;
 }
 
-.table-box-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 16px;
-  flex-wrap: wrap;
-  gap: 10px;
+.search-icon-wrap{
+  position:relative;
 }
 
-.table-box-header h2 {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-size: 15px;
-  font-weight: 700;
-  color: #1e293b;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.table-box-header h2 i { color: #12ba11; font-size: 14px; }
-
-.count-tag {
-  background: #dcfce7;
-  color: #15803d;
-  font-size: 11px;
-  font-weight: 700;
-  padding: 2px 10px;
-  border-radius: 20px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+.search-icon-wrap i{
+  position:absolute;
+  left:10px;
+  top:50%;
+  transform:translateY(-50%);
+  color:#94a3b8;
+  font-size:13px;
 }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-  min-width: 600px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+/* TABLE */
+
+.table-box{
+  background:white;
+  border-radius:8px;
+  padding:20px;
+  box-shadow:0 2px 8px rgba(0,0,0,0.08);
+  overflow-x:auto;
 }
 
-thead th {
-  padding: 10px 14px;
-  text-align: left;
-  font-size: 11px;
-  font-weight: 700;
-  color: #94a3b8;
-  text-transform: uppercase;
-  letter-spacing: 0.6px;
-  background: #f8fafc;
-  white-space: nowrap;
+.table-box-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:16px;
+  flex-wrap:wrap;
+  gap:10px;
 }
-thead th:first-child { border-radius: 6px 0 0 6px; }
-thead th:last-child  { border-radius: 0 6px 6px 0; }
 
-tbody td {
-  padding: 13px 14px;
-  font-size: 14px;
-  color: #334155;
-  border-bottom: 1px solid #f1f5f9;
-  white-space: nowrap;
+.table-box-header h2{
+  font-size:15px;
+  font-weight:700;
+  color:#1e293b;
+  display:flex;
+  align-items:center;
+  gap:8px;
 }
-tbody tr:last-child td { border-bottom: none; }
-tbody tr:hover td { background: #f8fafc; }
+
+.table-box-header h2 i{
+  color:#12ba11;
+  font-size:14px;
+}
+
+.count-tag{
+  background:#dcfce7;
+  color:#15803d;
+  font-size:11px;
+  font-weight:700;
+  padding:2px 10px;
+  border-radius:20px;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:700px;
+}
+
+thead th{
+  padding:10px 14px;
+  text-align:left;
+  font-size:11px;
+  font-weight:700;
+  color:#94a3b8;
+  text-transform:uppercase;
+  letter-spacing:0.6px;
+  background:#f8fafc;
+  white-space:nowrap;
+}
+
+thead th:first-child{
+  border-radius:6px 0 0 6px;
+}
+
+thead th:last-child{
+  border-radius:0 6px 6px 0;
+}
+
+tbody td{
+  padding:13px 14px;
+  font-size:14px;
+  color:#334155;
+  border-bottom:1px solid #f1f5f9;
+  white-space:nowrap;
+}
+
+tbody tr:hover td{
+  background:#f8fafc;
+}
 
 /* BADGES */
-.badge {
-  display: inline-block;
-  padding: 3px 11px;
-  border-radius: 20px;
-  font-size: 11px;
-  font-weight: 700;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  white-space: nowrap;
+
+.badge{
+  display:inline-block;
+  padding:3px 11px;
+  border-radius:20px;
+  font-size:11px;
+  font-weight:700;
 }
-.badge-pending    { background: #fef9c3; color: #ca8a04; }
-.badge-accepted   { background: #dbeafe; color: #2563eb; }
-.badge-completed  { background: #dcfce7; color: #15803d; }
-.badge-cancelled  { background: #fee2e2; color: #b91c1c; }
-.badge-processing { background: #ede9fe; color: #7c3aed; }
+
+.badge-pending{
+  background:#fef9c3;
+  color:#ca8a04;
+}
+
+.badge-processing{
+  background:#ede9fe;
+  color:#7c3aed;
+}
+
+.badge-completed{
+  background:#dcfce7;
+  color:#15803d;
+}
+
+.badge-cancelled{
+  background:#fee2e2;
+  color:#b91c1c;
+}
 
 /* ACTION BUTTONS */
-.action-btns {
-  display: flex;
-  gap: 6px;
+
+.action-btns{
+  display:flex;
+  gap:6px;
 }
-.btn-action {
-  padding: 5px 10px;
-  border: none;
-  border-radius: 5px;
-  font-size: 12px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  cursor: pointer;
-  font-weight: 600;
-  transition: 0.2s;
+
+.btn-action{
+  padding:5px 10px;
+  border:none;
+  border-radius:5px;
+  font-size:12px;
+  cursor:pointer;
+  font-weight:600;
+  transition:0.2s;
 }
-.btn-accept   { background: #dcfce7; color: #15803d; }
-.btn-accept:hover   { background: #bbf7d0; }
-.btn-reject   { background: #fee2e2; color: #b91c1c; }
-.btn-reject:hover   { background: #fecaca; }
-.btn-view     { background: #dbeafe; color: #2563eb; }
-.btn-view:hover     { background: #bfdbfe; }
+
+.btn-accept{
+  background:#dcfce7;
+  color:#15803d;
+}
+
+.btn-accept:hover{
+  background:#bbf7d0;
+}
+
+.btn-reject{
+  background:#fee2e2;
+  color:#b91c1c;
+}
+
+.btn-reject:hover{
+  background:#fecaca;
+}
+
+.btn-view{
+  background:#dbeafe;
+  color:#2563eb;
+}
+
+.btn-view:hover{
+  background:#bfdbfe;
+}
 
 /* PAGINATION */
-.pagination {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 6px;
-  margin-top: 18px;
-  flex-wrap: wrap;
-}
-.page-btn {
-  padding: 6px 12px;
-  border: 1px solid #e2e8f0;
-  border-radius: 6px;
-  background: white;
-  font-size: 13px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  color: #475569;
-  cursor: pointer;
-  transition: 0.2s;
-}
-.page-btn:hover, .page-btn.active {
-  background: #12ba11;
-  color: white;
-  border-color: #12ba11;
+
+.pagination{
+  display:flex;
+  justify-content:flex-end;
+  align-items:center;
+  gap:6px;
+  margin-top:18px;
+  flex-wrap:wrap;
 }
 
-/* ── FOOTER ── */
-.footer-bottom {
-  text-align: center;
-  padding: 15px;
-  background: #1a1a1a;
-  color: #aaa;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-size: 13px;
-  margin-top: 20px;
+.page-btn{
+  padding:6px 12px;
+  border:1px solid #e2e8f0;
+  border-radius:6px;
+  background:white;
+  font-size:13px;
+  color:#475569;
+  cursor:pointer;
+  transition:0.2s;
 }
 
-/* ── RESPONSIVE ── */
-@media (max-width: 768px) {
-  .sidebar { width: 220px; }
+.page-btn:hover,
+.page-btn.active{
+  background:#12ba11;
+  color:white;
+  border-color:#12ba11;
 }
-@media (max-width: 600px) {
-  .hamburger { display: flex; }
-  .sidebar {
-    position: fixed;
-    top: 80px; left: 0;
-    height: calc(100vh - 80px);
-    transform: translateX(-100%);
-    min-height: unset;
-    overflow-y: auto;
+
+.page-btn:disabled{
+  opacity:0.5;
+  cursor:not-allowed;
+}
+
+/* FOOTER */
+
+.footer-bottom{
+  background:#1e293b;
+  color:#aaa;
+  padding:16px;
+  text-align:center;
+  font-size:14px;
+  margin-top:30px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:768px){
+
+  .hamburger{
+    display:flex;
   }
-  .sidebar.open { transform: translateX(0); }
-  .main { padding: 14px; }
-  .cards { gap: 10px; }
-  .card { min-width: 130px; }
-  .search-wrap { margin-left: 0; width: 100%; }
-  .search-wrap input { width: 100%; }
-  .filter-bar { gap: 8px; }
+
+  .sidebar{
+    width:220px;
+    top:60px;
+    left:0;
+    height:calc(100vh - 60px);
+    transform:translateX(-100%);
+    overflow-y:auto;
+  }
+
+  .sidebar.open{
+    transform:translateX(0);
+  }
+
+  .sidebar-close{
+    display:block;
+  }
+
+  .main{
+    margin-left:0;
+    padding:14px;
+  }
+
+  .cards{
+    gap:10px;
+  }
+
+  .card{
+    min-width:130px;
+  }
+
+  .search-wrap{
+    margin-left:0;
+    width:100%;
+  }
+
+  .search-wrap input{
+    width:100%;
+  }
+
+  .filter-bar{
+    gap:8px;
+  }
+
+  .page-header{
+    align-items:flex-start;
+  }
+
 }
 
 </style>
 </head>
+
 <body>
 
 <!-- HEADER -->
+
 <header class="header">
-  <nav class="nav">
-    <div class="logo">
-      <!-- MOVED HAMBURGER HERE BEFORE LOGO TEXT -->
-      <button class="hamburger" id="hamburgerBtn" aria-label="Toggle menu">
-        <span></span><span></span><span></span>
-      </button>
-      <h1><i class="fas fa-leaf"></i> EcoSphere</h1>
-    </div>
-    <div class="nav-right">
-      <div class="profile-mini">
-        <a href="./recycler_profile.html"><i class="fas fa-user-circle"></i></a>
-      </div>
-    </div>
-  </nav>
+
+<nav class="nav">
+
+<div class="nav-left">
+
+<button class="hamburger" id="hamburgerBtn">
+  <i class="fas fa-bars"></i>
+</button>
+
+<a href="./admin.html" class="logo">
+  <i class="fas fa-leaf"></i> EcoSphere
+</a>
+
+</div>
+
+<div class="profile-mini">
+  <a href="./recycler_profile.html">
+    <i class="fas fa-user-circle"></i>
+  </a>
+</div>
+
+</nav>
+
 </header>
 
 <!-- OVERLAY -->
+
 <div class="overlay" id="overlay"></div>
 
 <!-- DASHBOARD -->
+
 <div class="dashboard">
 
-  <!-- SIDEBAR -->
-  <aside class="sidebar" id="sidebar">
-    <div class="admin-logo">
-      <i class="fas fa-recycle"></i>
-      <span>Recycler Panel</span>
-    </div>
-    <a href="./recycler.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
-    <a href="./recycler_orders.html" class="active"><i class="fas fa-shopping-cart"></i> Orders</a>
-    <a href="./recycler_payments.html"><i class="fas fa-wallet"></i> Payments</a>
-    <a href="./abc.html"><i class="fas fa-shopping-bag"></i> Buy Materials</a>
-    <a href="./card.html"><i class="fas fa-shopping-bag"></i> Cart</a>
-    <a href="./index.html"><i class="fas fa-sign-out-alt"></i> Logout</a>
-  </aside>
+<!-- SIDEBAR -->
 
-  <!-- MAIN -->
-  <div class="main">
+<aside class="sidebar" id="sidebar">
 
-    <!-- PAGE HEADER -->
-    <div class="page-header">
-      <div class="page-header-left">
-        <i class="fas fa-shopping-cart"></i>
-        <div>
-          <h1>My Orders</h1>
-          <p>Manage and track all your recycling orders</p>
-        </div>
-      </div>
-    </div>
+<button class="sidebar-close" id="closeSidebarBtn">
+  <i class="fas fa-times"></i>
+</button>
 
-    <!-- STAT CARDS -->
-    <div class="cards">
-      <div class="card">
-        <i class="fas fa-inbox"></i>
-        <h3>Total Orders</h3>
-        <p>27</p>
-      </div>
-      <div class="card">
-        <i class="fas fa-hourglass-half"></i>
-        <h3>Pending</h3>
-        <p>8</p>
-      </div>
-      <div class="card">
-        <i class="fas fa-spinner"></i>
-        <h3>Processing</h3>
-        <p>4</p>
-      </div>
-      <div class="card">
-        <i class="fas fa-check-circle"></i>
-        <h3>Completed</h3>
-        <p>13</p>
-      </div>
-      <div class="card">
-        <i class="fas fa-times-circle"></i>
-        <h3>Cancelled</h3>
-        <p>2</p>
-      </div>
-    </div>
+<div class="sidebar-brand">
+  Recycler Panel
+</div>
 
-    <!-- FILTER BAR -->
-    <div class="filter-bar">
-      <label><i class="fas fa-filter"></i> Filter:</label>
-      <select id="statusFilter" onchange="filterOrders()">
-        <option value="all">All Status</option>
-        <option value="Pending">Pending</option>
-        <option value="Processing">Processing</option>
-        <option value="Completed">Completed</option>
-        <option value="Cancelled">Cancelled</option>
-      </select>
-      <select id="typeFilter" onchange="filterOrders()">
-        <option value="all">All Types</option>
-        <option value="Paper">Paper</option>
-        <option value="Plastic">Plastic</option>
-        <option value="Metal">Metal</option>
-        <option value="E-Waste">E-Waste</option>
-        <option value="Glass">Glass</option>
-      </select>
-      <div class="search-wrap">
-        <div class="search-icon-wrap">
-          <i class="fas fa-search"></i>
-          <input type="text" id="searchInput" placeholder="Search order ID or name…" oninput="filterOrders()">
-        </div>
-      </div>
-    </div>
+<a href="./recycler.html">
+  <i class="fas fa-tachometer-alt"></i>
+  Dashboard
+</a>
 
-    <!-- ORDERS TABLE -->
-    <div class="table-box">
-      <div class="table-box-header">
-        <h2><i class="fas fa-list-alt"></i> Orders List <span class="count-tag" id="countTag">27 orders</span></h2>
-      </div>
+<a href="./recycler_orders.html" class="active">
+  <i class="fas fa-users"></i>
+  Orders
+</a>
 
-      <table>
-        <thead>
-          <tr>
-            <th>Order ID</th>
-            <th>Customer</th>
-            <th>Waste Type</th>
-            <th>Price/kg</th>
-            <th>Qty (kg)</th>
-            <th>Amount</th>
-            <th>Date</th>
-            <th>Status</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody id="ordersBody">
-          <!-- Rows injected by JS -->
-        </tbody>
-      </table>
+<a href="./recycler_payments.html">
+  <i class="fas fa-recycle"></i>
+  Payments
+</a>
 
-      <!-- PAGINATION -->
-      <div class="pagination" id="pagination"></div>
-    </div>
+<a href="./abc.html">
+  <i class="fas fa-box"></i>
+  Buy Materials
+</a>
 
-  </div>
+<a href="./card.html">
+  <i class="fas fa-shopping-cart"></i>
+  Cart
+</a>
+
+<a href="./index.html" class="logout">
+  <i class="fas fa-sign-out-alt"></i>
+  Logout
+</a>
+
+</aside>
+
+<!-- MAIN -->
+
+<div class="main">
+
+<!-- PAGE HEADER -->
+
+<div class="page-header">
+
+<div class="page-header-left">
+
+<i class="fas fa-shopping-cart"></i>
+
+<div>
+  <h1>My Orders</h1>
+  <p>Manage and track all your recycling orders</p>
+</div>
+
+</div>
+
+</div>
+
+<!-- CARDS -->
+
+<div class="cards">
+
+<div class="card">
+  <i class="fas fa-inbox"></i>
+  <h3>Total Orders</h3>
+  <p id="totalOrders">18</p>
+</div>
+
+<div class="card">
+  <i class="fas fa-hourglass-half"></i>
+  <h3>Pending</h3>
+  <p id="pendingOrders">5</p>
+</div>
+
+<div class="card">
+  <i class="fas fa-spinner"></i>
+  <h3>Processing</h3>
+  <p id="processingOrders">4</p>
+</div>
+
+<div class="card">
+  <i class="fas fa-check-circle"></i>
+  <h3>Completed</h3>
+  <p id="completedOrders">7</p>
+</div>
+
+<div class="card">
+  <i class="fas fa-times-circle"></i>
+  <h3>Cancelled</h3>
+  <p id="cancelledOrders">2</p>
+</div>
+
+</div>
+
+<!-- FILTER BAR -->
+
+<div class="filter-bar">
+
+<label>
+  <i class="fas fa-filter"></i> Filter:
+</label>
+
+<select id="statusFilter" onchange="filterOrders()">
+  <option value="all">All Status</option>
+  <option value="Pending">Pending</option>
+  <option value="Processing">Processing</option>
+  <option value="Completed">Completed</option>
+  <option value="Cancelled">Cancelled</option>
+</select>
+
+<select id="typeFilter" onchange="filterOrders()">
+  <option value="all">All Types</option>
+  <option value="Paper">Paper</option>
+  <option value="Plastic">Plastic</option>
+  <option value="Metal">Metal</option>
+  <option value="E-Waste">E-Waste</option>
+  <option value="Glass">Glass</option>
+</select>
+
+<div class="search-wrap">
+
+<div class="search-icon-wrap">
+
+<i class="fas fa-search"></i>
+
+<input type="text"
+id="searchInput"
+placeholder="Search order ID or customer..."
+oninput="filterOrders()">
+
+</div>
+
+</div>
+
+</div>
+
+<!-- TABLE -->
+
+<div class="table-box">
+
+<div class="table-box-header">
+
+<h2>
+  <i class="fas fa-list-alt"></i>
+  Orders List
+  <span class="count-tag" id="countTag">18 Orders</span>
+</h2>
+
+</div>
+
+<table>
+
+<thead>
+
+<tr>
+  <th>Order ID</th>
+  <th>Customer</th>
+  <th>Waste Type</th>
+  <th>Qty</th>
+  <th>Amount</th>
+  <th>Date</th>
+  <th>Status</th>
+  <th>Actions</th>
+</tr>
+
+</thead>
+
+<tbody id="ordersBody"></tbody>
+
+</table>
+
+<div class="pagination" id="pagination"></div>
+
+</div>
+
+</div>
+
 </div>
 
 <!-- FOOTER -->
+
 <footer class="footer-bottom">
   <p>© 2026 EcoSphere. All rights reserved.</p>
 </footer>
 
 <script>
 
-/* ── HAMBURGER ── */
-const hamburgerBtn = document.getElementById("hamburgerBtn");
-const sidebar      = document.getElementById("sidebar");
-const overlay      = document.getElementById("overlay");
+/* SIDEBAR */
 
-function toggleSidebar() {
-  const isOpen = sidebar.classList.toggle("open");
-  hamburgerBtn.classList.toggle("open", isOpen);
-  overlay.classList.toggle("show", isOpen);
-  document.body.style.overflow = isOpen ? "hidden" : "";
+const hamburgerBtn = document.getElementById("hamburgerBtn");
+const sidebar = document.getElementById("sidebar");
+const overlay = document.getElementById("overlay");
+const closeSidebarBtn = document.getElementById("closeSidebarBtn");
+
+function openSidebar(){
+  sidebar.classList.add("open");
+  overlay.classList.add("show");
+  document.body.style.overflow = "hidden";
 }
+
+function closeSidebar(){
+  sidebar.classList.remove("open");
+  overlay.classList.remove("show");
+  document.body.style.overflow = "";
+}
+
+function toggleSidebar(){
+
+  if(sidebar.classList.contains("open")){
+    closeSidebar();
+  }else{
+    openSidebar();
+  }
+
+}
+
 hamburgerBtn.addEventListener("click", toggleSidebar);
-overlay.addEventListener("click", toggleSidebar);
-sidebar.querySelectorAll("a").forEach(link => {
-  link.addEventListener("click", () => { if (window.innerWidth <= 600) toggleSidebar(); });
+
+overlay.addEventListener("click", closeSidebar);
+
+closeSidebarBtn.addEventListener("click", closeSidebar);
+
+sidebar.querySelectorAll("a").forEach(link=>{
+
+  link.addEventListener("click",()=>{
+
+    if(window.innerWidth <= 768){
+      closeSidebar();
+    }
+
+  });
+
 });
 
-/* ── ORDER DATA ── */
+/* ORDERS */
+
 const orders = [
-  { id:"#RC-1001", customer:"Ravi Sharma",   type:"Paper",   qty:12, price:40, amount:480, date:"01 May 2026", status:"Completed"  },
-  { id:"#RC-1002", customer:"Priya Singh",   type:"Plastic", qty:8,  price:40, amount:320, date:"02 May 2026", status:"Pending"    },
-  { id:"#RC-1003", customer:"Anil Kumar",    type:"Metal",   qty:20, price:45, amount:900, date:"03 May 2026", status:"Processing" },
-  { id:"#RC-1004", customer:"Sunita Patel",  type:"E-Waste", qty:5,  price:150, amount:750, date:"03 May 2026", status:"Completed"  },
-  { id:"#RC-1005", customer:"Vikram Rao",    type:"Glass",   qty:15, price:20, amount:300, date:"04 May 2026", status:"Pending"    },
-  { id:"#RC-1006", customer:"Meera Joshi",   type:"Paper",   qty:10, price:40, amount:400, date:"04 May 2026", status:"Cancelled"  },
-  { id:"#RC-1007", customer:"Rajesh Gupta",  type:"Plastic", qty:6,  price:40, amount:240, date:"05 May 2026", status:"Completed"  },
-  { id:"#RC-1008", customer:"Deepa Nair",    type:"Metal",   qty:18, price:45, amount:810, date:"05 May 2026", status:"Pending"    },
-  { id:"#RC-1009", customer:"Suresh Menon",  type:"E-Waste", qty:3,  price:150, amount:450, date:"06 May 2026", status:"Processing" },
-  { id:"#RC-1010", customer:"Kavita Reddy",  type:"Paper",   qty:9,  price:40, amount:360, date:"06 May 2026", status:"Completed"  },
-  { id:"#RC-1011", customer:"Arjun Das",     type:"Glass",   qty:11, price:20, amount:220, date:"07 May 2026", status:"Pending"    },
-  { id:"#RC-1012", customer:"Nisha Verma",   type:"Plastic", qty:7,  price:40, amount:280, date:"07 May 2026", status:"Processing" },
-  { id:"#RC-1013", customer:"Mohan Lal",     type:"Metal",   qty:25, price:45, amount:1125,date:"08 May 2026", status:"Completed"  },
-  { id:"#RC-1014", customer:"Shalini Bose",  type:"E-Waste", qty:4,  price:150, amount:600, date:"08 May 2026", status:"Pending"    },
-  { id:"#RC-1015", customer:"Prakash Rao",   type:"Paper",   qty:14, price:40, amount:560, date:"09 May 2026", status:"Cancelled"  },
-  { id:"#RC-1016", customer:"Gita Kapoor",   type:"Plastic", qty:9,  price:40, amount:360, date:"09 May 2026", status:"Pending"    },
-  { id:"#RC-1017", customer:"Harish Tiwari", type:"Glass",   qty:20, price:20, amount:400, date:"09 May 2026", status:"Completed"  },
-  { id:"#RC-1018", customer:"Lalitha Iyer",  type:"Metal",   qty:16, price:45, amount:720, date:"09 May 2026", status:"Processing" },
+
+{ id:"#RC-1001", customer:"Ravi Sharma", type:"Paper", qty:12, amount:480, date:"01 May 2026", status:"Completed" },
+
+{ id:"#RC-1002", customer:"Priya Singh", type:"Plastic", qty:8, amount:320, date:"02 May 2026", status:"Pending" },
+
+{ id:"#RC-1003", customer:"Anil Kumar", type:"Metal", qty:20, amount:900, date:"03 May 2026", status:"Processing" },
+
+{ id:"#RC-1004", customer:"Sunita Patel", type:"E-Waste", qty:5, amount:750, date:"03 May 2026", status:"Completed" },
+
+{ id:"#RC-1005", customer:"Vikram Rao", type:"Glass", qty:15, amount:300, date:"04 May 2026", status:"Pending" },
+
+{ id:"#RC-1006", customer:"Meera Joshi", type:"Paper", qty:10, amount:400, date:"04 May 2026", status:"Cancelled" },
+
+{ id:"#RC-1007", customer:"Rajesh Gupta", type:"Plastic", qty:6, amount:240, date:"05 May 2026", status:"Completed" },
+
+{ id:"#RC-1008", customer:"Deepa Nair", type:"Metal", qty:18, amount:810, date:"05 May 2026", status:"Pending" },
+
+{ id:"#RC-1009", customer:"Suresh Menon", type:"E-Waste", qty:3, amount:450, date:"06 May 2026", status:"Processing" },
+
+{ id:"#RC-1010", customer:"Kavita Reddy", type:"Paper", qty:9, amount:360, date:"06 May 2026", status:"Completed" },
+
+{ id:"#RC-1011", customer:"Arjun Das", type:"Glass", qty:11, amount:220, date:"07 May 2026", status:"Pending" },
+
+{ id:"#RC-1012", customer:"Nisha Verma", type:"Plastic", qty:7, amount:280, date:"07 May 2026", status:"Processing" },
+
+{ id:"#RC-1013", customer:"Mohan Lal", type:"Metal", qty:25, amount:1125, date:"08 May 2026", status:"Completed" },
+
+{ id:"#RC-1014", customer:"Shalini Bose", type:"E-Waste", qty:4, amount:600, date:"08 May 2026", status:"Pending" },
+
+{ id:"#RC-1015", customer:"Prakash Rao", type:"Paper", qty:14, amount:560, date:"09 May 2026", status:"Cancelled" },
+
+{ id:"#RC-1016", customer:"Gita Kapoor", type:"Plastic", qty:9, amount:360, date:"09 May 2026", status:"Pending" },
+
+{ id:"#RC-1017", customer:"Harish Tiwari", type:"Glass", qty:20, amount:400, date:"09 May 2026", status:"Completed" },
+
+{ id:"#RC-1018", customer:"Lalitha Iyer", type:"Metal", qty:16, amount:720, date:"09 May 2026", status:"Processing" }
+
 ];
 
 const ROWS_PER_PAGE = 8;
+
 let currentPage = 1;
+
 let filtered = [...orders];
 
 const badgeClass = {
-  Pending:    "badge-pending",
-  Processing: "badge-processing",
-  Completed:  "badge-completed",
-  Cancelled:  "badge-cancelled"
+
+Pending:"badge-pending",
+Processing:"badge-processing",
+Completed:"badge-completed",
+Cancelled:"badge-cancelled"
+
 };
 
-function filterOrders() {
+/* FILTER */
+
+function filterOrders(){
+
   const status = document.getElementById("statusFilter").value;
-  const type   = document.getElementById("typeFilter").value;
+
+  const type = document.getElementById("typeFilter").value;
+
   const search = document.getElementById("searchInput").value.toLowerCase();
 
-  filtered = orders.filter(o => {
-    const matchStatus = status === "all" || o.status === status;
-    const matchType   = type   === "all" || o.type   === type;
-    const matchSearch = o.id.toLowerCase().includes(search) ||
-                        o.customer.toLowerCase().includes(search);
+  filtered = orders.filter(order=>{
+
+    const matchStatus =
+      status === "all" || order.status === status;
+
+    const matchType =
+      type === "all" || order.type === type;
+
+    const matchSearch =
+      order.id.toLowerCase().includes(search) ||
+      order.customer.toLowerCase().includes(search);
+
     return matchStatus && matchType && matchSearch;
+
   });
 
   currentPage = 1;
+
   renderTable();
+
 }
 
-function renderTable() {
-  const start = (currentPage - 1) * ROWS_PER_PAGE;
-  const slice = filtered.slice(start, start + ROWS_PER_PAGE);
+/* TABLE */
+
+function renderTable(){
+
   const tbody = document.getElementById("ordersBody");
 
-  document.getElementById("countTag").textContent =
-    filtered.length + " order" + (filtered.length !== 1 ? "s" : "");
+  const start = (currentPage - 1) * ROWS_PER_PAGE;
 
-  if (slice.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="9" style="text-align:center;padding:30px;color:#94a3b8;font-size:14px;">
-      <i class="fas fa-inbox" style="font-size:28px;display:block;margin-bottom:8px;"></i>No orders found.</td></tr>`;
-  } else {
-    tbody.innerHTML = slice.map(o => `
+  const slice = filtered.slice(start, start + ROWS_PER_PAGE);
+
+  document.getElementById("countTag").innerText =
+    filtered.length + " Orders";
+
+  if(slice.length === 0){
+
+    tbody.innerHTML = `
       <tr>
-        <td><strong>${o.id}</strong></td>
-        <td>${o.customer}</td>
-        <td>${o.type}</td>
-        <td>₹${o.price}</td>
-        <td>${o.qty} kg</td>
-        <td>₹ ${o.amount.toLocaleString()}</td>
-        <td>${o.date}</td>
-        <td><span class="badge ${badgeClass[o.status]}">${o.status}</span></td>
-        <td>
-          <div class="action-btns">
-            ${o.status === "Pending"
-              ? `<button class="btn-action btn-accept" onclick="changeStatus('${o.id}','Completed')">Accept</button>
-                 <button class="btn-action btn-reject" onclick="changeStatus('${o.id}','Cancelled')">Reject</button>`
-              : `<button class="btn-action btn-view" onclick="viewOrder('${o.id}')">View</button>`}
-          </div>
+        <td colspan="8" style="text-align:center;padding:30px;color:#94a3b8;">
+          No Orders Found
         </td>
-      </tr>`).join("");
+      </tr>
+    `;
+
+  }else{
+
+    tbody.innerHTML = slice.map(order=>`
+
+      <tr>
+
+        <td><strong>${order.id}</strong></td>
+
+        <td>${order.customer}</td>
+
+        <td>${order.type}</td>
+
+        <td>${order.qty} kg</td>
+
+        <td>₹ ${order.amount}</td>
+
+        <td>${order.date}</td>
+
+        <td>
+          <span class="badge ${badgeClass[order.status]}">
+            ${order.status}
+          </span>
+        </td>
+
+        <td>
+
+          <div class="action-btns">
+
+            ${
+              order.status === "Pending"
+
+              ?
+
+              `
+              <button class="btn-action btn-accept"
+              onclick="changeStatus('${order.id}','Completed')">
+                Accept
+              </button>
+
+              <button class="btn-action btn-reject"
+              onclick="changeStatus('${order.id}','Cancelled')">
+                Reject
+              </button>
+              `
+
+              :
+
+              `
+              <button class="btn-action btn-view"
+              onclick="viewOrder('${order.id}')">
+                View
+              </button>
+              `
+            }
+
+          </div>
+
+        </td>
+
+      </tr>
+
+    `).join("");
+
   }
 
   renderPagination();
+
+  updateCards();
+
 }
 
-function renderPagination() {
-  const totalPages = Math.ceil(filtered.length / ROWS_PER_PAGE);
-  const pg = document.getElementById("pagination");
-  if (totalPages <= 1) { pg.innerHTML = ""; return; }
+/* PAGINATION */
 
-  let html = `<button class="page-btn" onclick="goPage(${currentPage-1})" ${currentPage===1?"disabled":""}>
-                <i class="fas fa-chevron-left"></i></button>`;
-  for (let i = 1; i <= totalPages; i++) {
-    html += `<button class="page-btn ${i===currentPage?"active":""}" onclick="goPage(${i})">${i}</button>`;
+function renderPagination(){
+
+  const totalPages = Math.ceil(filtered.length / ROWS_PER_PAGE);
+
+  const pagination = document.getElementById("pagination");
+
+  if(totalPages <= 1){
+
+    pagination.innerHTML = "";
+
+    return;
+
   }
-  html += `<button class="page-btn" onclick="goPage(${currentPage+1})" ${currentPage===totalPages?"disabled":""}>
-             <i class="fas fa-chevron-right"></i></button>`;
-  pg.innerHTML = html;
+
+  let html = `
+    <button class="page-btn"
+    onclick="goPage(${currentPage - 1})"
+    ${currentPage === 1 ? "disabled" : ""}>
+      <i class="fas fa-chevron-left"></i>
+    </button>
+  `;
+
+  for(let i = 1; i <= totalPages; i++){
+
+    html += `
+      <button class="page-btn ${i === currentPage ? "active" : ""}"
+      onclick="goPage(${i})">
+        ${i}
+      </button>
+    `;
+
+  }
+
+  html += `
+    <button class="page-btn"
+    onclick="goPage(${currentPage + 1})"
+    ${currentPage === totalPages ? "disabled" : ""}>
+      <i class="fas fa-chevron-right"></i>
+    </button>
+  `;
+
+  pagination.innerHTML = html;
+
 }
 
-function goPage(n) {
+function goPage(page){
+
   const totalPages = Math.ceil(filtered.length / ROWS_PER_PAGE);
-  if (n < 1 || n > totalPages) return;
-  currentPage = n;
+
+  if(page < 1 || page > totalPages){
+    return;
+  }
+
+  currentPage = page;
+
   renderTable();
+
 }
 
-function changeStatus(id, newStatus) {
-  const order = orders.find(o => o.id === id);
-  if (order) order.status = newStatus;
+/* CHANGE STATUS */
+
+function changeStatus(id,status){
+
+  const order = orders.find(order=>order.id === id);
+
+  if(order){
+
+    order.status = status;
+
+  }
+
   filterOrders();
+
 }
 
-function viewOrder(id) {
-  const o = orders.find(o => o.id === id);
-  if (o) alert(`Order: ${o.id}\nCustomer: ${o.customer}\nType: ${o.type}\nQty: ${o.qty} kg\nAmount: ₹${o.amount}\nDate: ${o.date}\nStatus: ${o.status}`);
+/* VIEW */
+
+function viewOrder(id){
+
+  const order = orders.find(order=>order.id === id);
+
+  if(order){
+
+    alert(
+      `Order ID: ${order.id}
+Customer: ${order.customer}
+Type: ${order.type}
+Quantity: ${order.qty} kg
+Amount: ₹${order.amount}
+Date: ${order.date}
+Status: ${order.status}`
+    );
+
+  }
+
+}
+
+/* UPDATE CARDS */
+
+function updateCards(){
+
+  document.getElementById("totalOrders").innerText =
+    orders.length;
+
+  document.getElementById("pendingOrders").innerText =
+    orders.filter(o=>o.status === "Pending").length;
+
+  document.getElementById("processingOrders").innerText =
+    orders.filter(o=>o.status === "Processing").length;
+
+  document.getElementById("completedOrders").innerText =
+    orders.filter(o=>o.status === "Completed").length;
+
+  document.getElementById("cancelledOrders").innerText =
+    orders.filter(o=>o.status === "Cancelled").length;
+
 }
 
 /* INIT */
+
 renderTable();
 
 </script>
+
 </body>
 </html>

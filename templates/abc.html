@@ -106,10 +106,15 @@ body{
 /* SIDEBAR */
 
 .sidebar{
-    width:240px;
-    background:#0f172a;
+    position: fixed;
+    top: 80px;
+    left: 0;
+    width:220px;
+    background: #1e293b;
     color:white;
-    padding-top:100px;
+    padding-top:20px;
+    height: calc(100vh - 80px);
+    overflow-y: auto;
     flex-shrink:0;
 }
 
@@ -130,7 +135,7 @@ body{
     color:#cbd5e1;
     text-decoration:none;
     transition:0.3s;
-    font-size:16px;
+    font-size:15px;
 }
 
 .sidebar a i{
@@ -141,7 +146,7 @@ body{
 .sidebar a.active{
     background:#1e293b;
     color:white;
-    padding-left:28px;
+    padding-left:25px;
 }
 
 /* RIGHT CONTENT */
@@ -149,6 +154,7 @@ body{
 .content-area{
     flex:1;
     padding:100px;
+    margin-left:220px;
 }
 
 /* PAGE HEADER */
@@ -263,15 +269,33 @@ body{
     }
 
     .sidebar{
+        position: relative;
         width:100%;
         display:flex;
         overflow:auto;
+        top: 0;
+        height: auto;
     }
 
     .sidebar a{
         white-space:nowrap;
     }
 
+    .content-area{
+        margin-left:0;
+        padding:30px;
+    }
+
+}
+
+/* FOOTER */
+.footer-bottom { 
+  text-align: center; 
+  padding: 20px; 
+  background: #1a1a1a; 
+  color: #94a3b8; 
+  font-size: 13px; 
+  margin-top: 1px;
 }
 
 </style>
@@ -306,12 +330,12 @@ body{
     <aside class="sidebar">
 
         <div class="admin-logo">
-            <i class="fas fa-leaf"></i>
+            <i class="fas fa-recycle"></i>
             <span>Recycler Panel</span>
         </div>
 
         <a href="./recycler.html" class="active">
-            <i class="fas fa-home"></i> Dashboard
+            <i class="fas fa-tachometer-alt"></i> Dashboard
         </a>
 
         <a href="./recycler_orders.html">
@@ -323,11 +347,11 @@ body{
         </a>
 
         <a href="./abc.html">
-            <i class="fas fa-box"></i> Buy Materials
+            <i class="fas fa-shopping-bag"></i> Buy Materials
         </a>
 
         <a href="./card.html">
-            <i class="fas fa-box"></i> Cards
+            <i class="fas fa-shopping-bag"></i> Cards
         </a>
 
         <!-- <a href="./recycler_profile.html">
@@ -551,33 +575,63 @@ body{
 
 </div>
 
+<footer class="footer-bottom">
+  <p>© 2026 EcoSphere. All rights reserved.</p>
+</footer>
+
 <!-- ADD THIS SCRIPT BEFORE </body> -->
 
 <script>
+const cartKey = "ecoCartItems";
 
-    // Select all Add Cart buttons
-    const cartButtons = document.querySelectorAll(".cart-btn");
+function getCartItems() {
+    try {
+        return JSON.parse(localStorage.getItem(cartKey)) || [];
+    } catch (err) {
+        return [];
+    }
+}
 
-    // Add click event to every button
-    cartButtons.forEach(button => {
+function saveCartItems(items) {
+    localStorage.setItem(cartKey, JSON.stringify(items));
+}
 
-        button.addEventListener("click", function(e){
+function addToCart(item) {
+    const cart = getCartItems();
+    if (cart.some(cartItem => cartItem.name === item.name)) {
+        return false;
+    }
+    cart.push(item);
+    saveCartItems(cart);
+    return true;
+}
 
-            e.preventDefault();
+const cartButtons = document.querySelectorAll(".cart-btn");
+cartButtons.forEach(button => {
+    button.addEventListener("click", function(e) {
+        e.preventDefault();
 
-            // Change button text
+        const itemCard = button.closest(".item-card");
+        const name = itemCard.querySelector(".item-title").textContent.trim();
+        const sellerInfo = itemCard.querySelector(".seller-info").textContent.trim().split("\n").map(line => line.trim()).filter(Boolean);
+        const seller = sellerInfo[0] || "";
+        const location = sellerInfo[1] || "";
+        const price = sellerInfo[2] || "";
+        const bg = itemCard.querySelector(".item-image").style.backgroundImage;
+        const image = bg.replace(/^url\(["']?/, "").replace(/["']?\)$/, "");
+
+        const item = { name, seller, location, price, image };
+
+        if (addToCart(item)) {
             button.innerHTML = "✅ Added";
-
-            // Show success message
-            alert("Item added to cart successfully!");
-
-            // Optional button color change
             button.style.background = "#16a34a";
-
-        });
-
+            alert(`${name} added to cart!`);
+            window.location.href = "./card.html";
+        } else {
+            alert(`${name} is already in the cart.`);
+        }
     });
-
+});
 </script>
 
 </body>

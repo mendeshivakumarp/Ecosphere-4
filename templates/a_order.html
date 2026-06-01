@@ -660,7 +660,25 @@ View
 </main>
 
 </div>
+function viewOrder(btn){
 
+    let row = btn.closest("tr");
+    let data = row.children;
+
+    let status = data[6].querySelector("select").value;
+
+    alert(
+        "📦 ORDER DETAILS\n\n" +
+        "Order ID : " + data[0].innerText +
+        "\nRecycler : " + data[1].innerText +
+        "\nProduct : " + data[2].innerText +
+        "\nPrice : " + data[3].innerText +
+        "\nQuantity : " + data[4].innerText +
+        "\nTotal : " + data[5].innerText +
+        "\nStatus : " + status.toUpperCase() +
+        "\nDate : " + data[7].innerText
+    );
+}
 <!-- ================= FOOTER ================= -->
 
 <footer class="footer">
