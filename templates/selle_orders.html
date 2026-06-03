@@ -271,27 +271,27 @@ tbody tr:hover td{
 
 /* STATUS */
 
-.status-select{
+.status-label{
+  display:inline-block;
   padding:5px 10px;
   border-radius:6px;
   border:1.5px solid #e2e8f0;
   font-size:0.8rem;
-  cursor:pointer;
 }
 
-.status-select[data-status="delivered"]{
+.status-label[data-status="delivered"]{
   border-color:#16a34a;
   background:#dcfce7;
   color:#14532d;
 }
 
-.status-select[data-status="pending"]{
+.status-label[data-status="pending"]{
   border-color:#f59e0b;
   background:#fef3c7;
   color:#78350f;
 }
 
-.status-select[data-status="cancelled"]{
+.status-label[data-status="cancelled"]{
   border-color:#ef4444;
   background:#fee2e2;
   color:#991b1b;
@@ -483,9 +483,9 @@ const orders = [
     id:"#ORD1021",
     seller:"RecycleHub India",
     product:"Plastic Bottles",
-    qty:"50 kg",
-    price:"₹12/kg",
-    total:"₹600",
+    qty:"5 kg",
+    price:"₹10/kg",
+    total:"₹50",
     status:"delivered",
     date:"20 Jan 2026"
   },
@@ -495,8 +495,8 @@ const orders = [
     seller:"EcoSphere Recyclers",
     product:"Old Newspapers",
     qty:"30 kg",
-    price:"₹8/kg",
-    total:"₹240",
+    price:"₹12/kg",
+    total:"₹360",
     status:"pending",
     date:"21 Jan 2026"
   },
@@ -505,9 +505,9 @@ const orders = [
     id:"#ORD1023",
     seller:"GreenCycle Recyclers",
     product:"Iron Scrap",
-    qty:"80 kg",
-    price:"₹12/kg",
-    total:"₹960",
+    qty:"6 kg",
+    price:"₹45/kg",
+    total:"₹270",
     status:"delivered",
     date:"22 Jan 2026"
   },
@@ -516,9 +516,9 @@ const orders = [
     id:"#ORD1024",
     seller:"EcoBin Recycling",
     product:"Glass Bottles",
-    qty:"15 kg",
+    qty:"7 kg",
     price:"₹12/kg",
-    total:"₹180",
+    total:"₹84",
     status:"cancelled",
     date:"23 Jan 2026"
   },
@@ -539,8 +539,8 @@ const orders = [
     seller:"EcoVision Recycling",
     product:"Cardboard",
     qty:"40 kg",
-    price:"₹8/kg",
-    total:"₹320",
+    price:"₹12/kg",
+    total:"₹480",
     status:"delivered",
     date:"25 Jan 2026"
   }
@@ -572,28 +572,9 @@ function renderOrders(filter){
       <td><strong>${order.total}</strong></td>
 
       <td>
-
-        <select class="status-select"
-        data-status="${order.status}"
-        onchange="changeStatus(this)">
-
-          <option value="delivered"
-          ${order.status === 'delivered' ? 'selected' : ''}>
-          Delivered
-          </option>
-
-          <option value="pending"
-          ${order.status === 'pending' ? 'selected' : ''}>
-          Pending
-          </option>
-
-          <option value="cancelled"
-          ${order.status === 'cancelled' ? 'selected' : ''}>
-          Cancelled
-          </option>
-
-        </select>
-
+        <span class="status-label" data-status="${order.status}">
+          ${order.status.charAt(0).toUpperCase() + order.status.slice(1)}
+        </span>
       </td>
 
       <td>${order.date}</td>
@@ -614,10 +595,6 @@ function filterOrders(filter, btn){
   btn.classList.add("active");
 
   renderOrders(filter);
-}
-
-function changeStatus(select){
-  select.dataset.status = select.value;
 }
 
 renderOrders("all");

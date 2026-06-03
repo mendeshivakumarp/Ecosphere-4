@@ -225,9 +225,9 @@ background:rgba(248,113,113,0.08);
   margin-top:2px;
 }
 
-/* CARDS */
+/* Cart */
 
-.cards{
+.Cart{
   display:flex;
   gap:16px;
   flex-wrap:wrap;
@@ -559,7 +559,7 @@ tbody tr:hover td{
     padding:14px;
   }
 
-  .cards{
+  .Cart{
     gap:10px;
   }
 
@@ -692,9 +692,9 @@ tbody tr:hover td{
 
 </div>
 
-<!-- CARDS -->
+<!-- Cart -->
 
-<div class="cards">
+<div class="Cart">
 
 <div class="card">
   <i class="fas fa-inbox"></i>
@@ -880,7 +880,7 @@ const orders = [
 
 { id:"#RC-1004", Seller:"Sunita Patel", type:"E-Waste", qty:5, amount:750, date:"03 May 2026", status:"Completed" },
 
-{ id:"#RC-1005", Seller:"Vikram Rao", type:"Glass", qty:15, amount:300, date:"04 May 2026", status:"Pending" },
+{ id:"#RC-1005", Seller:"Vikram Rao", type:"Glass", qty:7, amount:140, date:"04 May 2026", status:"Pending" },
 
 { id:"#RC-1006", Seller:"Meera Joshi", type:"Paper", qty:10, amount:400, date:"04 May 2026", status:"Cancelled" },
 
@@ -892,7 +892,7 @@ const orders = [
 
 { id:"#RC-1010", Seller:"Kavita Reddy", type:"Paper", qty:9, amount:360, date:"06 May 2026", status:"Completed" },
 
-{ id:"#RC-1011", Seller:"Arjun Das", type:"Glass", qty:11, amount:220, date:"07 May 2026", status:"Pending" },
+{ id:"#RC-1011", Seller:"Arjun Das", type:"Glass", qty:7, amount:140, date:"07 May 2026", status:"Pending" },
 
 { id:"#RC-1012", Seller:"Nisha Verma", type:"Plastic", qty:7, amount:280, date:"07 May 2026", status:"Processing" },
 
@@ -904,7 +904,7 @@ const orders = [
 
 { id:"#RC-1016", Seller:"Gita Kapoor", type:"Plastic", qty:9, amount:360, date:"09 May 2026", status:"Pending" },
 
-{ id:"#RC-1017", Seller:"Harish Tiwari", type:"Glass", qty:20, amount:400, date:"09 May 2026", status:"Completed" },
+{ id:"#RC-1017", Seller:"Harish Tiwari", type:"Glass", qty:7, amount:140, date:"09 May 2026", status:"Completed" },
 
 { id:"#RC-1018", Seller:"Lalitha Iyer", type:"Metal", qty:16, amount:720, date:"09 May 2026", status:"Processing" }
 
@@ -1014,11 +1014,6 @@ function renderTable(){
               ?
 
               `
-              <button class="btn-action btn-accept"
-              onclick="changeStatus('${order.id}','Completed')">
-                Accept
-              </button>
-
               <button class="btn-action btn-reject"
               onclick="changeStatus('${order.id}','Cancelled')">
                 Reject
@@ -1047,7 +1042,7 @@ function renderTable(){
 
   renderPagination();
 
-  updateCards();
+  updateCart();
 
 }
 
@@ -1150,9 +1145,9 @@ Status: ${order.status}`
 
 }
 
-/* UPDATE CARDS */
+/* UPDATE Cart */
 
-function updateCards(){
+function updateCart(){
 
   document.getElementById("totalOrders").innerText =
     orders.length;
