@@ -454,7 +454,6 @@ footer{
               <th>Quantity</th>
               <th>Price</th>
               <th>Total</th>
-              <th>Status</th>
               <th>Date</th>
             </tr>
           </thead>
@@ -570,12 +569,6 @@ function renderOrders(filter){
       <td>${order.price}</td>
 
       <td><strong>${order.total}</strong></td>
-
-      <td>
-        <span class="status-label" data-status="${order.status}">
-          ${order.status.charAt(0).toUpperCase() + order.status.slice(1)}
-        </span>
-      </td>
 
       <td>${order.date}</td>
 

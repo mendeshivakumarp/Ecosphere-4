@@ -227,7 +227,6 @@ body{
     gap:10px;
 }
 
-.buy-btn,
 .cart-btn{
     flex:1;
     text-align:center;
@@ -238,16 +237,6 @@ body{
     font-weight:bold;
     transition:0.3s;
     font-size:14px;
-}
-
-/* BUY BUTTON */
-
-.buy-btn{
-    background:#16a34a;
-}
-
-.buy-btn:hover{
-    background:#15803d;
 }
 
 /* ADD TO CART BUTTON */
@@ -351,7 +340,7 @@ body{
         </a>
 
         <a href="./card.html">
-            <i class="fas fa-shopping-bag"></i> Cart
+            <i class="fas fa-shopping-bag"></i> Cards
         </a>
 
         <!-- <a href="./recycler_profile.html">
@@ -373,7 +362,7 @@ body{
             <p>Complete Scrap Trading Platform</p>
         </div>
 
-        <!-- Cart -->
+        <!-- CARDS -->
 
         <div class="items-grid">
 
@@ -391,15 +380,11 @@ body{
 
                     <div class="seller-info">
                         👤 naveen<br>
-                        📍 lingampally <br>
+                        📍 2-59, beside bus stop, lingampally <br>
                         💰 ₹45/kg
                     </div>
 
                     <div class="button-group">
-                        <a href="#" class="buy-btn">
-                            🛒 Buy Now
-                        </a>
-
                         <a href="#" class="cart-btn">
                             ➕ Add Cart
                         </a>
@@ -423,15 +408,11 @@ body{
 
                     <div class="seller-info">
                         👤 shiva <br>
-                        📍 dilsukhnagar <br>
+                        📍2-33 Sai Baba Colony, dilsukhnagar <br>
                         💰 ₹300/kg
                     </div>
 
                     <div class="button-group">
-                        <a href="#" class="buy-btn">
-                            🛒 Buy Now
-                        </a>
-
                         <a href="#" class="cart-btn">
                             ➕ Add Cart
                         </a>
@@ -455,15 +436,11 @@ body{
 
                     <div class="seller-info">
                         👤 ramesh<br>
-                        📍 suchitra <br>
-                        💰 ₹14/kg
+                        📍3-55  suchitra Circle <br>
+                        💰 ₹100/kg
                     </div>
 
                     <div class="button-group">
-                        <a href="#" class="buy-btn">
-                            🛒 Buy Now
-                        </a>
-
                         <a href="#" class="cart-btn">
                             ➕ Add Cart
                         </a>
@@ -487,15 +464,11 @@ body{
 
                     <div class="seller-info">
                         👤 vikram <br>
-                        📍  kandlakoya<br>
+                        📍 3-66 ,Beside Cmr College kandlakoya<br>
                         💰 ₹12/kg
                     </div>
 
                     <div class="button-group">
-                        <a href="#" class="buy-btn">
-                            🛒 Buy Now
-                        </a>
-
                         <a href="#" class="cart-btn">
                             ➕ Add Cart
                         </a>
@@ -519,15 +492,11 @@ body{
 
                     <div class="seller-info">
                         👤 santhosh <br>
-                        📍 kompally <br>
-                        💰 ₹10/kg
+                        📍 4-22, Sree Ramana Function Hall kompally <br>
+                        💰 ₹20/kg
                     </div>
 
                     <div class="button-group">
-                        <a href="#" class="buy-btn">
-                            🛒 Buy Now
-                        </a>
-
                         <a href="#" class="cart-btn">
                             ➕ Add Cart
                         </a>
@@ -551,15 +520,11 @@ body{
 
                     <div class="seller-info">
                         👤 rohit <br>
-                        📍 uppal <br>
-                        💰 ₹45/kg
+                        📍2-59, beside bus stop, uppal <br>
+                        💰 ₹40/kg
                     </div>
 
                     <div class="button-group">
-                        <a href="#" class="buy-btn">
-                            🛒 Buy Now
-                        </a>
-
                         <a href="#" class="cart-btn">
                             ➕ Add Cart
                         </a>
@@ -605,44 +570,6 @@ function addToCart(item) {
     saveCartItems(cart);
     return true;
 }
-
-// Buy Now Button Handler
-const buyButtons = document.querySelectorAll(".buy-btn");
-buyButtons.forEach(button => {
-    button.addEventListener("click", function(e) {
-        e.preventDefault();
-
-        const itemCard = button.closest(".item-card");
-        const name = itemCard.querySelector(".item-title").textContent.trim();
-
-        // Show success message
-        const successMessage = document.createElement("div");
-        successMessage.textContent = `✅ ${name} - Purchase Successful!`;
-        successMessage.style.cssText = `
-            position: fixed;
-            top: 100px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #16a34a;
-            color: white;
-            padding: 16px 24px;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
-            z-index: 2000;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            animation: slideDown 0.3s ease-out;
-        `;
-
-        document.body.appendChild(successMessage);
-
-        // Remove message after 3 seconds
-        setTimeout(() => {
-            successMessage.style.animation = "slideUp 0.3s ease-out";
-            setTimeout(() => successMessage.remove(), 300);
-        }, 3000);
-    });
-});
 
 // Add animations for the success message
 const style = document.createElement("style");

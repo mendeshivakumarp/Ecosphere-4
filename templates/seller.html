@@ -7,12 +7,7 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-<!-- CHART JS -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
-
-<!-- DATA LABELS -->
-<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
+<!-- chart removed -->
 
 <style>
 
@@ -184,9 +179,10 @@ body{
 
 .Cart{
   display:grid;
-  grid-template-columns:repeat(3,1fr);
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
   gap:16px;
   margin-bottom:24px;
+  justify-content:center;
 }
 
 .card{
@@ -198,6 +194,7 @@ body{
   gap:16px;
   box-shadow:0 1px 4px rgba(0,0,0,0.06);
   transition:0.3s;
+  width:100%;
 }
 
 .card:hover{
@@ -243,6 +240,9 @@ body{
   color:#1e293b;
 }
 
+/* utility */
+.w-100{width:100% !important;}
+
 /* BOTTOM GRID */
 
 .bottom-grid{
@@ -260,6 +260,8 @@ body{
   box-shadow:0 1px 4px rgba(0,0,0,0.06);
 }
 
+.panel.full-width{grid-column:1 / -1;}
+
 .panel-title{
   font-size:0.9rem;
   font-weight:700;
@@ -272,35 +274,6 @@ body{
 
 .panel-title i{
   color:#18a118;
-}
-
-/* CHART */
-
-.chart-box{
-  position:relative;
-  width:100%;
-  max-width:260px;
-  margin:auto;
-}
-
-.chart-center{
-  position:absolute;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  text-align:center;
-}
-
-.chart-center h2{
-  font-size:2rem;
-  font-weight:700;
-  color:#1e293b;
-}
-
-.chart-center p{
-  font-size:0.8rem;
-  color:#64748b;
-  margin-top:3px;
 }
 
 /* TABLE */
@@ -491,42 +464,43 @@ footer{
     <div class="Cart">
 
       <div class="card">
-
         <div class="card-icon icon-green">
           <i class="fas fa-shopping-bag"></i>
         </div>
-
         <div>
           <div class="card-label">Total Orders</div>
-          <div class="card-value" id="total">0</div>
+          <div class="card-value" id="totalOrders">0</div>
         </div>
-
       </div>
 
       <div class="card">
-
-        <div class="card-icon icon-yellow">
-          <i class="fas fa-clock"></i>
-        </div>
-
-        <div>
-          <div class="card-label">Pending</div>
-          <div class="card-value" id="pending">0</div>
-        </div>
-
-      </div>
-
-      <div class="card">
-
         <div class="card-icon icon-blue">
-          <i class="fas fa-check-circle"></i>
+          <i class="fas fa-fill-drip"></i>
         </div>
-
         <div>
-          <div class="card-label">Completed</div>
-          <div class="card-value" id="completed">0</div>
+          <div class="card-label">Plastic</div>
+          <div class="card-value" id="plasticCount">0</div>
         </div>
+      </div>
 
+      <div class="card">
+        <div class="card-icon icon-yellow">
+          <i class="fas fa-magnet"></i>
+        </div>
+        <div>
+          <div class="card-label">Iron</div>
+          <div class="card-value" id="ironCount">0</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-icon icon-green">
+          <i class="fas fa-newspaper"></i>
+        </div>
+        <div>
+          <div class="card-label">Paper</div>
+          <div class="card-value" id="paperCount">0</div>
+        </div>
       </div>
 
     </div>
@@ -535,32 +509,11 @@ footer{
 
     <div class="bottom-grid">
 
-      <!-- CHART -->
-
-      <div class="panel">
-
-        <div class="panel-title">
-          <i class="fas fa-chart-pie"></i>
-          Order Status
-        </div>
-
-        <div class="chart-box">
-
-          <canvas id="chart" height="260"></canvas>
-
-          <div class="chart-center">
-            <h2 id="chartNumber"></h2>
-            <!-- <h2 id="chartNumber">0</h2> -->
-            <!-- <p>Total Orders</p> -->
-          </div>
-
-        </div>
-
-      </div>
+      <!-- Order status chart removed -->
 
       <!-- TABLE -->
 
-      <div class="panel">
+      <div class="panel full-width">
 
         <div class="panel-title">
           <i class="fas fa-users"></i>
@@ -628,137 +581,29 @@ footer{
 /* ORDERS */
 
 const orders = [
-
-  { status:"Pending" },
-  { status:"Completed" },
-  { status:"Completed" },
-  { status:"Pending" },
-  { status:"Completed" }
-
+  { status:"Completed", type:"Plastic" },
+  { status:"Pending",   type:"Plastic" },
+  { status:"Completed", type:"Plastic" },
+  { status:"Completed", type:"Plastic" },
+  { status:"Completed", type:"Plastic" },
+  { status:"Completed", type:"Iron" },
+  { status:"Completed", type:"Iron" },
+  { status:"Completed", type:"Iron" },
+  { status:"Pending",   type:"Iron" },
+  { status:"Completed", type:"Paper" },
+  { status:"Completed", type:"Paper" },
+  { status:"Completed", type:"Paper" }
 ];
-
-/* COUNTS */
-
-const pending =
-orders.filter(o => o.status === "Pending").length;
-
-const completed =
-orders.filter(o => o.status === "Completed").length;
 
 /* CARD VALUES */
 
-document.getElementById("total").innerText =
-orders.length;
+document.getElementById("totalOrders").innerText = orders.length;
 
-document.getElementById("pending").innerText =
-pending;
+document.getElementById("plasticCount").innerText = orders.filter(o => o.type === "Plastic").length;
 
-document.getElementById("completed").innerText =
-completed;
+document.getElementById("ironCount").innerText = orders.filter(o => o.type === "Iron").length;
 
-/* CENTER TEXT */
-
-const centerText = {
-
-  id: 'centerText',
-
-  afterDraw(chart) {
-
-    const { ctx } = chart;
-
-    const centerX =
-    chart.getDatasetMeta(0).data[0].x;
-
-    const centerY =
-    chart.getDatasetMeta(0).data[0].y;
-
-    ctx.save();
-
-    ctx.textAlign = "center";
-    ctx.textBaseline = "middle";
-
-    /* LABEL */
-
-    ctx.font = "600 14px Segoe UI";
-    ctx.fillStyle = "#64748b";
-
-    ctx.fillText(
-      "Total Orders",
-      centerX,
-      centerY - 12
-    );
-
-    /* VALUE */
-
-    ctx.font = "700 28px Segoe UI";
-    ctx.fillStyle = "#1e293b";
-
-    ctx.fillText(
-      orders.length,
-      centerX,
-      centerY + 16
-    );
-
-    ctx.restore();
-  }
-};
-
-/* CHART */
-
-new Chart(document.getElementById("chart"), {
-
-  type: "doughnut",
-
-  data: {
-
-    labels: ["Pending", "Completed"],
-
-    datasets: [{
-
-      data: [pending, completed],
-
-      backgroundColor: [
-        "#fbbf24",
-        "#22c55e"
-      ],
-
-      borderWidth: 0,
-
-      hoverOffset: 5
-    }]
-  },
-
-  options: {
-
-    plugins: {
-
-      legend: {
-        position: "bottom"
-      },
-
-      datalabels: {
-
-        color: "#fff",
-
-        font: {
-          weight: "bold",
-          size: 18
-        },
-
-        formatter: (value) => value
-      }
-
-    },
-
-    cutout: "68%"
-  },
-
-  plugins: [
-    ChartDataLabels,
-    centerText
-  ]
-
-});
+document.getElementById("paperCount").innerText = orders.filter(o => o.type === "Paper").length;
 
 /* SIDEBAR */
 

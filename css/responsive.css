@@ -193,7 +193,7 @@
         width: 100% !important;
         height: auto !important;
         max-height: 240px;
-        object-fit: cover;
+        object-fit: inherit;
     }
 
     /* ===== STATS ===== */

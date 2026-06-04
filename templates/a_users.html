@@ -303,6 +303,7 @@ padding:5px 12px;
 border-radius:20px;
 font-size:12px;
 font-weight:bold;
+cursor:pointer;
 }
 
 .active-status{
@@ -610,8 +611,6 @@ Add New Seller
 <th>Email</th>
 <th>Status</th>
 <th>Location</th>
-<th>Bank</th>
-<th>Account No</th>
 <th>Date Joined</th>
 <th>Action</th>
 </tr>
@@ -625,8 +624,6 @@ Add New Seller
 <td>ravi@email.com</td>
 <td><span class="status-pill active-status">Active</span></td>
 <td>Hyderabad</td>
-<td>SBI</td>
-<td>********9032</td>
 <td>05-04-2026</td>
 <td>
 <button class="btn view" onclick="viewUser(this)">View</button>
@@ -638,9 +635,7 @@ Add New Seller
 <td>Anjali Goel</td>
 <td>anjali@email.com</td>
 <td><span class="status-pill active-status">Active</span></td>
-<td>Mumbai</td>
-<td>HDFC</td>
-<td>********1124</td>
+<td> Kukatpally</td>
 <td>06-04-2026</td>
 <td>
 <button class="btn view" onclick="viewUser(this)">View</button>
@@ -652,9 +647,7 @@ Add New Seller
 <td>Vikram Mehra</td>
 <td>vikram@email.com</td>
 <td><span class="status-pill inactive-status">Inactive</span></td>
-<td>Delhi</td>
-<td>ICICI</td>
-<td>********4456</td>
+<td> Bowenpally </td>
 <td>07-04-2026</td>
 <td>
 <button class="btn view" onclick="viewUser(this)">View</button>
@@ -666,9 +659,7 @@ Add New Seller
 <td>Priya Verma</td>
 <td>priya@email.com</td>
 <td><span class="status-pill active-status">Active</span></td>
-<td>Chennai</td>
-<td>Axis</td>
-<td>********6632</td>
+<td> Miyapur </td>
 <td>08-04-2026</td>
 <td>
 <button class="btn view" onclick="viewUser(this)">View</button>
@@ -704,14 +695,6 @@ placeholder="Email Address">
 <input type="text"
 id="location"
 placeholder="City / Location">
-
-<input type="text"
-id="bank"
-placeholder="Bank Name">
-
-<input type="text"
-id="account"
-placeholder="Account Number">
 
 <input type="text"
 id="date"
@@ -784,7 +767,7 @@ document.getElementById("overlay").classList.remove("show");
 
 function addUser(){
 
-const fields=["name","email","location","bank","account"];
+const fields=["name","email","location"];
 
 const data={};
 
@@ -818,10 +801,6 @@ Active
 </td>
 
 <td>${data.location}</td>
-
-<td>${data.bank}</td>
-
-<td>********${data.account.slice(-4)}</td>
 
 <td>${date}</td>
 
@@ -877,11 +856,7 @@ Status: ${cells[2].innerText}
 
 Location: ${cells[3].innerText}
 
-Bank: ${cells[4].innerText}
-
-Account: ${cells[5].innerText}
-
-Joined: ${cells[6].innerText}`
+Joined: ${cells[4].innerText}`
 
 );
 
@@ -903,6 +878,21 @@ row.style.display=text.includes(input) ? "" : "none";
 
 }
 
+}
+
+/* STATUS TOGGLE */
+
+document.getElementById("userTableBody").addEventListener("click", function(event){
+    if(event.target.classList.contains("status-pill")){
+        toggleStatus(event.target);
+    }
+});
+
+function toggleStatus(element){
+    const isActive = element.innerText.trim().toLowerCase() === "active";
+    element.innerText = isActive ? "Inactive" : "Active";
+    element.classList.toggle("active-status", !isActive);
+    element.classList.toggle("inactive-status", isActive);
 }
 
 </script>

@@ -2,769 +2,501 @@
 <html lang="en">
 
 <head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>EcoSphere Admin - Orders</title>
-
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
-<style>
-
-/* ================= GLOBAL ================= */
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Segoe UI',sans-serif;
-}
-
-body{
-background:#f4f6f8;
-display:flex;
-flex-direction:column;
-min-height:100vh;
-}
-
-/* ================= HEADER ================= */
-
-.header{
-position:fixed;
-top:0;
-left:0;
-right:0;
-height:60px;
-background:#18a118;
-z-index:1000;
-display:flex;
-align-items:center;
-padding:0 20px;
-}
-
-.nav{
-width:100%;
-display:flex;
-justify-content:space-between;
-align-items:center;
-}
-
-.nav-left{
-display:flex;
-align-items:center;
-gap:14px;
-}
-
-.logo{
-text-decoration:none;
-font-size:1.25rem;
-font-weight:700;
-color:#fff;
-}
-
-.logo i{
-color:#ffd700;
-margin-right:6px;
-}
-
-.profile-mini a{
-font-size:24px;
-color:#fff;
-text-decoration:none;
-}
-
-/* ================= HAMBURGER ================= */
-
-.hamburger{
-display:none;
-background:none;
-border:none;
-color:#fff;
-font-size:22px;
-cursor:pointer;
-}
-
-/* ================= OVERLAY ================= */
-
-.overlay{
-display:none;
-position:fixed;
-inset:0;
-background:rgba(0,0,0,0.45);
-z-index:998;
-}
-
-.overlay.show{
-display:block;
-}
-
-/* ================= DASHBOARD ================= */
-
-.dashboard{
-display:flex;
-margin-top:60px;
-min-height:calc(100vh - 60px);
-}
-
-/* ================= SIDEBAR ================= */
-
-.sidebar{
-position:fixed;
-top:0;
-left:0;
-width:210px;
-height:100vh;
-background:#1b2636;
-z-index:999;
-display:flex;
-flex-direction:column;
-padding-top:60px;
-transition:0.3s;
-}
-
-.sidebar-close{
-display:none;
-position:absolute;
-top:14px;
-right:14px;
-background:none;
-border:none;
-color:#fff;
-font-size:20px;
-cursor:pointer;
-}
-
-.sidebar-brand{
-padding:18px 20px 16px;
-font-size:0.8rem;
-font-weight:700;
-color:rgba(255,255,255,0.35);
-text-transform:uppercase;
-letter-spacing:1px;
-border-bottom:1px solid rgba(255,255,255,0.06);
-margin-bottom:8px;
-}
-
-.sidebar a{
-display:flex;
-align-items:center;
-gap:10px;
-padding:11px 20px;
-color:rgba(255,255,255,0.65);
-text-decoration:none;
-font-size:0.88rem;
-font-weight:500;
-transition:0.2s;
-}
-
-.sidebar a i{
-width:16px;
-text-align:center;
-}
-
-.sidebar a:hover{
-color:#fff;
-background:rgba(255,255,255,0.07);
-padding-left:26px;
-}
-
-.sidebar a.active{
-color:#4ade80;
-background:rgba(74,222,128,0.1);
-}
-
-.sidebar a.logout{
-color:rgba(248,113,113,0.8);
-margin-bottom:12px;
-}
-
-.sidebar a.logout:hover{
-color:#f87171;
-background:rgba(248,113,113,0.08);
-}
-
-/* ================= MAIN ================= */
-
-.main-content{
-flex:1;
-padding:30px;
-margin-left:210px;
-}
-
-/* ================= TITLE ================= */
-
-.page-title{
-display:flex;
-align-items:center;
-gap:12px;
-font-size:26px;
-font-weight:bold;
-color:#1a1a1a;
-margin-bottom:20px;
-}
-
-.page-title i{
-color:#12ba11;
-background:#e8f5ec;
-padding:10px;
-border-radius:10px;
-font-size:20px;
-}
-
-/* ================= CARD ================= */
-
-.order-card{
-background:white;
-padding:20px;
-border-radius:12px;
-box-shadow:0 8px 18px rgba(0,0,0,0.1);
-overflow-x:auto;
-}
-
-.header-row{
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-bottom:15px;
-gap:10px;
-}
-
-/* ================= SEARCH ================= */
-
-.search-box{
-padding:10px 12px;
-border-radius:6px;
-border:1px solid #ccc;
-outline:none;
-}
-
-/* ================= TABLE ================= */
-
-table{
-width:100%;
-border-collapse:collapse;
-min-width:900px;
-}
-
-th,td{
-padding:12px;
-border-bottom:1px solid #eee;
-text-align:center;
-}
-
-th{
-background:#e8f5ec;
-color:#2e7d32;
-}
-
-/* ================= STATUS ================= */
-
-.status-select{
-padding:6px 10px;
-border-radius:6px;
-border:1px solid #ccc;
-font-weight:bold;
-background:white;
-outline:none;
-}
-
-.status-select.pending{
-color:orange;
-border-color:orange;
-}
-
-.status-select.delivered{
-color:green;
-border-color:green;
-}
-
-.status-select.cancelled{
-color:red;
-border-color:red;
-}
-
-/* ================= BUTTON ================= */
-
-.btn{
-padding:7px 12px;
-border:none;
-border-radius:6px;
-cursor:pointer;
-color:white;
-font-weight:500;
-transition:0.2s;
-}
-
-.btn:hover{
-opacity:0.85;
-}
-
-.view{
-background:#3498db;
-}
-
-/* ================= FOOTER ================= */
-
-.footer{
-background:#1a1a1a;
-color:white;
-padding:2rem;
-text-align:center;
-margin-top:auto;
-}
-
-/* ================= MOBILE ================= */
-
-@media(max-width:768px){
-
-.hamburger{
-display:block;
-}
-
-.sidebar{
-left:-220px;
-}
-
-.sidebar.active{
-left:0;
-}
-
-.sidebar-close{
-display:block;
-}
-
-.main-content{
-margin-left:0;
-padding:20px;
-}
-
-.header-row{
-flex-direction:column;
-align-items:flex-start;
-}
-
-.page-title{
-font-size:22px;
-}
-
-}
-
-</style>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoSphere Admin - Orders</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* ================= GLOBAL ================= */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background: #f4f6f8;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* ================= HEADER ================= */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background: #18a118;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .nav {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .logo {
+            text-decoration: none;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .logo i {
+            color: #ffd700;
+            margin-right: 6px;
+        }
+
+        .profile-mini a {
+            font-size: 24px;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        /* ================= HAMBURGER ================= */
+        .hamburger {
+            display: none;
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 22px;
+            cursor: pointer;
+        }
+
+        /* ================= OVERLAY ================= */
+        .overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.45);
+            z-index: 998;
+        }
+
+        .overlay.show {
+            display: block;
+        }
+
+        /* ================= DASHBOARD ================= */
+        .dashboard {
+            display: flex;
+            margin-top: 60px;
+            min-height: calc(100vh - 60px);
+        }
+
+        /* ================= SIDEBAR ================= */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 210px;
+            height: 100vh;
+            background: #1b2636;
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            padding-top: 60px;
+            transition: 0.3s;
+        }
+
+        .sidebar-close {
+            display: none;
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .sidebar-brand {
+            padding: 18px 20px 16px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.35);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            margin-bottom: 8px;
+        }
+
+        .sidebar a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 11px 20px;
+            color: rgba(255, 255, 255, 0.65);
+            text-decoration: none;
+            font-size: 0.88rem;
+            font-weight: 500;
+            transition: 0.2s;
+        }
+
+        .sidebar a i {
+            width: 16px;
+            text-align: center;
+        }
+
+        .sidebar a:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.07);
+            padding-left: 26px;
+        }
+
+        .sidebar a.active {
+            color: #4ade80;
+            background: rgba(74, 222, 128, 0.1);
+        }
+
+        .sidebar a.logout {
+            color: rgba(248, 113, 113, 0.8);
+            margin-bottom: 12px;
+        }
+
+        .sidebar a.logout:hover {
+            color: #f87171;
+            background: rgba(248, 113, 113, 0.08);
+        }
+
+        /* ================= MAIN ================= */
+        .main-content {
+            flex: 1;
+            padding: 30px;
+            margin-left: 210px;
+        }
+
+        /* ================= TITLE ================= */
+        .page-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 26px;
+            font-weight: bold;
+            color: #1a1a1a;
+            margin-bottom: 20px;
+        }
+
+        .page-title i {
+            color: #12ba11;
+            background: #e8f5ec;
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 20px;
+        }
+
+        /* ================= CARD ================= */
+        .order-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.1);
+            overflow-x: auto;
+        }
+
+        .header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            gap: 10px;
+        }
+
+        /* ================= SEARCH ================= */
+        .search-box {
+            padding: 10px 12px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            outline: none;
+        }
+
+        /* ================= TABLE ================= */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 900px;
+        }
+
+        th, td {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+            text-align: center;
+        }
+
+        th {
+            background: #e8f5ec;
+            color: #2e7d32;
+        }
+
+        /* ================= STATUS BADGES ================= */
+        .badge {
+            display: inline-block;
+            padding: 5px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .badge.delivered {
+            background: #dcfce7;
+            color: #15803d;
+        }
+
+        .badge.cancelled {
+            color: #b91c1c;
+            background: #fee2e2;
+        }
+
+        /* ================= BUTTON ================= */
+        .btn {
+            padding: 7px 12px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            color: white;
+            font-weight: 500;
+            transition: 0.2s;
+        }
+
+        .btn:hover {
+            opacity: 0.85;
+        }
+
+        .view {
+            background: #3498db;
+        }
+
+        /* ================= FOOTER ================= */
+        .footer {
+            background: #1b2636;
+            color: white;
+            text-align: center;
+            padding:16px;
+            font-size:14px;
+        }
+
+        /* ================= MOBILE ================= */
+        @media(max-width:768px) {
+            .hamburger {
+                display: block;
+            }
+
+            .sidebar {
+                left: -220px;
+            }
+
+            .sidebar.active {
+                left: 0;
+            }
+
+            .sidebar-close {
+                display: block;
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 20px;
+            }
+
+            .header-row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .page-title {
+                font-size: 22px;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-<!-- ================= HEADER ================= -->
-
-<header class="header">
-
-<nav class="nav">
-
-<div class="nav-left">
-
-<button class="hamburger"
-onclick="toggleSidebar()">
-
-<i class="fas fa-bars"></i>
-
-</button>
-
-<a href="./admin.html"
-class="logo">
-
-<i class="fas fa-leaf"></i>
-EcoSphere
-
-</a>
-
-</div>
-
-<div class="profile-mini">
-
-<a href="./admin_profile.html">
-
-<i class="fas fa-user-circle"></i>
-
-</a>
-
-</div>
-
-</nav>
-
-</header>
-
-<!-- ================= OVERLAY ================= -->
-
-<div class="overlay"
-id="overlay"
-onclick="closeSidebar()">
-</div>
-
-<!-- ================= DASHBOARD ================= -->
-
-<div class="dashboard">
-
-<!-- ================= SIDEBAR ================= -->
-
-<aside class="sidebar"
-id="sidebar">
-
-<button class="sidebar-close"
-onclick="closeSidebar()">
-
-<i class="fas fa-times"></i>
-
-</button>
-
-<div class="sidebar-brand">
-Admin Panel
-</div>
-
-<a href="./admin.html">
-
-<i class="fas fa-tachometer-alt"></i>
-Dashboard
-
-</a>
-
-<a href="./a_users.html">
-
-<i class="fas fa-users"></i> 
-Seller
-
-</a>
-
-<a href="./a_recyciier.html">
-
-<i class="fas fa-recycle"></i>
-Recycler
-
-</a>
-
-<a href="./a_products.html">
-
-<i class="fas fa-box"></i>
-Products
-
-</a>
-
-<a href="./a_order.html"
-class="active">
-
-<i class="fas fa-shopping-cart"></i>
-Orders
-
-</a>
-
-<a href="./index.html"
-class="logout">
-
-<i class="fas fa-sign-out-alt"></i>
-Logout
-
-</a>
-
-</aside>
-
-<!-- ================= MAIN ================= -->
-
-<main class="main-content">
-
-<h1 class="page-title">
-
-<i class="fas fa-shopping-bag"></i>
-Orders Management
-
-</h1>
-
-<div class="order-card">
-
-<div class="header-row">
-
-<h3>All Orders</h3>
-
-<input type="text"
-id="searchInput"
-placeholder="Search orders..."
-class="search-box"
-onkeyup="searchOrders()">
-
-</div>
-
-<table id="ordersTable">
-
-<thead>
-
-<tr>
-
-<th>Order ID</th>
-<th>Recycle</th>
-<th>Product</th>
-<th>Price</th>
-<th>Quantity</th>
-<th>Total</th>
-<th>Status</th>
-<th>Date</th>
-<th>Action</th>
-
-</tr>
-
-</thead>
-
-<tbody>
-
-<tr>
-<td>#ORD1021</td>
-<td>EcoWaste Solutions</td>
-<td>Plastic Bottles</td>
-<td>₹12</td>
-<td>50 kg</td>
-<td>₹600</td>
-
-<td>
-<select class="status-select"
-onchange="changeStatus(this)">
-<option value="delivered" selected>Delivered</option>
-<option value="pending">Pending</option>
-<option value="cancelled">Cancelled</option>
-</select>
-</td>
-
-<td>20 Jan 2026</td>
-
-<td>
-<button class="btn view"
-onclick="viewOrder(this)">
-View
-</button>
-</td>
-</tr>
-
-<tr>
-<td>#ORD1022</td>
-<td>EcoMetal Recyclers</td>
-<td>Old Newspapers</td>
-<td>₹8</td>
-<td>30 kg</td>
-<td>₹240</td>
-
-<td>
-<select class="status-select"
-onchange="changeStatus(this)">
-<option value="pending" selected>Pending</option>
-<option value="delivered">Delivered</option>
-<option value="cancelled">Cancelled</option>
-</select>
-</td>
-
-<td>21 Jan 2026</td>
-
-<td>
-<button class="btn view"
-onclick="viewOrder(this)">
-View
-</button>
-</td>
-</tr>
-
-<tr>
-<td>#ORD1023</td>
-<td>EcoLoop Recyclers</td>
-<td>Iron Scrap</td>
-<td>₹45</td>
-<td>100 kg</td>
-<td>₹4500</td>
-
-<td>
-<select class="status-select"
-onchange="changeStatus(this)">
-<option value="pending">Pending</option>
-<option value="delivered">Delivered</option>
-<option value="cancelled" selected>Cancelled</option>
-</select>
-</td>
-
-<td>22 Jan 2026</td>
-
-<td>
-<button class="btn view"
-onclick="viewOrder(this)">
-View
-</button>
-</td>
-</tr>
-
-<tr>
-<td>#ORD1024</td>
-<td>Future Green Recyclers</td>
-<td>Glass Bottles</td>
-<td>₹25</td>
-<td>40 kg</td>
-<td>₹1000</td>
-
-<td>
-<select class="status-select"
-onchange="changeStatus(this)">
-<option value="pending" selected>Pending</option>
-<option value="delivered">Delivered</option>
-<option value="cancelled">Cancelled</option>
-</select>
-</td>
-
-<td>23 Jan 2026</td>
-
-<td>
-<button class="btn view"
-onclick="viewOrder(this)">
-View
-</button>
-</td>
-</tr>
-
-<tr>
-<td>#ORD1025</td>
-<td>GreenCycle Recycling</td>
-<td>Aluminium Cans</td>
-<td>₹80</td>
-<td>60 kg</td>
-<td>₹4800</td>
-
-<td>
-<select class="status-select"
-onchange="changeStatus(this)">
-<option value="delivered" selected>Delivered</option>
-<option value="pending">Pending</option>
-<option value="cancelled">Cancelled</option>
-</select>
-</td>
-
-<td>24 Jan 2026</td>
-
-<td>
-<button class="btn view"
-onclick="viewOrder(this)">
-View
-</button>
-</td>
-</tr>
-
-</tbody>
-
-</table>
-
-</div>
-
-</main>
-
-</div>
-<!-- function viewOrder(btn){
-
-    let row = btn.closest("tr");
-    let data = row.children;
-
-    let status = data[6].querySelector("select").value;
-
-    alert(
-        "📦 ORDER DETAILS\n\n" +
-        "Order ID : " + data[0].innerText +
-        "\nRecycler : " + data[1].innerText +
-        "\nProduct : " + data[2].innerText +
-        "\nPrice : " + data[3].innerText +
-        "\nQuantity : " + data[4].innerText +
-        "\nTotal : " + data[5].innerText +
-        "\nStatus : " + status.toUpperCase() +
-        "\nDate : " + data[7].innerText
-    );
-} -->
-<!-- ================= FOOTER ================= -->
-
-<footer class="footer">
-
-<p>© 2026 EcoSphere | Admin Dashboard</p>
-
-</footer>
-
-<!-- ================= JAVASCRIPT ================= -->
-
-<script>
-
-/* ================= SIDEBAR ================= */
-
-function toggleSidebar() {
-    document.getElementById("sidebar").classList.toggle("active");
-    document.getElementById("overlay").classList.toggle("show");
-}
-
-function closeSidebar() {
-    document.getElementById("sidebar").classList.remove("active");
-    document.getElementById("overlay").classList.remove("show");
-}
-
-/* ================= VIEW ORDER ================= */
-
-function viewOrder(btn) {
-
-    let row = btn.closest("tr");
-    let data = row.children;
-
-    let status = data[6].querySelector("select").value;
-
-    alert(
-        "📦 ORDER DETAILS\n\n" +
-        "Order ID : " + data[0].innerText +
-        "\nRecycler : " + data[1].innerText +
-        "\nProduct : " + data[2].innerText +
-        "\nPrice : " + data[3].innerText +
-        "\nQuantity : " + data[4].innerText +
-        "\nTotal : " + data[5].innerText +
-        "\nStatus : " + status.toUpperCase() +
-        "\nDate : " + data[7].innerText
-    );
-}
-
-/* ================= SEARCH ================= */
-
-function searchOrders() {
-
-    let input = document.getElementById("searchInput")
-        .value.toLowerCase();
-
-    let rows = document.querySelectorAll("#ordersTable tbody tr");
-
-    rows.forEach(row => {
-
-        let text = row.innerText.toLowerCase();
-
-        row.style.display = text.includes(input)
-            ? ""
-            : "none";
-
-    });
-}
-
-/* ================= STATUS COLOR ================= */
-
-function changeStatus(select) {
-
-    select.classList.remove(
-        "pending",
-        "delivered",
-        "cancelled"
-    );
-
-    select.classList.add(select.value);
-}
-
-/* ================= LOAD STATUS ================= */
-
-document.querySelectorAll(".status-select")
-    .forEach(select => {
-        changeStatus(select);
-    });
-
-</script>
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-left">
+                <button class="hamburger" onclick="toggleSidebar()">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <a href="./admin.html" class="logo">
+                    <i class="fas fa-leaf"></i> EcoSphere
+                </a>
+            </div>
+            <div class="profile-mini">
+                <a href="./admin_profile.html">
+                    <i class="fas fa-user-circle"></i>
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
+
+    <div class="dashboard">
+
+        <aside class="sidebar" id="sidebar">
+            <button class="sidebar-close" onclick="closeSidebar()">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="sidebar-brand">Admin Panel</div>
+            <a href="./admin.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+            <a href="./a_users.html"><i class="fas fa-users"></i> Seller</a>
+            <a href="./a_recyciier.html"><i class="fas fa-recycle"></i> Recycler</a>
+            <a href="./a_products.html"><i class="fas fa-box"></i> Products</a>
+            <a href="./a_order.html" class="active"><i class="fas fa-shopping-cart"></i> Orders</a>
+            <a href="./index.html" class="logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        </aside>
+
+        <main class="main-content">
+            <h1 class="page-title">
+                <i class="fas fa-shopping-bag"></i> Orders Management
+            </h1>
+
+            <div class="order-card">
+                <div class="header-row">
+                    <h3>All Orders</h3>
+                    <input type="text" id="searchInput" placeholder="Search orders..." class="search-box" onkeyup="searchOrders()">
+                </div>
+
+                <table id="ordersTable">
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Recycle</th>
+                            <th>Product</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Total</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>#ORD1021</td>
+                            <td>EcoWaste Solutions</td>
+                            <td>Plastic Bottles</td>
+                            <td>₹12</td>
+                            <td>50 kg</td>
+                            <td>₹600</td>
+                            <td><span class="badge delivered">Delivered</span></td>
+                            <td>20 Jan 2026</td>
+                            <td><button class="btn view" onclick="viewOrder(this)">View</button></td>
+                        </tr>
+                        <tr>
+                            <td>#ORD1022</td>
+                            <td>EcoMetal Recyclers</td>
+                            <td>Old Newspapers</td>
+                            <td>₹8</td>
+                            <td>30 kg</td>
+                            <td>₹240</td>
+                            <td><span class="badge cancelled">Cancelled</span></td>
+                            <td>21 Jan 2026</td>
+                            <td><button class="btn view" onclick="viewOrder(this)">View</button></td>
+                        </tr>
+                        <tr>
+                            <td>#ORD1023</td>
+                            <td>EcoLoop Recyclers</td>
+                            <td>Iron Scrap</td>
+                            <td>₹45</td>
+                            <td>100 kg</td>
+                            <td>₹4500</td>
+                            <td><span class="badge delivered">Delivered</span></td>
+                            <td>22 Jan 2026</td>
+                            <td><button class="btn view" onclick="viewOrder(this)">View</button></td>
+                        </tr>
+                        <tr>
+                            <td>#ORD1024</td>
+                            <td>Future Green Recyclers</td>
+                            <td>Glass Bottles</td>
+                            <td>₹25</td>
+                            <td>40 kg</td>
+                            <td>₹1000</td>
+                            <td><span class="badge cancelled">Cancelled</span></td>
+                            <td>23 Jan 2026</td>
+                            <td><button class="btn view" onclick="viewOrder(this)">View</button></td>
+                        </tr>
+                        <tr>
+                            <td>#ORD1025</td>
+                            <td>GreenCycle Recycling</td>
+                            <td>Aluminium Cans</td>
+                            <td>₹80</td>
+                            <td>60 kg</td>
+                            <td>₹4800</td>
+                            <td><span class="badge delivered">Delivered</span></td>
+                            <td>24 Jan 2026</td>
+                            <td><button class="btn view" onclick="viewOrder(this)">View</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <footer class="footer">
+        <p>© 2026 EcoSphere | Admin Dashboard</p>
+    </footer>
+
+    <script>
+        /* ================= SIDEBAR ================= */
+        function toggleSidebar() {
+            document.getElementById("sidebar").classList.toggle("active");
+            document.getElementById("overlay").classList.toggle("show");
+        }
+
+        function closeSidebar() {
+            document.getElementById("sidebar").classList.remove("active");
+            document.getElementById("overlay").classList.remove("show");
+        }
+
+        /* ================= VIEW ORDER ================= */
+        function viewOrder(btn) {
+            let row = btn.closest("tr");
+            let data = row.children;
+
+            // Grabs plain text value directly from row column 6
+            let status = data[6].innerText.trim();
+
+            alert(
+                "--- ORDER DETAILS ---\n\n" +
+                "Order ID: " + data[0].innerText +
+                "\nBuyer: " + data[1].innerText +
+                "\nProduct: " + data[2].innerText +
+                "\nPrice: " + data[3].innerText +
+                "\nQuantity: " + data[4].innerText +
+                "\nTotal: " + data[5].innerText +
+                "\nStatus: " + status.toUpperCase() +
+                "\nDate: " + data[7].innerText
+            );
+        }
+
+        /* ================= SEARCH ================= */
+        function searchOrders() {
+            let input = document.getElementById("searchInput").value.toLowerCase();
+            let rows = document.querySelectorAll("#ordersTable tbody tr");
+
+            rows.forEach(row => {
+                let text = row.innerText.toLowerCase();
+                row.style.display = text.includes(input) ? "" : "none";
+            });
+        }
+    </script>
 </body>
+
 </html>

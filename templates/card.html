@@ -121,7 +121,7 @@ body{
     margin-bottom:30px;
 }
 
-/* Cart */
+/* CARDS */
 .container{
     display:grid;
     grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
@@ -293,7 +293,7 @@ body{
         </a>
 
         <a href="./card.html">
-            <i class="fas fa-shopping-bag"></i> Carts
+            <i class="fas fa-shopping-bag"></i> Cards
         </a>
 
         <!-- <a href="./recycler_profile.html">
@@ -331,6 +331,12 @@ function getCartItems(){
     }
 }
 
+function formatLocation(loc){
+    if(!loc) return '';
+    if(String(loc).trim().toLowerCase() === 'uppal') return 'House No. 12, Uppal';
+    return loc;
+}
+
 function loadCart(){
 
     const cartItems = getCartItems();
@@ -361,12 +367,12 @@ function loadCart(){
             
                 <p><b>Seller:</b> ${scrap.seller}</p>
             
-                <p><b>Location:</b> ${scrap.location}</p>
+                <p><b>Location:</b> ${formatLocation(scrap.location)}</p>
             
                 <div class="price">${scrap.price}</div>
 
                 <button class="btn"
-                onclick="buyNow('${scrap.name}')">
+                onclick="buyNow('${scrap.name}', this)">
                     Buy Now
                 </button>
 
@@ -384,9 +390,14 @@ function loadCart(){
 
 }
 
-function buyNow(product){
+function buyNow(product, button){
 
     alert(product + " purchased successfully!");
+    
+    button.disabled = true;
+    button.textContent = "✓ Purchased";
+    button.style.opacity = "0.5";
+    button.style.cursor = "not-allowed";
 
 }
 

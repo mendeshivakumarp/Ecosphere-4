@@ -293,6 +293,7 @@ padding:5px 12px;
 border-radius:20px;
 font-size:12px;
 font-weight:bold;
+cursor:pointer;
 }
 
 .active{
@@ -578,7 +579,7 @@ Add Recycler
 <tr>
 <td>EcoSphere Recyclers</td>
 <td>ecosphere@email.com</td>
-<td>Hyderabad</td>
+<td>Miyapur</td>
 <td>28AAECE5566H1ZW</td>
 <td><span class="status active">Active</span></td>
 <td>05-04-2026</td>
@@ -591,7 +592,7 @@ Add Recycler
 <tr>
 <td>GreenCycle Recyclers</td>
 <td>greencycle@email.com</td>
-<td>Mumbai</td>
+<td>kukatpally</td>
 <td>36ABCPK2211M1Z6</td>
 <td><span class="status active">Active</span></td>
 <td>06-04-2026</td>
@@ -604,7 +605,7 @@ Add Recycler
 <tr>
 <td>EcoBin Recycling</td>
 <td>ecobin@email.com</td>
-<td>Delhi</td>
+<td>Bowenpally</td>
 <td>33AALPS4455D1ZT</td>
 <td><span class="status inactive">Inactive</span></td>
 <td>07-04-2026</td>
@@ -794,6 +795,21 @@ text.includes(input)
 
 }
 
+}
+
+/* STATUS TOGGLE */
+
+document.getElementById("userTableBody").addEventListener("click", function(event){
+    if(event.target.classList.contains("status")){
+        toggleStatus(event.target);
+    }
+});
+
+function toggleStatus(element){
+    const isActive = element.innerText.trim().toLowerCase() === "active";
+    element.innerText = isActive ? "Inactive" : "Active";
+    element.classList.toggle("active", !isActive);
+    element.classList.toggle("inactive", isActive);
 }
 
 </script>

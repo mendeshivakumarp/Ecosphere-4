@@ -6,7 +6,7 @@
 <title>EcoSphere - Register</title>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
+    <link rel="stylesheet" href="../css/responsive.css">
 <style>
 *{
     margin:0;
@@ -199,7 +199,8 @@ body{
 
     .nav-links{
         flex-wrap:wrap;
-        justify-content:center;
+        justify-content:flex-start;
+        align-items:flex-start;
         gap:15px;
     }
 
@@ -214,6 +215,24 @@ body{
     .subtitle{
         font-size:14px;
     }
+
+    .register-container{
+        padding:20px 10px;
+    }
+
+    .register-card{
+        width:min(100%,700px);
+        padding:30px 20px;
+    }
+
+    .form-group i{
+        top:40px;
+    }
+
+    .form-group input,
+    .form-group select{
+        padding:12px 15px 12px 45px;
+    }
 }
 </style>
 </head>
@@ -223,17 +242,24 @@ body{
 <!-- NAVBAR -->
 <header class="header">
     <nav class="nav">
+        <button class="hamburger" id="hamburger" aria-label="Toggle navigation" aria-expanded="false">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
         <div class="logo">
             <h1><i class="fas fa-leaf"></i> EcoSphere</h1>
         </div>
 
-        <ul class="nav-links">
+        <ul class="nav-links" id="navLinks">
             <li><a href="index.html">Home</a></li>
             <li><a href="about.html">About</a></li>
             <li><a href="contact.html">Contact</a></li>
             <li><a href="login.html">Login</a></li>
         </ul>
     </nav>
+    <div class="nav-overlay" id="navOverlay"></div>
 </header>
 
 <!-- REGISTER FORM -->
@@ -291,7 +317,7 @@ required>
 </select>
 </div>
 
-<div class="bank-section">
+<!-- <div class="bank-section">
 <h3><i class="fa-solid fa-building-columns"></i> Bank Details</h3>
 
 <div class="form-group">
@@ -338,7 +364,7 @@ placeholder="Enter Bank Name"
 style="display:none;">
 </div>
 
-</div>
+</div> -->
 
 <button type="submit" class="btn-register">
 <i class="fa-solid fa-user-plus"></i>
@@ -378,6 +404,26 @@ document.getElementById("registerForm")
     );
 
     window.location.href="login.html";
+});
+
+const hamburger = document.getElementById('hamburger');
+const navLinks = document.getElementById('navLinks');
+const navOverlay = document.getElementById('navOverlay');
+
+function toggleNav() {
+    const isOpen = navLinks.classList.toggle('open');
+    hamburger.classList.toggle('active', isOpen);
+    navOverlay.classList.toggle('open', isOpen);
+    hamburger.setAttribute('aria-expanded', isOpen);
+}
+
+hamburger.addEventListener('click', toggleNav);
+navOverlay.addEventListener('click', toggleNav);
+
+navLinks.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+        if (navLinks.classList.contains('open')) toggleNav();
+    });
 });
 </script>
 
